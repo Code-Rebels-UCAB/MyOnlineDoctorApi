@@ -1,4 +1,4 @@
-import { IValueObject } from "../../../commun/dominio/values/IValueObject"
+import { IValueObject } from "interfaceVO";
 
 
 export class Motivo implements IValueObject{

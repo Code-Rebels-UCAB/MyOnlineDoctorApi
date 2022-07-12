@@ -1,4 +1,5 @@
-import { IValueObject } from "../../../commun/dominio/values/IValueObject"
+import { IValueObject } from "interfaceVO";
+
 
 export class FechaCita implements IValueObject {
     constructor ( readonly _fechaCita: Date ) {}

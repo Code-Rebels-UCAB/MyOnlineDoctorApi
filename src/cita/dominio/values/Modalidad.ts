@@ -1,4 +1,4 @@
-import { IValueObject } from "../../../commun/dominio/values/IValueObject"
+import { IValueObject } from "interfaceVO";
 import { TipoModalidad } from "./TipoModalidad";
 
 export class Modalidad  implements IValueObject {
