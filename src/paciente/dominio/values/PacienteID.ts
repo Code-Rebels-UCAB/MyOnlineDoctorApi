@@ -3,6 +3,7 @@ import { Guid } from 'guid-typescript';
 
 export class PacienteID implements IValueObject {
   private readonly id: Guid;
+
   constructor() {
     this.id = Guid.create();
   }
