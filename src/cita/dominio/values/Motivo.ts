@@ -2,7 +2,7 @@ import { IValueObject } from "interfaceVO";
 
 
 export class Motivo implements IValueObject{
-    constructor ( readonly _motivo: string ) {}
+    constructor (private readonly _motivo: string ) {}
     
     public get motivo() : string {
         return this._motivo;

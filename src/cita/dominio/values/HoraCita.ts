@@ -4,7 +4,7 @@ export class HoraCita implements IValueObject {
     constructor (private readonly _hora: number,  private readonly _minuto:number) {}
 
     public get horaCita() : string {
-        return this.convertirString(this._hora)+this.convertirString(this._minuto);
+        return this.convertirString(this._hora)+ ":"+this.convertirString(this._minuto);
     }
 
     private convertirString(entrada: number){
