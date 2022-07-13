@@ -1,4 +1,4 @@
-import { IValueObject } from 'src/commun/dominio/values/IValueObject';
+import { IValueObject } from '../../../commun/dominio/values/IValueObject';
 
 export class FechaDeNacimiento implements IValueObject {
   constructor(private readonly fecha: Date) {}
