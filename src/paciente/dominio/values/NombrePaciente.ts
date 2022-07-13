@@ -1,7 +1,11 @@
 import { IValueObject } from '../../../commun/dominio/values/IValueObject';
+import { PrimerApellidoPacienteVacio } from '../excepciones/PrimerApellidoPacienteVacio';
+import { PrimerNombrePacienteVacio } from '../excepciones/PrimerNombrePacienteVacio';
+import { SegundoApellidoPacienteVacio } from '../excepciones/SegundoApellidoPacienteVacio';
+import { SegundoNombrePacienteVacio } from '../excepciones/SegundoNombrePacienteVacio';
 
 export class NombrePaciente implements IValueObject {
-  constructor(
+  private constructor(
     private readonly primer_nombre: string,
     private readonly segundo_nombre: string,
     private readonly primer_apellido: string,
@@ -31,5 +35,27 @@ export class NombrePaciente implements IValueObject {
       this.primer_apellido == nombre.getPrimerApellido() &&
       this.segundo_apellido == nombre.getSegundoApellido()
     );
+  }
+
+  public static crear(primer_nombre: string, segundo_nombre: string, primer_apellido:string, segundo_apellido:string){
+    if (primer_nombre == null || primer_nombre == undefined || primer_nombre == ''){
+      //LANZA LA EXCEPCION
+      throw new PrimerNombrePacienteVacio('EL primer nombre del paciente no puede estar vacio');
+    }
+    else if (primer_apellido == null || primer_apellido == undefined || primer_apellido == ''){
+      //LANZA LA EXCEPCION
+      throw new PrimerApellidoPacienteVacio('EL primer apellido del paciente no puede estar vacio');
+    }
+    else if(segundo_apellido == null || segundo_apellido == undefined || segundo_apellido == ''){
+      //LANZA LA EXCEPCION
+      throw new SegundoApellidoPacienteVacio('EL segundo apellido del paciente no puede estar vacio');
+    }
+    // else if(segundo_nombre == null || segundo_nombre == undefined || segundo_nombre == ''){
+    //   //LANZA LA EXCEPCION
+    //   throw new SegundoNombrePacienteVacio('EL segundo nombre del paciente no puede estar vacio');
+    // }
+
+    return new NombrePaciente(primer_nombre, segundo_nombre, primer_apellido, segundo_apellido)
+    
   }
 }

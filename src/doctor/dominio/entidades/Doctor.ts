@@ -1,11 +1,11 @@
-import { Calificacion } from './values/Calificacion';
-import { CorreoDoctor } from './values/CorreoDoctor';
-import { DoctorID } from '../../commun/dominio/values/DoctorID';
-import { Especialidad } from './values/Especialidad';
-import { GeneroDoctor } from './values/GeneroDoctor';
-import { NombreCompletoDoctor } from './values/NombreDoctor';
-import { PasswordDoctor } from './values/PasswordDoctor';
-import { Ubicacion } from './values/Ubicacion';
+import { Calificacion } from '../values/Calificacion';
+import { CorreoDoctor } from '../values/CorreoDoctor';
+import { DoctorID } from '../../../commun/dominio/values/DoctorID';
+import { Especialidad } from '../values/Especialidad';
+import { GeneroDoctor } from '../values/GeneroDoctor';
+import { NombreCompletoDoctor } from '../values/NombreDoctor';
+import { PasswordDoctor } from '../values/PasswordDoctor';
+import { Ubicacion } from '../values/Ubicacion';
 
 export class Doctor {
   private constructor(

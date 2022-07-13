@@ -15,4 +15,8 @@ export class DoctorID implements IValueObject {
   public esIgual(doctorid: DoctorID): boolean {
     return this.id == doctorid.getDoctorID();
   }
+
+  public static crear(){
+    return new DoctorID();
+  }
 }
