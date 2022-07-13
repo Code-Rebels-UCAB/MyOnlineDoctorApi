@@ -27,16 +27,16 @@ export class HoraCita implements IValueObject {
     }
 
     public static crear(hora:number, minuto:number){
-        if(hora == null && hora == undefined){
+        if(hora == null || hora == undefined){
             throw new HoraVacia('La hora de la cita no puede estar vacia');
         }
-        else if(hora < 0 && hora > 24){
+        else if(hora < 0 || hora > 24){
             throw new HoraInvalida('La hora es invalida');
         }
-        else if(minuto == null && minuto == undefined){
+        else if(minuto == null || minuto == undefined){
             throw new MinutoVacia('El minuto de la cita no puede estar vacia');
         }
-        else if(minuto < 0 && minuto > 60){
+        else if(minuto < 0 || minuto > 60){
             throw new MinutoInvalido('El minuto es invalido');
         }
     }   
