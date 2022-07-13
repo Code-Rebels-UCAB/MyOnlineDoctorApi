@@ -1,18 +1,18 @@
-import { PacienteID } from './values/PacienteID';
-import { GeneroPaciente } from './values/GeneroPaciente';
-import { Altura } from './values/Altura';
-import { Peso } from './values/Peso';
-import { NumeroTelefonico } from './values/NumeroTelefonico';
-import { Antecedentes } from './values/Antecedentes';
-import { Operacion } from './values/Operacion';
-import { StatusSuscripcion } from './values/StatusSuscripcion';
-import { Alergia } from './values/Alergia';
-import { PasswordPaciente } from './values/PasswordPaciente';
-import { CorreoPaciente } from './values/CorreoPaciente';
-import { FechaDeNacimiento } from './values/FechaDenacimiento';
-import { NombrePaciente } from './values/NombrePaciente';
+import { PacienteID } from '../../../commun/dominio/values/PacienteID';
+import { GeneroPaciente } from '../values/GeneroPaciente';
+import { Altura } from '../values/Altura';
+import { Peso } from '../values/Peso';
+import { NumeroTelefonico } from '../values/NumeroTelefonico';
+import { Antecedentes } from '../values/Antecedentes';
+import { Operacion } from '../values/Operacion';
+import { StatusSuscripcion } from '../values/StatusSuscripcion';
+import { Alergia } from '../values/Alergia';
+import { PasswordPaciente } from '../values/PasswordPaciente';
+import { CorreoPaciente } from '../values/CorreoPaciente';
+import { FechaDeNacimiento } from '../values/FechaDeNacimiento';
+import { NombrePaciente } from '../values/NombrePaciente';
 
-export abstract class Paciente {
+export class Paciente {
   constructor(
     private id: PacienteID,
     private genero: GeneroPaciente,

@@ -1,5 +1,6 @@
-import { IValueObject } from 'src/commun/dominio/values/IValueObject';
+
 import { Guid } from 'guid-typescript';
+import { IValueObject } from 'interfaceVO';
 
 export class PacienteID implements IValueObject {
   private readonly id: Guid;
