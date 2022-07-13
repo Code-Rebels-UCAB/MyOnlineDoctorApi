@@ -1,7 +1,7 @@
 import { IValueObject } from '../../../commun/dominio/values/IValueObject';
 
 export class PasswordPaciente implements IValueObject {
-  constructor(private readonly password: string) {}
+  private constructor(private readonly password: string) {}
 
   public getPasswordPaciente(): string {
     return this.password;
@@ -9,5 +9,9 @@ export class PasswordPaciente implements IValueObject {
 
   public esIgual(password: PasswordPaciente): boolean {
     return this.password == password.getPasswordPaciente();
+  }
+
+  public static crear(password: string) {
+    return new PasswordPaciente(password);
   }
 }
