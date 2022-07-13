@@ -7,7 +7,7 @@ import { NombreCompletoDoctor } from './values/NombreDoctor';
 import { PasswordDoctor } from './values/PasswordDoctor';
 import { Ubicacion } from './values/Ubicacion';
 
-export abstract class Doctor {
+export class Doctor {
   private constructor(
     private especialidad: Especialidad,
     private calificacion: Calificacion,
