@@ -12,7 +12,7 @@ export class Alergia implements IValueObject {
     return this.alergia == alergia.getAlergia();
   }
 
-  public static crear(alergia: string){
+  public static crear(alergia: string) {
     // if (alergia == null || alergia == undefined || alergia == ''){
     //   //LANZA LA EXCEPCION
     //   throw new AlergiaVacio('La Alergia del Paciente no puede estar vacia');

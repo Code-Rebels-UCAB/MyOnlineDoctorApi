@@ -1,4 +1,5 @@
 import { IValueObject } from '../../../commun/dominio/values/IValueObject';
+import { StatusSuscripcionVacio } from '../excepciones/StatusSuscripcionVacio';
 import { Status } from './Status';
 
 export class StatusSuscripcion implements IValueObject {
@@ -13,6 +14,12 @@ export class StatusSuscripcion implements IValueObject {
   }
 
   public static crear(status: Status) {
+    if (status == null || status == undefined) {
+      throw new StatusSuscripcionVacio(
+        'El Status de la Suscripcion no puede estar vacio',
+      );
+    }
+
     return new StatusSuscripcion(status);
   }
 }
