@@ -1,4 +1,6 @@
 import { IValueObject } from "interfaceVO";
+import { FechaInvalida } from '../../../commun/dominio/excepcciones/FechaInvalida';
+import { FechaVacio } from "../../../commun/dominio/excepcciones/FechaVacio";
 
 
 export class FechaCita implements IValueObject {
@@ -10,5 +12,15 @@ export class FechaCita implements IValueObject {
 
     public esIgual(fechaCita: FechaCita): boolean {
         return this._fechaCita == fechaCita.fechaCita;
+    }
+
+    public static crear(fechaCita: Date): FechaCita {
+        if (fechaCita == null || fechaCita == undefined) {
+            throw new FechaVacio("La fecha de la cita no puede estar vacia");
+        }
+        else if (!(fechaCita instanceof Date)) {
+            throw new FechaInvalida("La fecha ingresada no es valida");
+        }
+        return new FechaCita(fechaCita);
     }
 }
