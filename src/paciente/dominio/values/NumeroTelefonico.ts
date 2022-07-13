@@ -1,17 +1,17 @@
-import { IValueObject } from "../../../commun/dominio/values/IValueObject"
+import { IValueObject } from '../../../commun/dominio/values/IValueObject';
 
 export class NumeroTelefonico implements IValueObject {
-    private constructor(private readonly valor: string) {
+  private constructor(private readonly valor: string) {}
 
-    }
-  
-    public getNumeroTelefonicoValor() {
-      return this.valor;
-    }
-  
-    public esIgual(numeroTelefonico: NumeroTelefonico): boolean {
-      return this.valor == numeroTelefonico.getNumeroTelefonicoValor()
-    }
-
+  public getNumeroTelefonicoValor() {
+    return this.valor;
   }
-  
+
+  public esIgual(numeroTelefonico: NumeroTelefonico): boolean {
+    return this.valor == numeroTelefonico.getNumeroTelefonicoValor();
+  }
+
+  public static crear(valor: string) {
+    return new NumeroTelefonico(valor);
+  }
+}
