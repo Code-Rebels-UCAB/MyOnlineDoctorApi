@@ -1,4 +1,4 @@
-import { PacienteID } from './values/PacienteID';
+import { PacienteID } from 'src/commun/dominio/values/PacienteID';
 import { GeneroPaciente } from './values/GeneroPaciente';
 import { Altura } from './values/Altura';
 import { Peso } from './values/Peso';
