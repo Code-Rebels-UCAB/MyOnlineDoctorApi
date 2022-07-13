@@ -4,7 +4,7 @@ import { Guid } from 'guid-typescript';
 export class RegistroMedicoID implements IValueObject {
   private readonly id: Guid;
 
-  constructor() {
+  private constructor() {
     this.id = Guid.create();
   }
 
@@ -15,4 +15,9 @@ export class RegistroMedicoID implements IValueObject {
   public esIgual(id: RegistroMedicoID): boolean {
     return this.id == id.getRegistroMedicoID();
   }
+
+  public static crear(){
+    return new RegistroMedicoID();
+  }
+
 }

@@ -15,4 +15,8 @@ export class CitaID implements IValueObject {
     public esIgual(citaID: CitaID): boolean {
         return this.id == citaID.getCitaID();
     }
+
+    public static crear(){
+        return new CitaID();
+    }
 }
