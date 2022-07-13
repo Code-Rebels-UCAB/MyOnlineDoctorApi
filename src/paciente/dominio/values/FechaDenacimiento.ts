@@ -1,5 +1,6 @@
 import { IValueObject } from 'src/commun/dominio/values/IValueObject';
-import { FechaNacimientoVacio } from '../excepciones/FechaNAcimientoVacio';
+import { FechaInvalida } from '../excepciones/FechaInvalida';
+import { FechaNacimientoVacio } from '../excepciones/FechaNacimientoVacio';
 import { PacienteMenorEdad } from '../excepciones/PacienteMenorEdad';
 
 export class FechaDeNacimiento implements IValueObject {
@@ -28,6 +29,9 @@ export class FechaDeNacimiento implements IValueObject {
     }
     else if(FechaDeNacimiento.calculateAge(fecha) < 18){
       throw new PacienteMenorEdad('El paciente no puede ser menor de edad');
+    }
+    else if(!(fecha instanceof Date)){
+      throw new FechaInvalida('La fecha ingresada no es valida');
     }
     return new FechaDeNacimiento(fecha);
   }
