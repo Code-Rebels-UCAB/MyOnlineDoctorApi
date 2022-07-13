@@ -1,5 +1,5 @@
-import { FechaInvalida } from '../excepciones/FechaInvalida';
-import { FechaNacimientoVacio } from '../excepciones/FechaNacimientoVacio';
+import { FechaInvalida } from '../../../commun/dominio/excepcciones/FechaInvalida';
+import { FechaVacio } from '../../../commun/dominio/excepcciones/FechaVacio';
 import { PacienteMenorEdad } from '../excepciones/PacienteMenorEdad';
 import { IValueObject } from '../../../commun/dominio/values/IValueObject';
 
@@ -25,7 +25,7 @@ export class FechaDeNacimiento implements IValueObject {
   public static crear(fecha: Date){
     if (fecha == null || fecha == undefined){
       //LANZA LA EXCEPCION
-      throw new FechaNacimientoVacio('La fecha de nacimiento no puede estar vacia');
+      throw new FechaVacio('La fecha de nacimiento no puede estar vacia');
     }
     else if(FechaDeNacimiento.calculateAge(fecha) < 18){
       throw new PacienteMenorEdad('El paciente no puede ser menor de edad');
