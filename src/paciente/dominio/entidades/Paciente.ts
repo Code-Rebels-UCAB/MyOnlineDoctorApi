@@ -9,7 +9,7 @@ import { StatusSuscripcion } from '../values/StatusSuscripcion';
 import { Alergia } from '../values/Alergia';
 import { PasswordPaciente } from '../values/PasswordPaciente';
 import { CorreoPaciente } from '../values/CorreoPaciente';
-import { FechaDeNacimiento } from '../values/FechaDeNacimiento';
+import { FechaDeNacimiento } from '../values/FechaDenacimiento';
 import { NombrePaciente } from '../values/NombrePaciente';
 
 export class Paciente {
