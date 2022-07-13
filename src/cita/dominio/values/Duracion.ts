@@ -2,7 +2,7 @@ import { IValueObject } from "interfaceVO";
 
 export class Duracion implements IValueObject {
     
-    constructor(readonly _duracion: number) {}
+    constructor(private readonly _duracion: number) {}
 
     public get duracion(): number {
         return this._duracion;

@@ -2,7 +2,7 @@ import { IValueObject } from "interfaceVO";
 
 
 export class FechaCita implements IValueObject {
-    constructor ( readonly _fechaCita: Date ) {}
+    constructor (private readonly _fechaCita: Date ) {}
 
     public get fechaCita() : Date {
         return this._fechaCita;
