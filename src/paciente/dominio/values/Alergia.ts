@@ -1,5 +1,5 @@
-import { IValueObject } from 'src/commun/dominio/values/IValueObject';
 import { AlergiaVacio } from '../excepciones/AlergiaVacio';
+import { IValueObject } from '../../../commun/dominio/values/IValueObject';
 
 export class Alergia implements IValueObject {
   private constructor(private readonly alergia: string) {}

@@ -1,4 +1,4 @@
-import { IValueObject } from 'src/commun/dominio/values/IValueObject';
+import { IValueObject } from '../../../commun/dominio/values/IValueObject';
 
 export class PasswordPaciente implements IValueObject {
   constructor(private readonly password: string) {}

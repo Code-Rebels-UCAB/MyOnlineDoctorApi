@@ -1,7 +1,7 @@
-import { IValueObject } from 'src/commun/dominio/values/IValueObject';
 import { FechaInvalida } from '../excepciones/FechaInvalida';
 import { FechaNacimientoVacio } from '../excepciones/FechaNacimientoVacio';
 import { PacienteMenorEdad } from '../excepciones/PacienteMenorEdad';
+import { IValueObject } from '../../../commun/dominio/values/IValueObject';
 
 export class FechaDeNacimiento implements IValueObject {
   private constructor(private readonly fecha: Date) {}
