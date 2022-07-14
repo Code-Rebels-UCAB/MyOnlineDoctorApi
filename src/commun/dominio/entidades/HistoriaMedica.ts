@@ -1,9 +1,7 @@
-import { RegistroMedico } from "src/registro_medico/dominio/entidades/RegistroMedico";
 import { HistoriaMedicaID } from "../values/HisotriaMedicaID";
 import { PacienteID } from "../values/PacienteID";
 import { RegistroMedicoID } from "../values/RegistroMedicoID";
 import { Agregado } from "./Agregado";
-import { IEntidad } from "./IEntidad";
 
 export class HistoriaMedica extends Agregado<HistoriaMedicaID>{
     

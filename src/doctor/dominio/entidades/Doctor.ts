@@ -6,8 +6,7 @@ import { GeneroDoctor } from '../values/GeneroDoctor';
 import { NombreCompletoDoctor } from '../values/NombreDoctor';
 import { PasswordDoctor } from '../values/PasswordDoctor';
 import { Ubicacion } from '../values/Ubicacion';
-import { Agregado } from 'src/commun/dominio/entidades/Agregado';
-import { IEntidad } from 'src/commun/dominio/entidades/IEntidad';
+import { Agregado } from '../../../commun/dominio/entidades/Agregado';
 
 export class Doctor extends Agregado<DoctorID>{
   private constructor(

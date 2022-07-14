@@ -7,7 +7,6 @@ import { RegistroMedicoID } from "../../../commun/dominio/values/RegistroMedicoI
 import { DoctorID } from "../../../commun/dominio/values/DoctorID";
 import { CitaID } from "../../../commun/dominio/values/CitaID";
 import { Agregado } from "../../../commun/dominio/entidades/Agregado";
-import { IEntidad } from "src/commun/dominio/entidades/IEntidad";
 
 
 export class RegistroMedico extends Agregado<RegistroMedicoID> {
