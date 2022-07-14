@@ -6,14 +6,13 @@ import { AppService } from './app.service';
 import { ConfigModule } from './commun/infraestructura/config/config.module';
 import { ConfigService } from './commun/infraestructura/config/config.service';
 import { DatabaseModule } from './commun/infraestructura/database/database.module';
-import { DoctorModule } from './doctor/doctor.module';
+
 
 
 @Module({
   imports: [
     DatabaseModule,
     ConfigModule,
-    DoctorModule,
   ],
   controllers: [AppController],
   providers: [AppService],
