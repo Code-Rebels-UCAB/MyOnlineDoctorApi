@@ -6,10 +6,12 @@ import { GeneroDoctor } from '../values/GeneroDoctor';
 import { NombreCompletoDoctor } from '../values/NombreDoctor';
 import { PasswordDoctor } from '../values/PasswordDoctor';
 import { Ubicacion } from '../values/Ubicacion';
+import { Agregado } from 'src/commun/dominio/entidades/Agregado';
+import { IEntidad } from 'src/commun/dominio/entidades/IEntidad';
 
-export class Doctor {
+export class Doctor extends Agregado<DoctorID>{
   private constructor(
-    private especialidad: Especialidad,
+    private especialidad: Especialidad[],
     private calificacion: Calificacion,
     private ubicacion: Ubicacion,
     private generoDoctor: GeneroDoctor,
@@ -17,17 +19,17 @@ export class Doctor {
     private passwordDoctor: PasswordDoctor,
     private nombreDoctor: NombreCompletoDoctor,
     private doctorid: DoctorID,
-  ) {}
+  ) {
+    super();
+  }
 
-  public getEspecialidad(): Especialidad {
+  public getEspecialidad(): Especialidad []{
     return this.especialidad;
   }
-  public setEspecialidad(value: Especialidad) {
+  public setEspecialidad(value: Especialidad[]) {
     this.especialidad = value;
   }
-  public getDoctorid(): DoctorID {
-    return this.doctorid;
-  }
+
   public getCalificacion(): Calificacion {
     return this.calificacion;
   }
@@ -55,4 +57,13 @@ export class Doctor {
   public getNombreDoctor(): NombreCompletoDoctor {
     return this.nombreDoctor;
   }
+
+  obtenerIdentificador(): DoctorID {
+    return this.doctorid;
+  }
+  esIgual(entidad: Doctor): boolean {
+    return this.doctorid.getDoctorID() === entidad.obtenerIdentificador().getDoctorID();
+  }
+
+
 }
