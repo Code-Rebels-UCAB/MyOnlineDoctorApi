@@ -11,7 +11,7 @@ import { IEntidad } from 'src/commun/dominio/entidades/IEntidad';
 
 export class Doctor extends Agregado<DoctorID>{
   private constructor(
-    private especialidad: Especialidad,
+    private especialidad: Especialidad[],
     private calificacion: Calificacion,
     private ubicacion: Ubicacion,
     private generoDoctor: GeneroDoctor,
@@ -23,15 +23,13 @@ export class Doctor extends Agregado<DoctorID>{
     super();
   }
 
-  public getEspecialidad(): Especialidad {
+  public getEspecialidad(): Especialidad []{
     return this.especialidad;
   }
-  public setEspecialidad(value: Especialidad) {
+  public setEspecialidad(value: Especialidad[]) {
     this.especialidad = value;
   }
-  public getDoctorid(): DoctorID {
-    return this.doctorid;
-  }
+
   public getCalificacion(): Calificacion {
     return this.calificacion;
   }
@@ -64,7 +62,7 @@ export class Doctor extends Agregado<DoctorID>{
     return this.doctorid;
   }
   esIgual(entidad: Doctor): boolean {
-    return this.doctorid.getDoctorID() === entidad.getDoctorid().getDoctorID();
+    return this.doctorid.getDoctorID() === entidad.obtenerIdentificador().getDoctorID();
   }
 
 

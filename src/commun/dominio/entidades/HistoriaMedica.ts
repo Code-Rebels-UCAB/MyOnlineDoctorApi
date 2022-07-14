@@ -8,15 +8,11 @@ import { IEntidad } from "./IEntidad";
 export class HistoriaMedica extends Agregado<HistoriaMedicaID>{
     
     constructor(
-        private id: HistoriaMedicaID,
+        private readonly id: HistoriaMedicaID,
         private id_paciente: PacienteID,
         private RegistrosMedicos: RegistroMedicoID[]
     ) {
         super();
-    }
-
-    public getHistoriaMedicaID(): HistoriaMedicaID{
-        return this.id;
     }
 
     public getPacienteID(): PacienteID{
@@ -31,7 +27,7 @@ export class HistoriaMedica extends Agregado<HistoriaMedicaID>{
         return this.id;
     }
     esIgual(entidad: HistoriaMedica): boolean {
-        return this.id.getHistoriaMedicaID() === entidad.id.getHistoriaMedicaID();
+        return this.id.getHistoriaMedicaID() === entidad.obtenerIdentificador().getHistoriaMedicaID();
     }
     
 

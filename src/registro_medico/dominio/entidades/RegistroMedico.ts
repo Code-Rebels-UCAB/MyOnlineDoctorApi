@@ -13,7 +13,7 @@ import { IEntidad } from "src/commun/dominio/entidades/IEntidad";
 export class RegistroMedico extends Agregado<RegistroMedicoID> {
   
   constructor(
-    private id: RegistroMedicoID,
+    private readonly id: RegistroMedicoID,
     private id_doctor: DoctorID,
     private id_cita: CitaID,
     private examenes: Examenes,
@@ -23,10 +23,6 @@ export class RegistroMedico extends Agregado<RegistroMedicoID> {
     private diagnostico: Diagnostico,
   ) {
     super();
-  }
-
-  public getRegistroMedicoID(): RegistroMedicoID{
-    return this.id
   }
  
   public getExamenes(): Examenes{

@@ -17,7 +17,7 @@ import { IEntidad } from '../../../commun/dominio/entidades/IEntidad';
 export class Paciente extends Agregado<PacienteID>{
   
   constructor(
-    private id: PacienteID,
+    private readonly id: PacienteID,
     private genero: GeneroPaciente,
     private altura: Altura,
     private peso: Peso,
@@ -32,10 +32,6 @@ export class Paciente extends Agregado<PacienteID>{
     private nombre: NombrePaciente,
   ) {
     super();
-  }
-
-  public getPacienteId(): PacienteID {
-    return this.id;
   }
 
   public getNombrePaciente(): NombrePaciente {

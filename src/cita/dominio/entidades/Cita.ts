@@ -69,7 +69,7 @@ export class Cita extends Agregado<CitaID> {
     
     //METODOS ADICIONALES
     esIgual(entidad: Cita): boolean {
-        return this.id.getCitaID() == entidad.id.getCitaID();
+        return this.id.getCitaID() == entidad.obtenerIdentificador().getCitaID();
     }
     
 }
