@@ -1,14 +1,4 @@
-
 export interface IEntidad<E> {
-
-    obtenerIdentificador():E
-    esIgual(entidad: IEntidad<E>): boolean
-
+  obtenerIdentificador(): E;
+  esIgual(entidad: IEntidad<E>): boolean;
 }
-
-
-
-
-
-
-

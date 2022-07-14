@@ -11,8 +11,9 @@ import { PasswordPaciente } from '../values/PasswordPaciente';
 import { CorreoPaciente } from '../values/CorreoPaciente';
 import { FechaDeNacimiento } from '../values/FechaDenacimiento';
 import { NombrePaciente } from '../values/NombrePaciente';
+import { Agregado } from '../../../commun/dominio/entidades/Agregado';
 
-export class Paciente {
+export class Paciente extends Agregado<PacienteID> {
   constructor(
     private id: PacienteID,
     private genero: GeneroPaciente,
@@ -27,9 +28,11 @@ export class Paciente {
     private correo: CorreoPaciente,
     private fechaNacimiento: FechaDeNacimiento,
     private nombre: NombrePaciente,
-  ) {}
+  ) {
+    super();
+  }
 
-  public getPacienteId(): PacienteID {
+  public obtenerIdentificador(): PacienteID {
     return this.id;
   }
 
@@ -99,5 +102,9 @@ export class Paciente {
 
   public setAntecendentes(antecedentes: Antecedentes) {
     this.antecedentes = antecedentes;
+  }
+
+  public esIgual(entidad: Paciente): boolean {
+    return this.id.getPacienteID() == entidad.id.getPacienteID();
   }
 }

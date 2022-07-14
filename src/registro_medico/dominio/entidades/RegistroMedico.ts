@@ -1,14 +1,14 @@
-import { Diagnostico } from "../values/Diagnostico";
-import { Examenes } from "../values/Examenes";
-import { Historia } from "../values/Historia";
-import { Plan } from "../values/Plan";
-import { Prescripcion } from "../values/Prescripcion";
-import { RegistroMedicoID } from "../../../commun/dominio/values/RegistroMedicoID";
-import { DoctorID } from "../../../commun/dominio/values/DoctorID";
-import { CitaID } from "../../../commun/dominio/values/CitaID";
+import { Diagnostico } from '../values/Diagnostico';
+import { Examenes } from '../values/Examenes';
+import { Historia } from '../values/Historia';
+import { Plan } from '../values/Plan';
+import { Prescripcion } from '../values/Prescripcion';
+import { RegistroMedicoID } from '../../../commun/dominio/values/RegistroMedicoID';
+import { DoctorID } from '../../../commun/dominio/values/DoctorID';
+import { CitaID } from '../../../commun/dominio/values/CitaID';
+import { Agregado } from '../../../commun/dominio/entidades/Agregado';
 
-
-export class RegistroMedico {
+export class RegistroMedico extends Agregado<RegistroMedicoID> {
   constructor(
     private id: RegistroMedicoID,
     private id_doctor: DoctorID,
@@ -18,38 +18,43 @@ export class RegistroMedico {
     private prescripccion: Prescripcion,
     private plan: Plan,
     private diagnostico: Diagnostico,
-  ) {}
-
-  public getRegistroMedicoID(): RegistroMedicoID{
-    return this.id
+  ) {
+    super();
   }
- 
-  public getExamenes(): Examenes{
+
+  public obtenerIdentificador(): RegistroMedicoID {
+    return this.id;
+  }
+
+  public getExamenes(): Examenes {
     return this.examenes;
   }
 
-  public getHistoria(): Historia{
+  public getHistoria(): Historia {
     return this.historia;
   }
 
-  public getPrescripccion(): Prescripcion{
+  public getPrescripccion(): Prescripcion {
     return this.prescripccion;
   }
 
-  public getPlan(): Plan{
+  public getPlan(): Plan {
     return this.plan;
   }
 
-  public getDiagnostico(): Diagnostico{
+  public getDiagnostico(): Diagnostico {
     return this.diagnostico;
   }
 
-  public getDoctorID(): DoctorID{
+  public getDoctorID(): DoctorID {
     return this.id_doctor;
   }
 
-  public getCitaID(): CitaID{
+  public getCitaID(): CitaID {
     return this.id_cita;
   }
 
+  public esIgual(entidad: RegistroMedico): boolean {
+    return this.id.getRegistroMedicoID() == entidad.id.getRegistroMedicoID();
+  }
 }
