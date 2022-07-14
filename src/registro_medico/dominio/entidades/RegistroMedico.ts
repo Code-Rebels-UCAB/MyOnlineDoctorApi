@@ -6,9 +6,12 @@ import { Prescripcion } from "../values/Prescripcion";
 import { RegistroMedicoID } from "../../../commun/dominio/values/RegistroMedicoID";
 import { DoctorID } from "../../../commun/dominio/values/DoctorID";
 import { CitaID } from "../../../commun/dominio/values/CitaID";
+import { Agregado } from "../../../commun/dominio/entidades/Agregado";
+import { IEntidad } from "src/commun/dominio/entidades/IEntidad";
 
 
-export class RegistroMedico {
+export class RegistroMedico extends Agregado<RegistroMedicoID> {
+  
   constructor(
     private id: RegistroMedicoID,
     private id_doctor: DoctorID,
@@ -18,7 +21,9 @@ export class RegistroMedico {
     private prescripccion: Prescripcion,
     private plan: Plan,
     private diagnostico: Diagnostico,
-  ) {}
+  ) {
+    super();
+  }
 
   public getRegistroMedicoID(): RegistroMedicoID{
     return this.id
@@ -50,6 +55,13 @@ export class RegistroMedico {
 
   public getCitaID(): CitaID{
     return this.id_cita;
+  }
+
+  obtenerIdentificador(): RegistroMedicoID {
+    return this.id;
+  }
+  esIgual(entidad: RegistroMedico): boolean {
+    return this.id.getRegistroMedicoID() === entidad.obtenerIdentificador().getRegistroMedicoID();
   }
 
 }

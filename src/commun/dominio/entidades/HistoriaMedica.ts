@@ -2,13 +2,18 @@ import { RegistroMedico } from "src/registro_medico/dominio/entidades/RegistroMe
 import { HistoriaMedicaID } from "../values/HisotriaMedicaID";
 import { PacienteID } from "../values/PacienteID";
 import { RegistroMedicoID } from "../values/RegistroMedicoID";
+import { Agregado } from "./Agregado";
+import { IEntidad } from "./IEntidad";
 
-export class HistoriaMedica{
+export class HistoriaMedica extends Agregado<HistoriaMedicaID>{
+    
     constructor(
         private id: HistoriaMedicaID,
         private id_paciente: PacienteID,
         private RegistrosMedicos: RegistroMedicoID[]
-    ) {}
+    ) {
+        super();
+    }
 
     public getHistoriaMedicaID(): HistoriaMedicaID{
         return this.id;
@@ -21,7 +26,13 @@ export class HistoriaMedica{
     public getRegistrosMedicos(): RegistroMedicoID[]{
         return this.RegistrosMedicos;
     }
-      
+    
+    obtenerIdentificador(): HistoriaMedicaID {
+        return this.id;
+    }
+    esIgual(entidad: HistoriaMedica): boolean {
+        return this.id.getHistoriaMedicaID() === entidad.id.getHistoriaMedicaID();
+    }
     
 
 }
