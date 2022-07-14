@@ -1,4 +1,4 @@
-import { Agregado } from "src/commun/dominio/entidades/Agregado";
+import { Agregado } from "../../../commun/dominio/entidades/Agregado";
 import { CitaID } from "../../../commun/dominio/values/CitaID";
 import { DoctorID } from "../../../commun/dominio/values/DoctorID";
 import { PacienteID } from "../../../commun/dominio/values/PacienteID";

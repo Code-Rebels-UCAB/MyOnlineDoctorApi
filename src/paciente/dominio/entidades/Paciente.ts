@@ -12,7 +12,6 @@ import { CorreoPaciente } from '../values/CorreoPaciente';
 import { FechaDeNacimiento } from '../values/FechaDenacimiento';
 import { NombrePaciente } from '../values/NombrePaciente';
 import { Agregado } from "../../../commun/dominio/entidades/Agregado";
-import { IEntidad } from '../../../commun/dominio/entidades/IEntidad';
 
 export class Paciente extends Agregado<PacienteID>{
   
