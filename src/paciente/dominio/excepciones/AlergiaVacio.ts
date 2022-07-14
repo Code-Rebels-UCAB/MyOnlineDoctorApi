@@ -1,4 +1,4 @@
-import { IExcepcion } from "../../../commun/dominio/excepcciones/IExcepcion"
+import { IExcepcion } from "../../../commun/dominio/excepciones/IExcepcion"
 
 export class AlergiaVacio implements IExcepcion {
     public readonly origen = 'AlergiaVacio'

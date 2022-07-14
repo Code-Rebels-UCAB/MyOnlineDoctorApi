@@ -1,6 +1,6 @@
 import { IValueObject } from "interfaceVO";
-import { FechaInvalida } from '../../../commun/dominio/excepcciones/FechaInvalida';
-import { FechaVacio } from "../../../commun/dominio/excepcciones/FechaVacio";
+import { FechaInvalida } from '../../../commun/dominio/excepciones/FechaInvalida';
+import { FechaVacio } from "../../../commun/dominio/excepciones/FechaVacio";
 
 
 export class FechaCita implements IValueObject {

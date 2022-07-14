@@ -1,5 +1,5 @@
-import { FechaInvalida } from '../../../commun/dominio/excepcciones/FechaInvalida';
-import { FechaVacio } from '../../../commun/dominio/excepcciones/FechaVacio';
+import { FechaInvalida } from '../../../commun/dominio/excepciones/FechaInvalida';
+import { FechaVacio } from '../../../commun/dominio/excepciones/FechaVacio';
 import { PacienteMenorEdad } from '../excepciones/PacienteMenorEdad';
 import { IValueObject } from '../../../commun/dominio/values/IValueObject';
 
