@@ -1,5 +1,6 @@
 import { IValueObject } from '../../../commun/dominio/values/IValueObject';
 import { Status } from './Status';
+import { StatusDoctorVacio } from '../excepciones/statusDoctorVacio';
 
 
 export class StatusDoctor implements IValueObject {
@@ -14,7 +15,11 @@ export class StatusDoctor implements IValueObject {
   }
 
   public static crear(status: Status) {
-
+    if (status == null || status == undefined) {
+      throw new StatusDoctorVacio(
+        'El Status del Doctor no puede estar vacio',
+      );
+    }
     return new StatusDoctor(status);
   }
 }

@@ -14,7 +14,7 @@ import { StatusDoctor } from '../values/StatusDoctor';
 export class Doctor extends Agregado<DoctorID> {
   private constructor(
     private especialidad: Especialidad[],
-    private calificacion: Calificacion[],
+    private calificacion: Calificacion,
     private ubicacion: Ubicacion,
     private generoDoctor: GeneroDoctor,
     private correoDoctor: CorreoDoctor,
@@ -34,11 +34,14 @@ export class Doctor extends Agregado<DoctorID> {
     this.especialidad = value;
   }
 
-  public getCalificacion(): Calificacion[] {
+  public getCalificacion(): Calificacion {
     return this.calificacion;
   }
   public setCalificacion(value: Calificacion) {
-    this.calificacion.push(value);
+    this.calificacion = value;
+  }
+  public setStatusDoctor(value: StatusDoctor) {
+    this.statusDoctor = value;
   }
   public getUbicacion(): Ubicacion {
     return this.ubicacion;
@@ -61,6 +64,16 @@ export class Doctor extends Agregado<DoctorID> {
   public getNombreDoctor(): NombreCompletoDoctor {
     return this.nombreDoctor;
   }
+
+  public getfotoDoctor(): FotoDoctor {
+    return this.fotoDoctor;
+  }
+
+  public getStatusDoctor(): StatusDoctor {
+    return this.statusDoctor;
+  }
+
+
 
   obtenerIdentificador(): DoctorID {
     return this.doctorid;
