@@ -8,14 +8,14 @@ export class HistoriaMedicaORM {
     @PrimaryColumn({name:'id_historia', type:'varchar'})
     id_historia: string
 
-
-    @OneToOne(() => PacienteORM)
+    //Relacion con Paciente
+    @OneToOne(() => PacienteORM, paciente => paciente.historiaMedica)
     @JoinColumn({name:'id_paciente'})
-    id_paciente: string
+    paciente: PacienteORM
 
-
-    @OneToMany(() => RegistroMedicoORM, (RegistroMedico) => RegistroMedico.fk_historia)
-    id_registro_medicos: string[]
+    //Relacion con RegistroMedico
+    @OneToMany(() => RegistroMedicoORM, (RegistroMedico) => RegistroMedico.historiaMedica)
+    registroMedico: RegistroMedicoORM[]
 
 
 

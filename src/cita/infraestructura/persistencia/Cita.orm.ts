@@ -1,6 +1,7 @@
 import { PacienteORM } from 'src/paciente/infraestructura/persistencia/Paciente.orm';
 import { DoctorORM } from 'src/doctor/infraestructura/persistencia/Doctor.orm';
-import { Entity, PrimaryColumn, Column, OneToOne, JoinColumn } from 'typeorm'
+import { Entity, PrimaryColumn, Column, OneToMany, JoinColumn, ManyToMany, ManyToOne, JoinTable } from 'typeorm'
+import { RegistroMedicoORM } from 'src/registro_medico/infraestructura/persistencia/RegistroMedico.orm';
 
 @Entity({ name: 'citas' })
 export class CitaORM {
@@ -16,7 +17,6 @@ export class CitaORM {
     @Column()
     motivo: string;
 
-
     @Column()
     fechacita: Date;
 
@@ -26,16 +26,19 @@ export class CitaORM {
     @Column()
     duracion: number;
 
-    @OneToOne(() => PacienteORM)
-    @JoinColumn({
-        name: 'id_paciente'
-    })
+    //Relacion Con Paciente
+    @ManyToOne(() => PacienteORM, paciente => paciente.cita)
+    @JoinColumn({ name: "paciente" })
     paciente: PacienteORM;
 
-    @OneToOne(() => DoctorORM)
-    @JoinColumn({
-        name: 'id_doctor'
-    })
+    //Relacion Con Doctor
+    @ManyToOne(() => DoctorORM, doctor => doctor.cita)
+    @JoinColumn({ name: "doctor" })
     doctor: DoctorORM;
+
+    //Relacion Con Registro Medico
+    @OneToMany(() => RegistroMedicoORM, registro => registro.cita)
+    registroMedico: RegistroMedicoORM[];
+
 
 }
