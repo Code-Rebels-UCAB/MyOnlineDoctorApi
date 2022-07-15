@@ -34,6 +34,18 @@ export class Paciente extends Agregado<PacienteID>{
     super();
   }
 
+
+  //Metodos de la clase abstracta Agregado
+  obtenerIdentificador(): PacienteID {
+    return this.id;
+  }
+
+  esIgual(entidad: Paciente): boolean {
+    return this.id.getPacienteID() === entidad.obtenerIdentificador().getPacienteID();
+  }
+
+  //GETTERS
+
   public getNombrePaciente(): NombrePaciente {
     return this.nombre;
   }
@@ -41,6 +53,7 @@ export class Paciente extends Agregado<PacienteID>{
   public getFechaNacimiento(): FechaDeNacimiento {
     return this.fechaNacimiento;
   }
+
   public getCorreoPaciente(): CorreoPaciente {
     return this.correo;
   }
@@ -52,24 +65,13 @@ export class Paciente extends Agregado<PacienteID>{
   public getAlergia(): Alergia {
     return this.alergia;
   }
-  public setAlergia(alergia: Alergia) {
-    this.alergia = alergia;
-  }
-
+  
   public getStatusSuscripccion(): StatusSuscripcion {
     return this.status;
   }
-
-  public setStatusSuscripccion(status: StatusSuscripcion) {
-    this.status = status;
-  }
-
+  
   public getOperacion(): Operacion {
     return this.operacion;
-  }
-
-  public setOperacion(operacion: Operacion) {
-    this.operacion = operacion;
   }
 
   public getGeneroPaciente(): GeneroPaciente {
@@ -79,17 +81,11 @@ export class Paciente extends Agregado<PacienteID>{
   public getAltura(): Altura {
     return this.altura;
   }
-  public setAltura(altura: Altura) {
-    this.altura = altura;
-  }
 
   public getPeso(): Peso {
     return this.peso;
   }
 
-  public setPeso(peso: Peso) {
-    this.peso = peso;
-  }
   public getNumeroTelefonico(): NumeroTelefonico {
     return this.numero;
   }
@@ -98,34 +94,56 @@ export class Paciente extends Agregado<PacienteID>{
     return this.antecedentes;
   }
 
-  public setAntecendentes(antecedentes: Antecedentes) {
-    this.antecedentes = antecedentes;
+  //SETTERS
+  public setNombrePaciente(nombre: NombrePaciente): void {
+    this.nombre = nombre;
   }
 
-  obtenerIdentificador(): PacienteID {
-    return this.id;
+  public setFechaNacimiento(fechaNacimiento: FechaDeNacimiento): void {
+    this.fechaNacimiento = fechaNacimiento;
   }
-  esIgual(entidad: Paciente): boolean {
-    return this.id.getPacienteID() === entidad.obtenerIdentificador().getPacienteID();
+
+  public setCorreoPaciente(correo: CorreoPaciente): void {
+    this.correo = correo;
+  }
+
+  public setPasswordPaciente(password: PasswordPaciente): void {
+    this.password = password;
+  }
+
+  public setAlergia(alergia: Alergia): void {
+    this.alergia = alergia;
+  }
+
+  public setStatusSuscripccion(status: StatusSuscripcion): void {
+    this.status = status;
+  }
+
+  public setOperacion(operacion: Operacion): void {
+    this.operacion = operacion;
   }
 
   //Eventos de Dominio Paciente
   public static Registrarpaciente(nombrePaciente: NombrePaciente, correo: CorreoPaciente, password: PasswordPaciente, genero: GeneroPaciente, 
                                   telefono: NumeroTelefonico,  fechaNacimiento: FechaDeNacimiento, peso?: Peso, altura?: Altura,alergia?: Alergia, operacion?: Operacion,
                                   antecedentes?: Antecedentes, status_suscripccion?: StatusSuscripcion): Paciente {
-    //Se agrega el nuevo estatus de suscripcion al paciente
-    // this.setStatusSuscripccion(status);
+    //Se crea el Id del paciente
+    let id: PacienteID = PacienteID.crear();
 
-    // this.agregarEvento({
-    //   Fecha: new Date(),
-    //   Nombre: "PacienteBloqueado",
-    //   Datos: {
-    //     id_paciente: this.obtenerIdentificador(),
-    //     status_suscripccion: this.getStatusSuscripccion
-    //   }
-    // });
+    //Se Crea una instancia del paciente con los datos suministrados
+    let paciente = new Paciente(id, genero, altura, peso, telefono, antecedentes, operacion, status_suscripccion, alergia, password, correo, fechaNacimiento, nombrePaciente);
+    
+    //Se genera el Evento de Dominio
+    paciente.agregarEvento({
+      Fecha: new Date(),
+      Nombre: "PacienteBloqueado",
+      Datos: {
+        id_paciente: id,
+        status_suscripccion: status_suscripccion.getStatusSuscripcion(),
+      }
+    });
 
-    return 
+    return paciente;
   }
 
   public AtrasarStatusPaciente(status: StatusSuscripcion): void {
