@@ -2,6 +2,7 @@
 import {Entity, PrimaryColumn, Column, ManyToMany, JoinTable} from 'typeorm'; 
 import { DoctorORM } from './Doctor.orm';
 
+@Entity({name: 'especialidades'})
 export class EspecialidadORM {
     @PrimaryColumn({name: 'id_especialidad', type: 'varchar'})
     id_especialidad: string;
