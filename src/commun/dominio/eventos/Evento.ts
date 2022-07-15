@@ -1,7 +1,7 @@
 
-export interface EventoDominio{
-    Fecha: Date;
-    Nombre: string;
-    Datos: any;
+export abstract class EventoDominio{
+    protected Fecha: Date;
+    protected Nombre: string;
 
+    abstract GetInformacion():{};
 }
