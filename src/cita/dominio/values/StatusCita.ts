@@ -14,4 +14,8 @@ export class StatusCita  implements IValueObject {
     public esIgual(statusCita:StatusCita): boolean {
         return this._statusCita == statusCita.statusCita;
     }
+
+    public static crear(statusCita: TipoCita): StatusCita {
+        return new StatusCita(statusCita);
+    }
 }

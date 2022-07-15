@@ -1,11 +1,11 @@
 import { IValueObject } from '../../../commun/dominio/values/IValueObject';
 import { StatusSuscripcionVacio } from '../excepciones/StatusSuscripcionVacio';
-import { Status } from './Status';
+import { StatusPaciente } from './StatusPaciente';
 
 export class StatusSuscripcion implements IValueObject {
-  private constructor(private readonly status: Status) {}
+  private constructor(private readonly status: StatusPaciente) {}
 
-  public getStatusSuscripcion(): Status {
+  public getStatusSuscripcion(): StatusPaciente {
     return this.status;
   }
 
@@ -13,7 +13,7 @@ export class StatusSuscripcion implements IValueObject {
     return this.status == status.getStatusSuscripcion();
   }
 
-  public static crear(status: Status) {
+  public static crear(status: StatusPaciente) {
     if (status == null || status == undefined) {
       throw new StatusSuscripcionVacio(
         'El Status de la Suscripcion no puede estar vacio',

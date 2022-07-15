@@ -1,4 +1,4 @@
-export enum Status {
+export enum StatusPaciente {
   Activo = 'Activo',
   Bloqueado = 'Bloqueado',
   Suspendido = 'Suspendido',
