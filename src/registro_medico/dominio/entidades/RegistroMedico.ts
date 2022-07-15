@@ -111,7 +111,7 @@ export class RegistroMedico extends Agregado<RegistroMedicoID> {
     //Crear Evento
     registroMedico.agregarEvento({
       Fecha: new Date(),
-      Nombre: 'RegistroMedico creado',
+      Nombre: 'RegistroMedico Creado',
       Datos: {
         id_registroMedico: id,
         id_doctor: id_doctor,
@@ -147,7 +147,7 @@ export class RegistroMedico extends Agregado<RegistroMedicoID> {
 
     this.agregarEvento({
       Fecha: new Date(),
-      Nombre: 'RegistroMedicoModificado',
+      Nombre: 'RegistroMedico Modificado',
       Datos: {
         id_RegistroMedico: this.obtenerIdentificador(),
         id_doctor: this.getDoctorID(),
