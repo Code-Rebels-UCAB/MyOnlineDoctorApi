@@ -9,10 +9,11 @@ export class CitaSolicitada extends EventoDominio{
         private readonly IDPaciente:string,
         private readonly IDCita:string,
         private readonly Status:string,
-        private readonly Motivo:string,
-        private readonly Modalidad: string
+        readonly Fecha: Date 
     ){
         super();
+        this.Nombre = 'CitaSolicitada';
+        this.Fecha = Fecha 
     }
 
 
@@ -24,11 +25,7 @@ export class CitaSolicitada extends EventoDominio{
             id_paciente: this.IDPaciente,
             id_cita: this.IDCita,
             status: this.Status,
-            motivo: this.Motivo,
-            modalidad: this.Modalidad,
         }
     }
-
-
 }
 
