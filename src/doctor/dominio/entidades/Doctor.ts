@@ -3,7 +3,7 @@ import { CorreoDoctor } from '../values/CorreoDoctor';
 import { DoctorID } from '../../../commun/dominio/values/DoctorID';
 import { Especialidad } from '../values/Especialidad';
 import { GeneroDoctor } from '../values/GeneroDoctor';
-import { NombreCompletoDoctor } from '../values/NombreDoctor';
+import { NombreCompletoDoctor } from '../values/NombreCompletoDoctor';
 import { PasswordDoctor } from '../values/PasswordDoctor';
 import { Ubicacion } from '../values/Ubicacion';
 import { Agregado } from '../../../commun/dominio/entidades/Agregado';

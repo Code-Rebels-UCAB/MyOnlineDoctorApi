@@ -3,8 +3,8 @@ import {
   IValoresExcepcion,
 } from '../../../commun/dominio/excepcciones/IExcepcion';
 
-export class PasswordDoctorVacio implements IExcepcion {
-  public readonly origen = 'PasswordDoctorVacio';
+export class PasswordVacioDoctor implements IExcepcion {
+  public readonly origen = 'PasswordVacioDoctor';
 
   constructor(public readonly mensaje: string) {}
 
