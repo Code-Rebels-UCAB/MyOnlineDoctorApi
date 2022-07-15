@@ -35,7 +35,7 @@ export class DoctorORM{
     @Column({name: 'calificacion', type: 'numeric'})
     calificacion: number;
 
-    @Column({name: 'cantidad_calificacion', type: 'number', length:1})
+    @Column({name: 'cantidad_calificacion', type: 'numeric'})
     cantidad_calificacion: number;
 
     @ManyToMany(() => EspecialidadORM, especialidad => especialidad.doctores)
