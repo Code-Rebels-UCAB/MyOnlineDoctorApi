@@ -7,6 +7,7 @@ import { NombreCompletoDoctor } from '../values/NombreDoctor';
 import { PasswordDoctor } from '../values/PasswordDoctor';
 import { Ubicacion } from '../values/Ubicacion';
 import { Agregado } from '../../../commun/dominio/entidades/Agregado';
+import { FotoDoctor } from '../values/FotoDoctor';
 
 export class Doctor extends Agregado<DoctorID>{
   private constructor(
@@ -18,6 +19,7 @@ export class Doctor extends Agregado<DoctorID>{
     private passwordDoctor: PasswordDoctor,
     private nombreDoctor: NombreCompletoDoctor,
     private doctorid: DoctorID,
+    private fotoDoctor: FotoDoctor,
   ) {
     super();
   }
