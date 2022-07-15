@@ -3,7 +3,7 @@ import { CorreoDoctor } from '../values/CorreoDoctor';
 import { DoctorID } from '../../../commun/dominio/values/DoctorID';
 import { Especialidad } from '../values/Especialidad';
 import { GeneroDoctor } from '../values/GeneroDoctor';
-import { NombreCompletoDoctor } from '../values/NombreDoctor';
+import { NombreCompletoDoctor } from '../values/NombreCompletoDoctor';
 import { PasswordDoctor } from '../values/PasswordDoctor';
 import { Ubicacion } from '../values/Ubicacion';
 import { Agregado } from '../../../commun/dominio/entidades/Agregado';
@@ -11,7 +11,7 @@ import { FotoDoctor } from '../values/FotoDoctor';
 import { PacienteID } from 'src/commun/dominio/values/PacienteID';
 import { StatusDoctor } from '../values/StatusDoctor';
 
-export class Doctor extends Agregado<DoctorID>{
+export class Doctor extends Agregado<DoctorID> {
   private constructor(
     private especialidad: Especialidad[],
     private calificacion: Calificacion[],
@@ -27,7 +27,7 @@ export class Doctor extends Agregado<DoctorID>{
     super();
   }
 
-  public getEspecialidad(): Especialidad []{
+  public getEspecialidad(): Especialidad[] {
     return this.especialidad;
   }
   public setEspecialidad(value: Especialidad[]) {
@@ -66,7 +66,10 @@ export class Doctor extends Agregado<DoctorID>{
     return this.doctorid;
   }
   esIgual(entidad: Doctor): boolean {
-    return this.doctorid.getDoctorID() === entidad.obtenerIdentificador().getDoctorID();
+    return (
+      this.doctorid.getDoctorID() ===
+      entidad.obtenerIdentificador().getDoctorID()
+    );
   }
 
   //Eventos de Dominio
