@@ -10,6 +10,9 @@ import { Agregado } from '../../../commun/dominio/entidades/Agregado';
 import { FotoDoctor } from '../values/FotoDoctor';
 import { PacienteID } from 'src/commun/dominio/values/PacienteID';
 import { StatusDoctor } from '../values/StatusDoctor';
+import { DoctorCalificado } from '../eventos/DoctorCalificado';
+import { DoctorBloqueado } from '../eventos/DoctorBloqueado';
+import { Status } from '../values/Status';
 
 export class Doctor extends Agregado<DoctorID> {
   private constructor(
@@ -73,8 +76,6 @@ export class Doctor extends Agregado<DoctorID> {
     return this.statusDoctor;
   }
 
-
-
   obtenerIdentificador(): DoctorID {
     return this.doctorid;
   }
@@ -86,27 +87,29 @@ export class Doctor extends Agregado<DoctorID> {
   }
 
   //Eventos de Dominio
-  public calificarDoctor(id_paciente: PacienteID, calificacion: Calificacion):void{
+  public calificarDoctor(
+    id_paciente: PacienteID,
+    calificacion: Calificacion,
+  ): void {
     this.setCalificacion(calificacion);
-    
-    this.agregarEvento({
-      Fecha: new Date(),
-      Nombre: "DoctorCalificado",
-      Datos: {
-        id_doctor: this.doctorid.getDoctorID(),
-        id_paciente: id_paciente,
-        calificacion: calificacion.getCalificacion(),
-      }
-    });
+
+    this.agregarEvento(
+      new DoctorCalificado(
+        this.doctorid.getDoctorID().toString(),
+        id_paciente.getPacienteID().toString(),
+        calificacion.getCalificacion(),
+      ),
+    );
   }
 
-  public bloquearDoctor():void{
-    this.agregarEvento({
-      Fecha: new Date(),
-      Nombre: "DoctorBloqueado",
-      Datos: {
-        id_doctor: this.doctorid.getDoctorID(),
-      }
-    });
+  public bloquearDoctor(): void {
+    this.setStatusDoctor(StatusDoctor.crear(Status.Bloqueado));
+
+    this.agregarEvento(
+      new DoctorBloqueado(
+        this.doctorid.getDoctorID().toString(),
+        this.statusDoctor.getStatus(),
+      ),
+    );
   }
 }

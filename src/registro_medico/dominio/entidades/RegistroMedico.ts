@@ -7,6 +7,8 @@ import { RegistroMedicoID } from '../../../commun/dominio/values/RegistroMedicoI
 import { DoctorID } from '../../../commun/dominio/values/DoctorID';
 import { CitaID } from '../../../commun/dominio/values/CitaID';
 import { Agregado } from '../../../commun/dominio/entidades/Agregado';
+import { RegistroMedicoCreado } from '../eventos/RegistroMedicoCreado';
+import { RegistroMedicoModificado } from '../eventos/RegistroMedicoModificado';
 
 export class RegistroMedico extends Agregado<RegistroMedicoID> {
   private constructor(
@@ -109,20 +111,18 @@ export class RegistroMedico extends Agregado<RegistroMedicoID> {
     );
 
     //Crear Evento
-    registroMedico.agregarEvento({
-      Fecha: new Date(),
-      Nombre: 'RegistroMedico Creado',
-      Datos: {
-        id_registroMedico: id,
-        id_doctor: id_doctor,
-        id_cita: id_cita,
-        examenes: examenes,
-        historia: historia,
-        prescripcion: prescripcion,
-        plan: plan,
-        diagnostico: diagnostico,
-      },
-    });
+    registroMedico.agregarEvento(
+      new RegistroMedicoCreado(
+        id.getRegistroMedicoID().toString(),
+        id_doctor.getDoctorID().toString(),
+        id_cita.getCitaID().toString(),
+        examenes.getExamenes(),
+        historia.getHistoria(),
+        prescripcion.getPrescripcion(),
+        plan.getPlan(),
+        diagnostico.getDiagnostico(),
+      ),
+    );
 
     return registroMedico;
   }
@@ -145,19 +145,17 @@ export class RegistroMedico extends Agregado<RegistroMedicoID> {
       this.setDiagnostico(diagnostico);
     }
 
-    this.agregarEvento({
-      Fecha: new Date(),
-      Nombre: 'RegistroMedico Modificado',
-      Datos: {
-        id_RegistroMedico: this.obtenerIdentificador(),
-        id_doctor: this.getDoctorID(),
-        id_cita: this.getCitaID(),
-        examenes: examenes,
-        historia: historia,
-        prescripcion: prescripcion,
-        plan: plan,
-        diagnostico: diagnostico,
-      },
-    });
+    this.agregarEvento(
+      new RegistroMedicoModificado(
+        this.obtenerIdentificador().getRegistroMedicoID().toString(),
+        this.getDoctorID().getDoctorID().toString(),
+        this.getCitaID().getCitaID().toString(),
+        examenes.getExamenes(),
+        historia.getHistoria(),
+        prescripcion.getPrescripcion(),
+        plan.getPlan(),
+        diagnostico.getDiagnostico(),
+      ),
+    );
   }
 }
