@@ -2,6 +2,7 @@ import { Agregado } from "../../../commun/dominio/entidades/Agregado";
 import { CitaID } from "../../../commun/dominio/values/CitaID";
 import { DoctorID } from "../../../commun/dominio/values/DoctorID";
 import { PacienteID } from "../../../commun/dominio/values/PacienteID";
+import { CitaSolicitada } from "../eventos/CitaSolicitada";
 import { Duracion } from "../values/Duracion";
 import { FechaCita } from "../values/FechaCita";
 import { HoraCita } from "../values/HoraCita";
@@ -117,15 +118,15 @@ export class Cita extends Agregado<CitaID> {
         const cita = new Cita 
         (id_cita, StatusCita.crear(TipoCita.Solicitada), modalidad, motivo, id_paciente, id_doctor);
 
-        cita.agregarEvento({
-            Fecha: new Date(),
-            Nombre: "CitaSolicitada",
-            Datos: {
-                id_cita : cita.obtenerIdentificador(),
-                id_paciente : cita.getPaciente(),
-                id_doctor : cita.getDoctor(),
-            },
-        });
+        cita.agregarEvento(
+          new CitaSolicitada(
+            id_doctor.getDoctorID().toString(),
+            id_paciente.getPacienteID().toString(),
+            id_cita.getCitaID().toString(),
+            TipoCita.Solicitada,
+            new Date(),
+          ),
+        );
 
         return cita;
         
@@ -137,7 +138,7 @@ export class Cita extends Agregado<CitaID> {
         this.setFecha(fecha);
         this.setHora(hora);
         this.setDuracion(duracion);
-
+        /*
         this.agregarEvento({
             Fecha: new Date(),
             Nombre: "CitaAgendada",
@@ -147,13 +148,14 @@ export class Cita extends Agregado<CitaID> {
                 id_doctor : this.getDoctor(),
             },
         });
-
+        */
     }
 
     public rechazarCita (){	
         const statusCita = StatusCita.crear(TipoCita.Rechazada);
         this.setStatus(statusCita);
 
+        /*
         this.agregarEvento({
             Fecha: new Date(),
             Nombre: "CitaRechazada",
@@ -163,8 +165,10 @@ export class Cita extends Agregado<CitaID> {
                 id_doctor : this.getDoctor(),
             },
         });
-    }
+        */
 
+    }
+/*
 
     public finalizarCita (){
         const statusCita = StatusCita.crear(TipoCita.Finalizada);
@@ -259,7 +263,7 @@ export class Cita extends Agregado<CitaID> {
         });
     }
 
-
+*/
 }
 
 
