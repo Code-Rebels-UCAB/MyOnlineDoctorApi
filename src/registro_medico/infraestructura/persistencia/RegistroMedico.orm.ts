@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { DoctorORM } from '../../../doctor/infraestructura/persistencia/Doctor.orm';
 import { CitaORM } from '../../../cita/infraestructura/persistencia/Cita.orm';
+import { HistoriaMedicaORM } from 'src/commun/infraestructura/persitencia/HistoriaMedica.orm';
 
 @Entity({ name: 'Registros_Medicos' })
 export class RegistroMedicoORM {
@@ -43,9 +44,6 @@ export class RegistroMedicoORM {
   @JoinColumn({ name: 'id_cita' })
   cita: CitaORM;
 
-  @ManyToOne(
-    () => HistoriaMedicaORM,
-    (HistoriaMedica) => HistoriaMedica.id_registroMedicos,
-  )
-  historia: string;
+  @ManyToOne(() => HistoriaMedicaORM, (HistoriaMedica) => HistoriaMedica.id_registro_medicos)
+  fk_historia: string
 }
