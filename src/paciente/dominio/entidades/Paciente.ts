@@ -12,7 +12,7 @@ import { CorreoPaciente } from '../values/CorreoPaciente';
 import { FechaDeNacimiento } from '../values/FechaDenacimiento';
 import { NombrePaciente } from '../values/NombrePaciente';
 import { Agregado } from "../../../commun/dominio/entidades/Agregado";
-import { Status } from '../values/Status';
+import { StatusPaciente } from '../values/StatusPaciente';
 
 export class Paciente extends Agregado<PacienteID>{
   
@@ -124,14 +124,14 @@ export class Paciente extends Agregado<PacienteID>{
   }
 
   //Eventos de Dominio Paciente
-  public static Registrarpaciente(nombrePaciente: NombrePaciente, correo: CorreoPaciente, password: PasswordPaciente, genero: GeneroPaciente, 
+  public static registrarPaciente(nombrePaciente: NombrePaciente, correo: CorreoPaciente, password: PasswordPaciente, genero: GeneroPaciente, 
                                   telefono: NumeroTelefonico,  fechaNacimiento: FechaDeNacimiento, peso?: Peso, altura?: Altura,alergia?: Alergia, operacion?: Operacion,
                                   antecedentes?: Antecedentes): Paciente {
     //Se crea el Id del paciente
     let id: PacienteID = PacienteID.crear();
 
     //Se Crea una instancia del paciente con los datos suministrados
-    let paciente = new Paciente(id, genero, altura, peso, telefono, antecedentes, operacion, StatusSuscripcion.crear(Status.Activo), alergia, password, correo, fechaNacimiento, nombrePaciente);
+    let paciente = new Paciente(id, genero, altura, peso, telefono, antecedentes, operacion, StatusSuscripcion.crear(StatusPaciente.Activo), alergia, password, correo, fechaNacimiento, nombrePaciente);
     
     //Se genera el Evento de Dominio
     paciente.agregarEvento({
@@ -146,9 +146,9 @@ export class Paciente extends Agregado<PacienteID>{
     return paciente;
   }
 
-  public AtrasarStatusPaciente(): void {
+  public atrasarStatusPaciente(): void {
     //Se agrega el nuevo estatus de suscripcion al paciente
-    this.setStatusSuscripccion(StatusSuscripcion.crear(Status.Atrasado));
+    this.setStatusSuscripccion(StatusSuscripcion.crear(StatusPaciente.Atrasado));
 
     this.agregarEvento({
       Fecha: new Date(),
@@ -160,9 +160,9 @@ export class Paciente extends Agregado<PacienteID>{
     });
   }
 
-  public SuspenderStatusPaciente(): void {
+  public suspenderStatusPaciente(): void {
     //Se agrega el nuevo estatus de suscripcion al paciente
-    this.setStatusSuscripccion(StatusSuscripcion.crear(Status.Suspendido));
+    this.setStatusSuscripccion(StatusSuscripcion.crear(StatusPaciente.Suspendido));
 
     this.agregarEvento({
       Fecha: new Date(),
@@ -174,9 +174,9 @@ export class Paciente extends Agregado<PacienteID>{
     });
   }
 
-  public BloquearStatusPaciente(): void {
+  public bloquearStatusPaciente(): void {
     //Se agrega el nuevo estatus de suscripcion al paciente
-    this.setStatusSuscripccion(StatusSuscripcion.crear(Status.Bloqueado));
+    this.setStatusSuscripccion(StatusSuscripcion.crear(StatusPaciente.Bloqueado));
 
     this.agregarEvento({
       Fecha: new Date(),
