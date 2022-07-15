@@ -1,7 +1,7 @@
 
-export class EventoDominio{
-    protected Fecha: Date;
-    protected Nombre: string;
-    protected Datos: any;
+export interface EventoDominio{
+    Fecha: Date;
+    Nombre: string;
+    Datos: any;
 
 }
