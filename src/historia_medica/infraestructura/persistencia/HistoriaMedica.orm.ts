@@ -1,5 +1,5 @@
-import { PacienteORM } from "src/paciente/infraestructura/persistencia/Paciente.orm"
-import { RegistroMedicoORM } from "src/registro_medico/infraestructura/persistencia/RegistroMedico.orm"
+import { PacienteORM } from "../../../paciente/infraestructura/persistencia/Paciente.orm";
+import { RegistroMedicoORM } from "../../../registro_medico/infraestructura/persistencia/RegistroMedico.orm";
 import { Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn } from "typeorm"
 
 

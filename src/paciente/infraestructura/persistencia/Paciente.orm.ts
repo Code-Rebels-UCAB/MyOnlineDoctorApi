@@ -1,5 +1,5 @@
-import { CitaORM } from 'src/cita/infraestructura/persistencia/Cita.orm';
-import { HistoriaMedicaORM } from 'src/historia_medica/infraestructura/persistencia/HistoriaMedica.orm';
+import { CitaORM } from '../../../cita/infraestructura/persistencia/Cita.orm';
+import { HistoriaMedicaORM } from '../../../historia_medica/infraestructura/persistencia/HistoriaMedica.orm';
 import {Entity, PrimaryColumn, Column, ManyToOne, OneToMany, OneToOne} from 'typeorm';
 
 @Entity({name: 'pacientes'})

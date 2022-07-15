@@ -1,6 +1,6 @@
 
-import { CitaORM } from 'src/cita/infraestructura/persistencia/Cita.orm';
-import { RegistroMedicoORM } from 'src/registro_medico/infraestructura/persistencia/RegistroMedico.orm';
+import { CitaORM } from '../../../cita/infraestructura/persistencia/Cita.orm';
+import { RegistroMedicoORM } from '../../../registro_medico/infraestructura/persistencia/RegistroMedico.orm';
 import {Entity, PrimaryColumn, Column, ManyToMany, OneToMany} from 'typeorm'; 
 import { EspecialidadORM } from './Especialidad.orm';
 

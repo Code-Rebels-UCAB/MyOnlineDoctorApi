@@ -1,7 +1,7 @@
-import { PacienteORM } from 'src/paciente/infraestructura/persistencia/Paciente.orm';
-import { DoctorORM } from 'src/doctor/infraestructura/persistencia/Doctor.orm';
+import { PacienteORM } from '../../../paciente/infraestructura/persistencia/Paciente.orm';
+import { DoctorORM } from '../../../doctor/infraestructura/persistencia/Doctor.orm';
 import { Entity, PrimaryColumn, Column, OneToMany, JoinColumn, ManyToMany, ManyToOne, JoinTable } from 'typeorm'
-import { RegistroMedicoORM } from 'src/registro_medico/infraestructura/persistencia/RegistroMedico.orm';
+import { RegistroMedicoORM } from '../../../registro_medico/infraestructura/persistencia/RegistroMedico.orm';
 
 @Entity({ name: 'citas' })
 export class CitaORM {

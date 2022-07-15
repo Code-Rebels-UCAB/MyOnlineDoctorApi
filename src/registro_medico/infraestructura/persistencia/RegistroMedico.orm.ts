@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import { DoctorORM } from '../../../doctor/infraestructura/persistencia/Doctor.orm';
 import { CitaORM } from '../../../cita/infraestructura/persistencia/Cita.orm';
-import { HistoriaMedicaORM } from 'src/historia_medica/infraestructura/persistencia/HistoriaMedica.orm';
+import { HistoriaMedicaORM } from '../../../historia_medica/infraestructura/persistencia/HistoriaMedica.orm';
 
 @Entity({ name: 'Registros_Medicos' })
 export class RegistroMedicoORM {
