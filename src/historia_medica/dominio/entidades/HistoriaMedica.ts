@@ -1,7 +1,7 @@
-import { HistoriaMedicaID } from "../values/HisotriaMedicaID";
-import { PacienteID } from "../values/PacienteID";
-import { RegistroMedicoID } from "../values/RegistroMedicoID";
-import { Agregado } from "./Agregado";
+import { HistoriaMedicaID } from "../../../commun/dominio/values/HisotriaMedicaID";
+import { PacienteID } from "../../../commun/dominio/values/PacienteID";
+import { RegistroMedicoID } from "../../../commun/dominio/values/RegistroMedicoID";
+import { Agregado } from "../../../commun/dominio/entidades/Agregado";
 
 export class HistoriaMedica extends Agregado<HistoriaMedicaID>{
     
