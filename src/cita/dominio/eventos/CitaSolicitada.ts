@@ -1,5 +1,4 @@
-import { EventoDominio } from "src/commun/dominio/eventos/Evento";
-
+import { EventoDominio } from "../../../commun/dominio/eventos/Evento";
 
 export class CitaSolicitada extends EventoDominio{
    
