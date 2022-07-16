@@ -2,19 +2,19 @@ import { EventoDominio } from "../../../commun/dominio/eventos/Evento";
 
 
 
-export class CitaSolicitada extends EventoDominio{
+export class CitaAgendada extends EventoDominio{
    
     constructor(
         private readonly IDDoctor:string,
         private readonly IDPaciente:string,
         private readonly IDCita:string,
         private readonly Status:string,
-        private readonly Motivo: string,
-        private readonly Modalidad: string,
+        private readonly Hora:string,
+        private readonly Duracion:string,
         readonly Fecha: Date 
     ){
         super();
-        this.Nombre = 'CitaSolicitada';
+        this.Nombre = 'CitaAgendada';
         this.Fecha = Fecha 
     }
 
@@ -22,13 +22,17 @@ export class CitaSolicitada extends EventoDominio{
     GetInformacion(): {} {
         return {
             nombre_evento: this.Nombre,
-            fecha: this.Fecha,
+            fecha_generacion: this.Fecha,
             id_doctor: this.IDDoctor,
             id_paciente: this.IDPaciente,
             id_cita: this.IDCita,
             status: this.Status,
-            motivo: this.Motivo,
-            modadalidad: this.Modalidad
+            hora: this.Hora,
+            duracion: this.Duracion
         }
     }
 }
+
+
+
+

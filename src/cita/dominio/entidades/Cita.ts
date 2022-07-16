@@ -2,7 +2,15 @@ import { Agregado } from "../../../commun/dominio/entidades/Agregado";
 import { CitaID } from "../../../commun/dominio/values/CitaID";
 import { DoctorID } from "../../../commun/dominio/values/DoctorID";
 import { PacienteID } from "../../../commun/dominio/values/PacienteID";
+import { CitaAceptada } from "../eventos/CitaAceptada";
+import { CitaAgendada } from "../eventos/CitaAgendada";
+import { CitaBloqueada } from "../eventos/CitaBloqueada";
+import { CitaCancelada } from "../eventos/CitaCancelada";
+import { CitaFinalizada } from "../eventos/CitaFinalizada";
+import { CitaIniciada } from "../eventos/CitaIniciada";
+import { CitaRechazada } from "../eventos/CitaRechazada";
 import { CitaSolicitada } from "../eventos/CitaSolicitada";
+import { CitaSuspendida } from "../eventos/CitaSuspendida";
 import { Duracion } from "../values/Duracion";
 import { FechaCita } from "../values/FechaCita";
 import { HoraCita } from "../values/HoraCita";
@@ -11,18 +19,6 @@ import { Motivo } from "../values/Motivo";
 import { StatusCita } from "../values/StatusCita";
 import { TipoCita } from "../values/TipoCita";
 
-
-export interface DatosCita {
-    id: CitaID;
-    doctor: DoctorID;
-    paciente: PacienteID;
-    modalidad: Modalidad;
-    motivo: Motivo;
-    status: StatusCita;
-    fecha?: FechaCita;
-    hora?: HoraCita;
-    duracion?: Duracion;
-}
 
 
 export class Cita extends Agregado<CitaID> {
@@ -124,6 +120,8 @@ export class Cita extends Agregado<CitaID> {
             id_paciente.getPacienteID().toString(),
             id_cita.getCitaID().toString(),
             TipoCita.Solicitada,
+            motivo.motivo,
+            modalidad.modalidad,
             new Date(),
           ),
         );
@@ -138,51 +136,61 @@ export class Cita extends Agregado<CitaID> {
         this.setFecha(fecha);
         this.setHora(hora);
         this.setDuracion(duracion);
-        /*
-        this.agregarEvento({
-            Fecha: new Date(),
-            Nombre: "CitaAgendada",
-            Datos: {    
-                id_cita : this.obtenerIdentificador(),
-                id_paciente : this.getPaciente(),
-                id_doctor : this.getDoctor(),
-            },
-        });
-        */
+
+        const id_doctor = this.getDoctor()
+        const id_paciente = this.getPaciente()
+        const id_cita = this.obtenerIdentificador()
+
+        this.agregarEvento(
+            new CitaAgendada(
+              id_doctor.getDoctorID().toString(),
+              id_paciente.getPacienteID().toString(),
+              id_cita.getCitaID().toString(),
+              TipoCita.Agendada,
+              hora.horaCita,
+              duracion.duracion.toString(),
+              new Date(),
+            ),
+          );
     }
 
     public rechazarCita (){	
         const statusCita = StatusCita.crear(TipoCita.Rechazada);
         this.setStatus(statusCita);
 
-        /*
-        this.agregarEvento({
-            Fecha: new Date(),
-            Nombre: "CitaRechazada",
-            Datos: {    
-                id_cita : this.obtenerIdentificador(),
-                id_paciente : this.getPaciente(),
-                id_doctor : this.getDoctor(),
-            },
-        });
-        */
+        const id_doctor = this.getDoctor()
+        const id_paciente = this.getPaciente()
+        const id_cita = this.obtenerIdentificador()
+
+        this.agregarEvento(
+            new CitaRechazada(
+              id_doctor.getDoctorID().toString(),
+              id_paciente.getPacienteID().toString(),
+              id_cita.getCitaID().toString(),
+              TipoCita.Rechazada,
+              new Date(),
+            ),
+        );
 
     }
-/*
 
     public finalizarCita (){
         const statusCita = StatusCita.crear(TipoCita.Finalizada);
         this.setStatus(statusCita);
 
-        this.agregarEvento({
-            Fecha: new Date(),
-            Nombre: "CitaFinalizada",
-            Datos: {    
-                id_cita : this.obtenerIdentificador(),
-                id_paciente : this.getPaciente(),
-                id_doctor : this.getDoctor(),
-            },
-        });
+        const id_doctor = this.getDoctor()
+        const id_paciente = this.getPaciente()
+        const id_cita = this.obtenerIdentificador()
+
+        this.agregarEvento(
+            new CitaFinalizada(
+                id_doctor.getDoctorID().toString(),
+                id_paciente.getPacienteID().toString(),
+                id_cita.getCitaID().toString(),
+                TipoCita.Finalizada,
+                new Date(),
+            ),
+        );
     }
 
 
@@ -190,15 +198,19 @@ export class Cita extends Agregado<CitaID> {
         const statusCita = StatusCita.crear(TipoCita.Cancelada);
         this.setStatus(statusCita);
 
-        this.agregarEvento({
-            Fecha: new Date(),
-            Nombre: "CitaCancelada",
-            Datos: {    
-                id_cita : this.obtenerIdentificador(),
-                id_paciente : this.getPaciente(),
-                id_doctor : this.getDoctor(),
-            },
-        });
+        const id_doctor = this.getDoctor()
+        const id_paciente = this.getPaciente()
+        const id_cita = this.obtenerIdentificador()
+
+        this.agregarEvento(
+            new CitaCancelada(
+                id_doctor.getDoctorID().toString(),
+                id_paciente.getPacienteID().toString(),
+                id_cita.getCitaID().toString(),
+                TipoCita.Cancelada,
+                new Date(),
+            ),
+        );
     }
 
 
@@ -206,30 +218,38 @@ export class Cita extends Agregado<CitaID> {
         const statusCita = StatusCita.crear(TipoCita.Aceptada);
         this.setStatus(statusCita);
 
-        this.agregarEvento({
-            Fecha: new Date(),
-            Nombre: "CitaAceptada",
-            Datos: {    
-                id_cita : this.obtenerIdentificador(),
-                id_paciente : this.getPaciente(),
-                id_doctor : this.getDoctor(),
-            },
-        });
+        const id_doctor = this.getDoctor()
+        const id_paciente = this.getPaciente()
+        const id_cita = this.obtenerIdentificador()
+
+        this.agregarEvento(
+            new CitaAceptada(
+                id_doctor.getDoctorID().toString(),
+                id_paciente.getPacienteID().toString(),
+                id_cita.getCitaID().toString(),
+                TipoCita.Aceptada,
+                new Date(),
+            ),
+        );
     }
 
     public iniciarCita (){
         const statusCita = StatusCita.crear(TipoCita.Iniciada);
         this.setStatus(statusCita);
 
-        this.agregarEvento({
-            Fecha: new Date(),
-            Nombre: "CitaIniciada",
-            Datos: {    
-                id_cita : this.obtenerIdentificador(),
-                id_paciente : this.getPaciente(),
-                id_doctor : this.getDoctor(),
-            },
-        });
+        const id_doctor = this.getDoctor()
+        const id_paciente = this.getPaciente()
+        const id_cita = this.obtenerIdentificador()
+
+        this.agregarEvento(
+            new CitaIniciada(
+                id_doctor.getDoctorID().toString(),
+                id_paciente.getPacienteID().toString(),
+                id_cita.getCitaID().toString(),
+                TipoCita.Iniciada,
+                new Date(),
+            ),
+        );
     }
 
 
@@ -237,33 +257,41 @@ export class Cita extends Agregado<CitaID> {
         const statusCita = StatusCita.crear(TipoCita.Suspendida);
         this.setStatus(statusCita);
 
-        this.agregarEvento({
-            Fecha: new Date(),
-            Nombre: "CitaSuspendida",
-            Datos: {    
-                id_cita : this.obtenerIdentificador(),
-                id_paciente : this.getPaciente(),
-                id_doctor : this.getDoctor(),
-            },
-        });
+        const id_doctor = this.getDoctor()
+        const id_paciente = this.getPaciente()
+        const id_cita = this.obtenerIdentificador()
+
+        this.agregarEvento(
+            new CitaSuspendida(
+                id_doctor.getDoctorID().toString(),
+                id_paciente.getPacienteID().toString(),
+                id_cita.getCitaID().toString(),
+                TipoCita.Suspendida,
+                new Date(),
+            ),
+        );
     }
 
     public bloquearCita (){
         const statusCita = StatusCita.crear(TipoCita.Bloqueada);
         this.setStatus(statusCita);
 
-        this.agregarEvento({
-            Fecha: new Date(),
-            Nombre: "CitaBloqueada",
-            Datos: {    
-                id_cita : this.obtenerIdentificador(),
-                id_paciente : this.getPaciente(),
-                id_doctor : this.getDoctor(),
-            },
-        });
+        const id_doctor = this.getDoctor()
+        const id_paciente = this.getPaciente()
+        const id_cita = this.obtenerIdentificador()
+
+        this.agregarEvento(
+            new CitaBloqueada(
+                id_doctor.getDoctorID().toString(),
+                id_paciente.getPacienteID().toString(),
+                id_cita.getCitaID().toString(),
+                TipoCita.Bloqueada,
+                new Date(),
+            ),
+        );
     }
 
-*/
+    
 }
 
 
