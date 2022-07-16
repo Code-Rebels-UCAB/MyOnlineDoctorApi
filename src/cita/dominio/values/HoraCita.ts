@@ -39,6 +39,8 @@ export class HoraCita implements IValueObject {
         else if(minuto < 0 || minuto > 60){
             throw new MinutoInvalido('El minuto es invalido');
         }
+        return new HoraCita(hora,minuto);
+
     }   
 
 }

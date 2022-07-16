@@ -13,4 +13,9 @@ export class Modalidad  implements IValueObject {
     public esIgual(modalidad: Modalidad): boolean {
         return this._modalidad == modalidad.modalidad;
     }
+
+    public static crear(modalidad: TipoModalidad): Modalidad {
+        return new Modalidad(modalidad);
+    }
 }
+
