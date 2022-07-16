@@ -35,7 +35,7 @@ export class RegistroMedicoORM {
   @Column()
   motivo: string;
 
-  @Column()
+  @Column({name: 'fechaCita', type: 'date'})
   fechaCita: Date;
 
   //Relacion con Doctor
