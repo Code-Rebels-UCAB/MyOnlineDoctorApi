@@ -1,5 +1,5 @@
+import { Doctor } from "../../dominio/entidades/Doctor";
 import { ILogger } from "../../../commun/aplicacion/ILogger";
-import { DoctorEspecialidadDTO } from "../dtos/DoctorEspecialidadDTO"
 import { DoctorMapeador } from "../mapeadores/DoctorMapeador";
 import { IRepositorioDoctor } from "../puertos/IRepositorioDoctor"
 
@@ -18,18 +18,19 @@ export class BuscarDoctorEspecialidad
             );
 
             //Mapear de persistencia a dominio
-            // const obtenerdoctor = DoctorMapeador.covertirPersistenciaDominio(doctor);
-             
-            // console.log(obtenerdoctor);
-            const DoctoresDominio = doctores.map((datos) =>
+            const DoctoresDominio: Doctor[] = doctores.map((datos) =>
                 DoctorMapeador.covertirPersistenciaDominio(datos),
             )
 
-             console.log(DoctoresDominio)   ;
 
+            //Mapeamos de dominio a la vista
+            const ListadoDoctores = DoctoresDominio.map((datos) =>
+                DoctorMapeador.ConvertirDoctoresEnListado(datos),
+            )
 
             this.logger.log("Buscar por especailidad: " + query, "Doctor Encontrado");
-            return doctores;        
+
+            return ListadoDoctores;        
         }
         catch (error) {
             throw error;

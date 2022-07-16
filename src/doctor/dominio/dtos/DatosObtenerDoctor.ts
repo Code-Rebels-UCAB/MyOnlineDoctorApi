@@ -19,5 +19,11 @@ export interface DatosObtenerDoctor {
     ubicacion: Ubicacion,
     fotoDoctor: FotoDoctor,
     statusDoctor: StatusDoctor,
+    especialidades: Especialidad[]
 
+}
+
+
+export interface DatosObtenerEspecialidades{
+    especialidad: Especialidad;
 }

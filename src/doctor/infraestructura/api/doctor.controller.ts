@@ -10,7 +10,7 @@ export class DoctorController {
   ) {}
 
   @Get('filtrar/especialidad')
-  async getTodo(@Query('especialidad') especialidad: string) {
+  async getByEspecialidad(@Query('especialidad') especialidad: string) {
     const doctores = await this.buscarDoctorEsp.ejecutar(especialidad);
     return doctores;
   }

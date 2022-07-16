@@ -15,7 +15,7 @@ import { DoctorBloqueado } from '../eventos/DoctorBloqueado';
 import { Status } from '../values/Status';
 
 export class Doctor extends Agregado<DoctorID> {
-  private constructor(
+  constructor(
     private doctorid: DoctorID,
     private nombreDoctor: NombreCompletoDoctor,
     private generoDoctor: GeneroDoctor,
