@@ -28,7 +28,11 @@ export class BuscarDoctorEspecialidad
                 DoctorMapeador.ConvertirDoctoresEnListado(datos),
             )
 
-            this.logger.log("Buscar por especailidad: " + query, "Doctor Encontrado");
+            let total_doctores = 0
+            if (ListadoDoctores.length > 0) {
+                total_doctores = ListadoDoctores.length
+            }
+            this.logger.log("Buscar por especailidad: " + query, "Doctores Encontrados: " + total_doctores);
 
             return ListadoDoctores;        
         }

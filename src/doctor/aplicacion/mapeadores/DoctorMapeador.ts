@@ -1,6 +1,6 @@
 import { DoctorPersistenciaDTO } from "../../infraestructura/dtos/DoctorPersistenciaDTO";
 import { DoctorID } from "../../../commun/dominio/values/DoctorID";
-import { DatosObtenerDoctor, DatosObtenerEspecialidades } from "../../dominio/dtos/DatosObtenerDoctor";
+import { DatosDoctorVO, DatosEspecialidadesVO } from "../../dominio/dtos/DatosDoctorVO";
 import { Calificacion } from "../../dominio/values/Calificacion";
 import { Ubicacion } from "../../dominio/values/Ubicacion";
 import { NombreCompletoDoctor } from "../../dominio/values/NombreCompletoDoctor";
@@ -76,7 +76,7 @@ export class DoctorMapeador{
 }
 
 export class EspecialidadMapeador{
-    public static covertirPersistenciaDominio(datos:EspecialidadPersistenciaDTO):DatosObtenerEspecialidades{
+    public static covertirPersistenciaDominio(datos:EspecialidadPersistenciaDTO):DatosEspecialidadesVO{
     
         return{
             especialidad: Especialidad.crear(datos.nombre)
