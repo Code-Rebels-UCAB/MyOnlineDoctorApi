@@ -14,8 +14,9 @@ import { RegistroMedicoDataDTO } from "../dto/RegistroMedicoDataDTO";
 
 export class RegistroMedicoMapeador  implements Imapeador<DatosRegistroMedicoVO, RegistroMedicoDataDTO>{
 
+
     constructor(){}
-    convertirDominioEnPersistencia(entrada: DatosRegistroMedicoVO): RegistroMedicoDataDTO {
+    convertirEntradaEnSalida(entrada: DatosRegistroMedicoVO): RegistroMedicoDataDTO {
         return {
             idRegistroMedico: entrada.idRegistroMedico.getRegistroMedicoID().toString(),
             idCita: entrada.idCita.getCitaID().toString(),
@@ -28,7 +29,7 @@ export class RegistroMedicoMapeador  implements Imapeador<DatosRegistroMedicoVO,
         }
     }
     
-    convertirPersistenciaEnDominio(entrada: RegistroMedicoDataDTO): DatosRegistroMedicoVO {
+    convertirSalidaEnEntrada(entrada: RegistroMedicoDataDTO): DatosRegistroMedicoVO {
         return {
           idRegistroMedico: RegistroMedicoID.crear(Guid.parse(entrada.idRegistroMedico)),
           idCita: CitaID.crear(Guid.parse(entrada.idCita)),
