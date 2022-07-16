@@ -1,16 +1,5 @@
-export interface RegistroMedicoPersistenciaDTO {
-  idRegistroMedico: string;
-  idCita: string;
-  idDoctor: string;
-  examenes: string;
-  plan: string;
-  diagnostico: string;
-  prescripcion: string;
-  historia: string;
-}
-
+import { RegistroMedicoDataDTO } from "../dto/RegistroMedicoDataDTO";
 export interface IRepositorioRegistroMedico {
-  crear(comando: RegistroMedicoPersistenciaDTO): Promise<void>;
-  obtener(id: string): Promise<RegistroMedicoPersistenciaDTO>;
-  modificar(id: string, examenes?);
+  crear(comando: RegistroMedicoDataDTO): Promise<void>;
+  obtener(id: string): Promise<RegistroMedicoDataDTO>;
 }
