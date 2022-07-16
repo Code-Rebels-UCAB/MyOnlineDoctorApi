@@ -15,17 +15,18 @@ import { DoctorBloqueado } from '../eventos/DoctorBloqueado';
 import { Status } from '../values/Status';
 
 export class Doctor extends Agregado<DoctorID> {
-  private constructor(
-    private especialidad: Especialidad[],
-    private calificacion: Calificacion,
-    private ubicacion: Ubicacion,
+  constructor(
+    private doctorid: DoctorID,
+    private nombreDoctor: NombreCompletoDoctor,
     private generoDoctor: GeneroDoctor,
     private correoDoctor: CorreoDoctor,
     private passwordDoctor: PasswordDoctor,
-    private nombreDoctor: NombreCompletoDoctor,
-    private doctorid: DoctorID,
+    private calificacion: Calificacion,
+    private ubicacion: Ubicacion,
     private fotoDoctor: FotoDoctor,
     private statusDoctor: StatusDoctor,
+    private especialidad: Especialidad[],
+
   ) {
     super();
   }
