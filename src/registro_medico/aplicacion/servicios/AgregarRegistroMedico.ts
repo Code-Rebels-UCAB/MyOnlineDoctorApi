@@ -17,7 +17,7 @@ export class AgregarRegistroMedico implements IServicioAplicacion<RegistroMedico
         try {
             const mapeadorRegistro = new RegistroMedicoMapeador();
             
-            const datosRegistroMedico:DatosRegistroMedicoVO = mapeadorRegistro.convertirPersistenciaEnDominio(comando);
+            const datosRegistroMedico:DatosRegistroMedicoVO = mapeadorRegistro.convertirSalidaEnEntrada(comando);
 
             const registroMedico: RegistroMedico = RegistroMedico.crearRegistroMedico(
                 datosRegistroMedico.examenes,
@@ -32,7 +32,7 @@ export class AgregarRegistroMedico implements IServicioAplicacion<RegistroMedico
             
             const eventos:EventoDominio[] = registroMedico.obtenerEventos()
             
-            await this._repositorioRegistroMedico.crear(mapeadorRegistro.convertirDominioEnPersistencia(datosRegistroMedico));
+            await this._repositorioRegistroMedico.crear(mapeadorRegistro.convertirEntradaEnSalida(datosRegistroMedico));
 
             return Resultado.Exito<void>();
         } catch (error) {
