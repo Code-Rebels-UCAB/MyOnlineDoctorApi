@@ -17,10 +17,10 @@ export class DoctorID implements IValueObject {
   }
 
   public static crear(id?: Guid){
-    if(id){
+    if (id) {
       return new DoctorID(id);
-    }else{
-      return new DoctorID(Guid.create());
     }
+    return new DoctorID(Guid.create());
   }
+
 }
