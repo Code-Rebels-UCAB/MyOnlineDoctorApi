@@ -30,7 +30,7 @@ export class DoctorModule {
             logger: LoggerService,
             userRepo: RepositorioDoctor,
           ) => new BuscarDoctorEspecialidad(logger, userRepo),
-        },
+        },        
       ],
     };
   }

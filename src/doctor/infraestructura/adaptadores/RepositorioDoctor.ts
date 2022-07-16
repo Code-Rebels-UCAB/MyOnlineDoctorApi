@@ -22,14 +22,6 @@ export class RepositorioDoctor implements IRepositorioDoctor {
                                         .orderBy('doctores.id_doctor', 'ASC')
                                         .getMany();
 
-        const result =  await this._doctorRepository.createQueryBuilder('doctores')
-                                .leftJoin('doctores.especialidades', 'especialidades')
-                                .leftJoinAndSelect('doctores.especialidades', 'EspecialidadesSelect')
-                                .where('especialidades.nombre like :especialidad', { especialidad: `%${especialidad}%`})
-                                .orderBy('doctores.id_doctor', 'ASC').printSql()
-                                .getMany();
-
-        console.log(result);
 
         return doctoresFiltrados;
     }
