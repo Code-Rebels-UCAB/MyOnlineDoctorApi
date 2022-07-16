@@ -7,6 +7,7 @@ import { CitaORM } from './cita/infraestructura/persistencia/Cita.orm';
 import { ConfigModule } from './commun/infraestructura/config/config.module';
 import { ConfigService } from './commun/infraestructura/config/config.service';
 import { DatabaseModule } from './commun/infraestructura/database/database.module';
+import { DoctorModule } from './doctor/infraestructura/api/doctor.module';
 import { DoctorORM } from './doctor/infraestructura/persistencia/Doctor.orm';
 import { EspecialidadORM } from './doctor/infraestructura/persistencia/Especialidad.orm';
 import { HistoriaMedicaORM } from './historia_medica/infraestructura/persistencia/HistoriaMedica.orm';
@@ -20,6 +21,7 @@ import { RegistroMedicoORM } from './registro_medico/infraestructura/persistenci
     TypeOrmModule.forFeature([DoctorORM, EspecialidadORM, PacienteORM, CitaORM, RegistroMedicoORM, HistoriaMedicaORM]),
     DatabaseModule,
     ConfigModule,
+    DoctorModule.register(),
   ],
   controllers: [AppController],
   providers: [AppService],
