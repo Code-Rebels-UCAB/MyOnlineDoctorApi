@@ -12,7 +12,7 @@ import { RegistroMedicoPersistenciaDTO } from "../puertos/IRepositoryRegistroMed
 
 export class RegistroMedicoMapeador  implements Imapeador<RegistroMedico,RegistroMedicoPersistenciaDTO>{
 
-    
+    constructor(){}
     convertirDominioEnPersistencia(entrada: RegistroMedico): RegistroMedicoPersistenciaDTO {
         return {
             idRegistroMedico: entrada.obtenerIdentificador().getRegistroMedicoID().toString(),
