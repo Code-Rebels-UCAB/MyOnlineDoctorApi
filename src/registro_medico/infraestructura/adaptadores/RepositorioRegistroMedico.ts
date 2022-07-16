@@ -15,7 +15,8 @@ export class RepositorioRegistroMedico implements IRepositorioRegistroMedico {
     async crear(registroMedico: RegistroMedicoDataDTO): Promise<void> {
         try {
            const registro = this.repositoryRegisroMedico;
-
+           //const cita = this.respositoryCita
+           const citabuscada =  //cita.find(registroMedico.idCita);
            registro.insert({
             id_registro: registroMedico.idRegistroMedico,
             examenes: registroMedico.examenes,
@@ -23,7 +24,7 @@ export class RepositorioRegistroMedico implements IRepositorioRegistroMedico {
             prescripcion: registroMedico.prescripcion,
             plan: registroMedico.plan,
             diagonistico: registroMedico.diagnostico,
-            
+            //motivo: citabuscada.motivo,
 
            })
         } catch (error) {}
