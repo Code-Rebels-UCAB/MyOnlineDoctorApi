@@ -8,7 +8,6 @@ import { CitaBloqueada } from "../eventos/CitaBloqueada";
 import { CitaCancelada } from "../eventos/CitaCancelada";
 import { CitaFinalizada } from "../eventos/CitaFinalizada";
 import { CitaIniciada } from "../eventos/CitaIniciada";
-import { CitaRechazada } from "../eventos/CitaRechazada";
 import { CitaSolicitada } from "../eventos/CitaSolicitada";
 import { CitaSuspendida } from "../eventos/CitaSuspendida";
 import { Duracion } from "../values/Duracion";
@@ -152,27 +151,7 @@ export class Cita extends Agregado<CitaID> {
               new Date(),
             ),
           );
-    }
-
-    public rechazarCita (){	
-        const statusCita = StatusCita.crear(TipoCita.Rechazada);
-        this.setStatus(statusCita);
-
-        const id_doctor = this.getDoctor()
-        const id_paciente = this.getPaciente()
-        const id_cita = this.obtenerIdentificador()
-
-        this.agregarEvento(
-            new CitaRechazada(
-              id_doctor.getDoctorID().toString(),
-              id_paciente.getPacienteID().toString(),
-              id_cita.getCitaID().toString(),
-              TipoCita.Rechazada,
-              new Date(),
-            ),
-        );
-
-    }
+    }    
 
     public finalizarCita (){
         const statusCita = StatusCita.crear(TipoCita.Finalizada);
