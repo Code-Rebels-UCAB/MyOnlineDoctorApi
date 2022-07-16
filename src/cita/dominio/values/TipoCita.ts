@@ -4,7 +4,6 @@ export enum TipoCita {
     Agendada = "Agendada",
     Aceptada = "Aceptada",
     Cancelada = "Cancelada",
-    Rechazada = "Rechazada",
     Suspendida = "Suspendida",
     Iniciada = "Iniciada",
     Finalizada = "Finalizada",
