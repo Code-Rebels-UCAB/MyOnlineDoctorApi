@@ -4,8 +4,8 @@ import { Guid } from "guid-typescript";
 export class CitaID implements IValueObject {
     private readonly id: Guid;
 
-    private constructor() {
-        this.id = Guid.create();
+    private constructor(id: Guid) {
+        this.id = id;
     }
 
     public getCitaID() {
@@ -16,7 +16,11 @@ export class CitaID implements IValueObject {
         return this.id == citaID.getCitaID();
     }
 
-    public static crear(){
-        return new CitaID();
+    
+    public static crear(id?: Guid){
+        if (id) {
+        return new CitaID(id);
+        }
+        return new CitaID(Guid.create());
     }
 }
