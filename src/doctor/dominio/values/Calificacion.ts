@@ -18,7 +18,7 @@ export class Calificacion implements IValueObject {
       throw new CalificacionVacia(
         'La calificacción del Doctor del doctor no puede ser vacia',
       );
-    } else if (puntaje >= 0 && puntaje <= 5) {
+    } else if (Number(puntaje) < 0 || Number(puntaje) > 5) {
       throw new CalificacionInvalida(
         'La calificación debe ser un número entre el 0 y 5',
       );
