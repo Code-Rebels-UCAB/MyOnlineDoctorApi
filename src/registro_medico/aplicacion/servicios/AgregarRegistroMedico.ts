@@ -6,6 +6,7 @@ import { RegistroMedicoMapeador } from "../mapeador/RegistroMedicoMapeador";
 import { RegistroMedicoDataDTO } from "../dto/RegistroMedicoDataDTO";
 import { IRepositorioRegistroMedico } from "../puertos/IRepositoryRegistroMedico";
 import { DatosRegistroMedicoVO } from "src/registro_medico/dominio/dto/DatosRegistroMedicoVO";
+import { EventoDominio } from "src/commun/dominio/eventos/Evento";
 
 
 export class AgregarRegistroMedico implements IServicioAplicacion<RegistroMedicoDataDTO, void>{
@@ -27,10 +28,13 @@ export class AgregarRegistroMedico implements IServicioAplicacion<RegistroMedico
                 datosRegistroMedico.idDoctor,
                 datosRegistroMedico.idCita,
                 );
-            
-            
 
             
+            const eventos:EventoDominio[] = registroMedico.obtenerEventos()
+            
+            await this._repositorioRegistroMedico.crear(mapeadorRegistro.convertirDominioEnPersistencia(datosRegistroMedico));
+
+            return Resultado.Exito<void>();
         } catch (error) {
             return Resultado.Falla(error);
         }
