@@ -7,6 +7,7 @@ import { LoggerService } from '../../../commun/infraestructura/logger/logger.ser
 import { RepositorioCita } from '../adaptadores/RepositorioCita';
 import { CitaORM } from '../persistencia/Cita.orm';
 import { CitaController } from './cita.controller';
+import { CantidadCitasDiaDoctor } from '../../aplicacion/servicios/CantidadCitasDiaDoctor';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CitaORM]), LoggerModule],
@@ -14,6 +15,7 @@ import { CitaController } from './cita.controller';
   providers: [
     CitasSolicitadasDoctor,
     CantidadPacientesDoctor,
+    CantidadCitasDiaDoctor,
     RepositorioCita,
     LoggerService,
   ],
@@ -34,6 +36,12 @@ export class CitaModule {
           provide: CantidadPacientesDoctor,
           useFactory: (logger: LoggerService, userRepo: RepositorioCita) =>
             new CantidadPacientesDoctor(logger, userRepo),
+        },
+        {
+          inject: [LoggerService, RepositorioCita],
+          provide: CantidadCitasDiaDoctor,
+          useFactory: (logger: LoggerService, userRepo: RepositorioCita) =>
+            new CantidadCitasDiaDoctor(logger, userRepo),
         },
       ],
     };

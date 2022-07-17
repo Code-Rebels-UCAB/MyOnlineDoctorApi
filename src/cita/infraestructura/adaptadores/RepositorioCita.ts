@@ -94,7 +94,9 @@ export class RepositorioCita implements IRepositorioCita {
       'citas',
     )
       .where('citas.doctor = :id', { id: doctorId })
-      .andWhere('citas.fechacita = :fecha', { fecha: new Date() })
+      .andWhere('citas.fechacita = :fecha', {
+        fecha: new Date().toISOString().split('T')[0],
+      })
       .getMany();
 
     const cantidadCitasDia = citasDiaDoctor.length;
