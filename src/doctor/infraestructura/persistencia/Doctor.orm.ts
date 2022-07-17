@@ -43,6 +43,9 @@ export class DoctorORM{
     @Column({name: 'status', type: 'varchar'})
     status: string;
 
+    @Column({name: 'tokenF', type: 'varchar', nullable: true})
+    tokenF: string;
+
     @ManyToMany(() => EspecialidadORM, especialidad => especialidad.doctores)
     especialidades: EspecialidadORM[];
 

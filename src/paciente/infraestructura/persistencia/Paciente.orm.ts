@@ -53,6 +53,9 @@ export class PacienteORM{
     @Column({name: 'fecha_nacimiento', type: 'date'})
     fecha_nacimiento: Date;
 
+    @Column({name: 'tokenF', type: 'varchar', nullable: true})
+    tokenF: string;
+
 
     //Relacion con cita
     @OneToMany(() => CitaORM, cita => cita.paciente)

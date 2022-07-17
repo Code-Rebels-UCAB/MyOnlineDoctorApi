@@ -35,6 +35,12 @@ export class CitaORM {
   @Column()
   duracion: number;
 
+  @Column({name: 'tokenA', type: 'varchar', nullable: true})
+  tokenA: string;
+  
+  @Column({name: 'channelA', type: 'varchar', nullable: true})
+  channelA: string;
+
   //Relacion Con Paciente
   @ManyToOne(() => PacienteORM, (paciente) => paciente.cita)
   @JoinColumn({ name: 'paciente' })
