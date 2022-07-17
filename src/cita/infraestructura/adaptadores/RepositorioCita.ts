@@ -27,8 +27,12 @@ export class RepositorioCita implements IRepositorioCita {
     return listaCitas;
   }
 
-  obtenerCitaByDoctor(id_doctor: string) {
-    throw new Error('Method not implemented');
+  async obtenerCitaByDoctor(id_doctor: string) {
+    const listaCItas = await this.RepositorioCita.createQueryBuilder('citas')
+      .where('citas.id_cita = :id', { id: id_doctor })
+      .getMany();
+
+    return listaCItas;
   }
 
   obtenerCitaByPaciente(id_paciente: string) {
