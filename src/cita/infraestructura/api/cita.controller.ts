@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Param} from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, Post} from '@nestjs/common';
 import { CitasDoctor } from '../../aplicacion/servicios/CitasDoctor';
 import { CitasSolicitadasDoctor } from '../../aplicacion/servicios/CitasSolicitadasDoctor';
 
@@ -22,6 +22,12 @@ export class CitaController {
   async getTodas(@Param('doctorid') doctorid: string) {
     const citas = await this.citasDoctor.ejecutar(doctorid);
     return citas;
+  }
+
+  @Post('agendar/:citaid')
+  async postAgendar(@Body() datos: string, @Param('citaid') citaid: string) {
+    //const citas = await this.citasDoctor.ejecutar(datos,citaid);
+    return datos;
   }
 
 

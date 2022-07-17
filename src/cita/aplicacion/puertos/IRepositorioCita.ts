@@ -18,4 +18,6 @@ export interface IRepositorioCita {
   crearCita();
 
   actualizarStatusCita();
+
+  actualizarCitaAgendada(citaid: string, fecha: string, hora: string);
 }

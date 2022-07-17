@@ -96,6 +96,15 @@ export class RepositorioCita implements IRepositorioCita {
     return citas;
   }
 
+  actualizarCitaAgendada(citaid: string,fecha: string, hora: string) {
+    const citas = this.RepositorioCita.createQueryBuilder('citas')
+    .update(CitaORM)
+    .set({fechacita: fecha, horacita: hora})
+    .where('citas.id_cita = :id', {
+      id: citaid,
+    })
+  }
+
   crearCita() {
     throw new Error('Method not implemented');
   }
