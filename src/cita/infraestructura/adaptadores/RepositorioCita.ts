@@ -36,23 +36,22 @@ export class RepositorioCita implements IRepositorioCita {
   }
 
   async obtenerCitaByPaciente(id_paciente: string) {
-    const listaCitas = await this.RepositorioCita.createQueryBuilder(
-      'citas',
-    ).where('citas.paciente = :id', { id: id_paciente });
+    const listaCitas = await this.RepositorioCita.createQueryBuilder('citas')
+      .where('citas.paciente = :id', { id: id_paciente })
+      .getMany();
 
     return listaCitas;
   }
 
   async obtenerCitaByFecha(fecha: string) {
-    const listaCitas = await this.RepositorioCita.createQueryBuilder(
-      'citas',
-    ).where('citas.fechacita = :fecha', { fecha: fecha });
+    const listaCitas = await this.RepositorioCita.createQueryBuilder('citas')
+      .where('citas.fechacita = :fecha', { fecha: fecha })
+      .getMany();
 
     return listaCitas;
   }
 
   obtenerCitaDeDoctorByStatus(statuscita: string, doctorid: string) {
-
     const citas = this.RepositorioCita.createQueryBuilder('citas')
       .leftJoinAndSelect('citas.doctor', 'doctor')
       .leftJoinAndSelect('citas.paciente', 'paciente')
@@ -62,9 +61,8 @@ export class RepositorioCita implements IRepositorioCita {
       })
       .getMany();
 
-    return citas
+    return citas;
   }
-
 
   crearCita() {
     throw new Error('Method not implemented');
