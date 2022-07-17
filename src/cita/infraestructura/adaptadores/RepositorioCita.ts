@@ -36,17 +36,17 @@ export class RepositorioCita implements IRepositorioCita {
   }
 
   async obtenerCitaByPaciente(id_paciente: string) {
-    const listaCitas = await this.RepositorioCita.createQueryBuilder(
-      'citas',
-    ).where('citas.paciente = :id', { id: id_paciente });
+    const listaCitas = await this.RepositorioCita.createQueryBuilder('citas')
+      .where('citas.paciente = :id', { id: id_paciente })
+      .getMany();
 
     return listaCitas;
   }
 
   async obtenerCitaByFecha(fecha: string) {
-    const listaCitas = await this.RepositorioCita.createQueryBuilder(
-      'citas',
-    ).where('citas.fechacita = :fecha', { fecha: fecha });
+    const listaCitas = await this.RepositorioCita.createQueryBuilder('citas')
+      .where('citas.fechacita = :fecha', { fecha: fecha })
+      .getMany();
 
     return listaCitas;
   }
@@ -60,11 +60,22 @@ export class RepositorioCita implements IRepositorioCita {
         status: statuscita,
         id: doctorid,
       })
+      .select([
+        'citas.id_cita',
+        'citas.statuscita',
+        'citas.modalidad',
+        'citas.motivo',
+        'doctor.id_doctor',
+        'doctor.p_nombre',
+        'doctor.p_apellido',
+        'paciente.id_paciente',
+        'paciente.p_nombre',
+        'paciente.p_apellido',
+      ])
       .getMany();
 
     return citas
   }
-
 
   crearCita() {
     throw new Error('Method not implemented');
