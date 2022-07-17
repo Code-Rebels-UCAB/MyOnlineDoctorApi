@@ -1,5 +1,5 @@
 import { Controller, Get, Inject, Param} from '@nestjs/common';
-import { CitasSolicitadasDoctor } from 'src/cita/aplicacion/servicios/CitasSolicitadasDoctor';
+import { CitasSolicitadasDoctor } from '../../aplicacion/servicios/CitasSolicitadasDoctor';
 
 
 
