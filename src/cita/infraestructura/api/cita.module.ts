@@ -1,5 +1,6 @@
 import { DynamicModule,Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CitasDoctor } from 'src/cita/aplicacion/servicios/CitasDoctor';
 import { CitasSolicitadasDoctor } from 'src/cita/aplicacion/servicios/CitasSolicitadasDoctor';
 import { LoggerModule } from '../../../commun/infraestructura/logger/logger.module';
 import { LoggerService } from '../../../commun/infraestructura/logger/logger.service';
@@ -15,7 +16,7 @@ import { CitaController} from './cita.controller';
     
   ],
   controllers: [CitaController],
-  providers: [CitasSolicitadasDoctor,RepositorioCita, LoggerService],
+  providers: [CitasSolicitadasDoctor, CitasDoctor,RepositorioCita, LoggerService],
 })
 
 
@@ -31,7 +32,16 @@ export class CitaModule {
             logger: LoggerService,
             userRepo: RepositorioCita,
           ) => new CitasSolicitadasDoctor(logger, userRepo),
-        },        
+        },   
+        {
+          inject: [LoggerService, RepositorioCita],
+          provide: CitasDoctor,
+          useFactory: (
+            logger: LoggerService,
+            userRepo: RepositorioCita,
+          ) => new CitasDoctor(logger, userRepo),
+        },  
+        
       ],
     };
   }

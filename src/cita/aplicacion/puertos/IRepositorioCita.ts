@@ -12,6 +12,8 @@ export interface IRepositorioCita {
 
   obtenerCitaDeDoctorByStatus(status: string, doctorid: string);
 
+  obtenerCitasDeDoctor(doctorid: string);
+
   //Comandos
   crearCita();
 
