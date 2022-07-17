@@ -33,17 +33,22 @@ export class RepositorioDoctor implements IRepositorioDoctor {
     }
     
     async obtenerDoctorByNombreorApellido(nombre: string): Promise<DoctorORM[]> {
+        
         if(nombre !=null || nombre != undefined){
+            
             nombre = nombre.toLowerCase().replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
         }else{
             nombre = '';
         }
-        /*
-        select * from doctores where p_nombre Like '%Eric%' or p_apellido Like '%Wilson';
-        */
-        const doctoresFiltrados =  await this._doctorRepository.createQueryBuilder('doctores')
 
-        return 
+        const doctoresFiltrados =  await this._doctorRepository.createQueryBuilder('doctores')
+                                                               .leftJoinAndSelect('doctores.especialidades', 'EspecialidadesSelect')
+                                                               .where("(doctores.p_nombre ||' '|| doctores.p_apellido) like :nombre", { nombre: `%${nombre}%`})
+                                                               .getMany(); 
+
+        console.log('doctoresFiltrados', doctoresFiltrados);
+        console.log('nombre', nombre);
+        return doctoresFiltrados;
     } 
 
 
