@@ -1,4 +1,6 @@
-import {Entity, PrimaryColumn, Column} from 'typeorm';
+import { CitaORM } from '../../../cita/infraestructura/persistencia/Cita.orm';
+import { HistoriaMedicaORM } from '../../../historia_medica/infraestructura/persistencia/HistoriaMedica.orm';
+import {Entity, PrimaryColumn, Column, ManyToOne, OneToMany, OneToOne} from 'typeorm';
 
 @Entity({name: 'pacientes'})
 export class PacienteORM{
@@ -51,5 +53,12 @@ export class PacienteORM{
     @Column({name: 'fecha_nacimiento', type: 'date'})
     fecha_nacimiento: Date;
 
+
+    //Relacion con cita
+    @OneToMany(() => CitaORM, cita => cita.paciente)
+    cita: CitaORM[];
+
+    @OneToOne(() => HistoriaMedicaORM, historiaMedica => historiaMedica.paciente)
+    historiaMedica: HistoriaMedicaORM;
 
 }

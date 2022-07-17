@@ -5,10 +5,12 @@ import {
   OneToOne,
   JoinColumn,
   ManyToOne,
+  JoinTable,
+  OneToMany,
 } from 'typeorm';
 import { DoctorORM } from '../../../doctor/infraestructura/persistencia/Doctor.orm';
 import { CitaORM } from '../../../cita/infraestructura/persistencia/Cita.orm';
-import { HistoriaMedicaORM } from 'src/historia_medica/infraestructura/persistencia/HistoriaMedica.orm';
+import { HistoriaMedicaORM } from '../../../historia_medica/infraestructura/persistencia/HistoriaMedica.orm';
 
 @Entity({ name: 'Registros_Medicos' })
 export class RegistroMedicoORM {
@@ -33,17 +35,22 @@ export class RegistroMedicoORM {
   @Column()
   motivo: string;
 
-  @Column()
+  @Column({name: 'fechaCita', type: 'date'})
   fechaCita: Date;
 
-  @OneToOne(() => DoctorORM)
-  @JoinColumn({ name: 'id_doctor' })
+  //Relacion con Doctor
+  @ManyToOne(() => DoctorORM, doctor => doctor.registroMedico)
+  @JoinColumn({name:'doctor'})
   doctor: DoctorORM;
 
-  @OneToOne(() => CitaORM)
-  @JoinColumn({ name: 'id_cita' })
+  //Relacion con Cita
+  @ManyToOne(() => CitaORM, cita => cita.registroMedico)
+  @JoinColumn({name:'cita'})
   cita: CitaORM;
 
-  @ManyToOne(() => HistoriaMedicaORM, (HistoriaMedica) => HistoriaMedica.id_registro_medicos)
-  fk_historia: string
+  //Relacion con Historia Medica
+  @ManyToOne(() => HistoriaMedicaORM, (HistoriaMedica) => HistoriaMedica.registroMedico)
+  @JoinColumn({name:'historiaMedica'})  
+  historiaMedica: HistoriaMedicaORM;
+
 }

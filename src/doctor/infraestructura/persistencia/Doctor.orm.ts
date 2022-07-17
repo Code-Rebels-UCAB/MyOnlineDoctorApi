@@ -1,5 +1,7 @@
 
-import {Entity, PrimaryColumn, Column, ManyToMany} from 'typeorm'; 
+import { CitaORM } from '../../../cita/infraestructura/persistencia/Cita.orm';
+import { RegistroMedicoORM } from '../../../registro_medico/infraestructura/persistencia/RegistroMedico.orm';
+import {Entity, PrimaryColumn, Column, ManyToMany, OneToMany} from 'typeorm'; 
 import { EspecialidadORM } from './Especialidad.orm';
 
 @Entity({name: 'doctores'})
@@ -38,6 +40,17 @@ export class DoctorORM{
     @Column({name: 'cantidad_calificacion', type: 'numeric'})
     cantidad_calificacion: number;
 
+    @Column({name: 'status', type: 'varchar'})
+    status: string;
+
     @ManyToMany(() => EspecialidadORM, especialidad => especialidad.doctores)
     especialidades: EspecialidadORM[];
+
+     //Relacion con cita
+    @OneToMany(() => CitaORM, cita => cita.doctor)
+    cita: CitaORM[];
+
+    //Relacion con Registro Medico
+    @OneToMany(() => RegistroMedicoORM, registroMedico => registroMedico.doctor)
+    registroMedico: RegistroMedicoORM[];
 }
