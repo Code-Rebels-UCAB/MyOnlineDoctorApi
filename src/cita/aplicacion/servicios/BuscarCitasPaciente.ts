@@ -17,6 +17,10 @@ export class BuscarCitasPaciente implements IServicioAplicacion<string,CitaPacie
     async ejecutar(pacienteid: string): Promise<Resultado<CitaPacienteDTO[]>> {
         try{
             const CitasPaciente: CitaPacienteDTO[] = await this.repositorioCita.obtenerCitaByPaciente(pacienteid);
+
+            
+            this.logger.log("Busqueda de Todas la citas de un Paciente", "Total: " + CitasPaciente.length );
+            
             
             return Resultado.Exito<CitaPacienteDTO[]>(CitasPaciente);
             
