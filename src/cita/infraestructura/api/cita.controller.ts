@@ -12,14 +12,14 @@ export class CitaController {
     private readonly citasDoctor: CitasDoctor,
   ) {}
 
-  @Get('solicitadas/:doctorid')
-  async getSolicitadas(@Param('doctorid') doctorid: string) {
+  @Get('getsolicitudesdoctor/:doctorid')
+  async getSolicitadasDoctor(@Param('doctorid') doctorid: string) {
     const citas = await this.citasSolicitadasDoctor.ejecutar(doctorid);
     return citas;
   }
 
-  @Get('todas/:doctorid')
-  async getTodas(@Param('doctorid') doctorid: string) {
+  @Get('getcitasdoctor/:doctorid')
+  async getTodasDoctor(@Param('doctorid') doctorid: string) {
     const citas = await this.citasDoctor.ejecutar(doctorid);
     return citas;
   }
