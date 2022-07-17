@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Inject, Param, Put} from '@nestjs/common';
-import { AgendarCitaDTO } from 'src/cita/aplicacion/dto/AgendarCitaDTO';
-import { AgendarCita } from 'src/cita/aplicacion/servicios/AgendarCita';
+import { AgendarCitaDTO } from '../../aplicacion/dto/AgendarCitaDTO';
+import { AgendarCita } from '../../aplicacion/servicios/AgendarCita';
 import { BuscarCitasPaciente } from '../../aplicacion/servicios/BuscarCitasPaciente';
 import { CitasDoctor } from '../../aplicacion/servicios/CitasDoctor';
 import { CitasSolicitadasDoctor } from '../../aplicacion/servicios/CitasSolicitadasDoctor';
@@ -39,7 +39,7 @@ export class CitaController {
   async postAgendar(@Body() datos: AgendarCitaDTO, @Param('citaid') citaid: string) {
     datos.idCita = citaid;
     const citas = await this.agendarCita.ejecutar(datos);
-    console.log(citas);
+    return citas
   }
 
 

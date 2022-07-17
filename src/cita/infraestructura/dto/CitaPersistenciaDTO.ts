@@ -6,8 +6,8 @@ export interface CitaPersistenciaDTO{
     statuscita: string;
     modalidad: string;
     motivo: string;
-    fechacita: Date;
-    horacita: Date;
+    fechacita: string;
+    horacita: string;
     duracion: number;
     doctor: {
         id_doctor: string,

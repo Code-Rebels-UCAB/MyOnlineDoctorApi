@@ -18,14 +18,27 @@ export class RepositorioCita implements IRepositorioCita {
   }
 
   async obtenerCitaById(id_cita: string) {
-    const cita = await this.RepositorioCita.find({
-      where: {
-        id_cita: id_cita,
-      },
-    });
-
+    const cita = this.RepositorioCita.createQueryBuilder('citas')
+    .leftJoinAndSelect('citas.doctor', 'doctor')
+    .leftJoinAndSelect('citas.paciente', 'paciente')
+    .where('citas.id_cita = :id', {
+      id: id_cita,
+    })
+    .select([
+      'citas.id_cita',
+      'citas.statuscita',
+      'citas.modalidad',
+      'citas.motivo',
+      'citas.fechacita',
+      'citas.horacita',
+      'citas.duracion',
+      'doctor.id_doctor',
+      'paciente.id_paciente',
+    ])
+    .getOne();
     return cita;
   }
+
 
   async obtenerCitaByDoctor(id_doctor: string) {
     const listaCitas = await this.RepositorioCita.createQueryBuilder('citas')

@@ -7,7 +7,7 @@ import { LoggerService } from '../../../commun/infraestructura/logger/logger.ser
 import { RepositorioCita } from '../adaptadores/RepositorioCita';
 import { CitaORM } from '../persistencia/Cita.orm';
 import { CitaController} from './cita.controller';
-import { AgendarCita } from 'src/cita/aplicacion/servicios/AgendarCita';
+import { AgendarCita } from '../../aplicacion/servicios/AgendarCita';
 import { BuscarCitasPaciente } from '../../aplicacion/servicios/BuscarCitasPaciente';
 
 
