@@ -1,23 +1,17 @@
+export interface IRepositorioCita {
+  //QUERYS
+  obtenerTodasLasCitas();
 
+  obtenerCitaById(id_cita: string);
 
-export interface IRepositorioCita {  
-    
-    //QUERYS
-    obtenerTodasLasCitas();
+  obtenerCitaByDoctor(id_doctor: string);
 
-    obtenercitaById(id_cita: string);
+  obtenerCitaByPaciente(id_paciente: string);
 
-    obtenercitaByDoctor(id_doctor: string);
+  obtenerCitaByFecha(fecha: string);
 
-    obtenercitaByPaciente(id_paciente: string);
-    
-    obtenercitaByFecha(fecha: string);
+  //Comandos
+  crearCita();
 
-    //Comandos
-    crearCita();
-
-    actualizarStatusCita();
-
-
+  actualizarStatusCita();
 }
-  
