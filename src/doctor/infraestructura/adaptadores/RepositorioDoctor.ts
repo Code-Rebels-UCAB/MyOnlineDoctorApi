@@ -14,7 +14,7 @@ export class RepositorioDoctor implements IRepositorioDoctor {
     ) { }
     
 
-    async obtenerDoctorByEspecialidad(especialidad: string) {
+    async obtenerDoctorByEspecialidad(especialidad: string): Promise<DoctorORM[]> {
         if(especialidad !=null || especialidad != undefined){
             especialidad = especialidad.toLowerCase().replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
         }else{
@@ -32,15 +32,29 @@ export class RepositorioDoctor implements IRepositorioDoctor {
         return doctoresFiltrados;
     }
     
-    obtenerDoctorByNombre(nombre: string) {
-        throw new Error('Method not implemented.');
-    }
+    async obtenerDoctorByNombreorApellido(nombre: string): Promise<DoctorORM[]> {
+        if(nombre !=null || nombre != undefined){
+            nombre = nombre.toLowerCase().replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+        }else{
+            nombre = '';
+        }
+
+        const doctoresFiltrados =  await this._doctorRepository.createQueryBuilder('doctores')
+
+        return 
+    } 
+
+
     obtenerTopDoctores() {
         throw new Error('Method not implemented.');
     }
+
+    
     bloquearDoctor(id: string) {
         throw new Error('Method not implemented.');
     }
+
+
     calificarDoctor(id: string, calificacion: number) {
         throw new Error('Method not implemented.');
     }
