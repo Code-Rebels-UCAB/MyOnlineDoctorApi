@@ -1,4 +1,4 @@
-import { CitaPacienteDTO } from "src/cita/aplicacion/dto/CitasPacienteDTO";
+import { CitaPacienteDTO } from "../../aplicacion/dto/CitasPacienteDTO";
 import { CitaDataDTO } from "../../aplicacion/dto/CitaDataDTO";
 import { CitaPersistenciaDTO } from "../dto/CitaPersistenciaDTO";
 
