@@ -3,12 +3,10 @@ import { IServicioAplicacion } from "../../../commun/aplicacion/IServicioAplicac
 import { Resultado } from "../../../commun/aplicacion/Resultado";
 import { IRepositorioCita } from "../puertos/IRepositorioCita";
 import { IExcepcion } from "../../../commun/dominio/excepcciones/IExcepcion";
-import { CitaTodasDTO } from "../dto/CitasTodasDTO";
+import { CitaPacienteDTO } from "../dto/CitasPacienteDTO";
 
 
-
-
-export class CitasDoctor implements IServicioAplicacion<string,CitaTodasDTO[]>
+export class BuscarCitasPaciente implements IServicioAplicacion<string,CitaPacienteDTO[]>
 {
     public constructor(
         private readonly logger: ILogger,
@@ -16,13 +14,12 @@ export class CitasDoctor implements IServicioAplicacion<string,CitaTodasDTO[]>
     ) {}
 
 
-    async ejecutar(doctorid: string): Promise<Resultado<CitaTodasDTO[]>> {
+    async ejecutar(pacienteid: string): Promise<Resultado<CitaPacienteDTO[]>> {
         try{
-            const Citas:CitaTodasDTO[] = await this.repositorioCita.obtenerCitasDeDoctor(doctorid);
-            this.logger.log("El doctor tiene un total de " + Citas.length.toString() + ' citas', '');
-            return Resultado.Exito<CitaTodasDTO[]>(Citas);
+            const CitasPaciente: CitaPacienteDTO[] = await this.repositorioCita.obtenerCitaByPaciente(pacienteid);
             
-
+            return Resultado.Exito<CitaPacienteDTO[]>(CitasPaciente);
+            
         }
         catch (error) {
             let errores: IExcepcion = error;

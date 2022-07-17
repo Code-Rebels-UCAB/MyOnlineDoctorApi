@@ -36,9 +36,24 @@ export class RepositorioCita implements IRepositorioCita {
   }
 
   async obtenerCitaByPaciente(id_paciente: string) {
-    const listaCitas = await this.RepositorioCita.createQueryBuilder('citas')
-      .where('citas.paciente = :id', { id: id_paciente })
+
+      const listaCitas = this.RepositorioCita.createQueryBuilder('citas')
+      .leftJoinAndSelect('citas.paciente', 'paciente')
+      .where('citas.doctor = :id', {
+        id: id_paciente,
+      })
+      .select([
+        'citas.id_cita',
+        'citas.statuscita',
+        'citas.modalidad',
+        'citas.horacita',
+        'paciente.id_paciente',
+        'doctor.id_doctor',
+        'doctor.p_nombre',
+        'doctor.p_apellido',
+      ])
       .getMany();
+
 
     return listaCitas;
   }
