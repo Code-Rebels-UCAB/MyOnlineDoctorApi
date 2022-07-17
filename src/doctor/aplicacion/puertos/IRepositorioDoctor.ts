@@ -5,7 +5,7 @@ export interface IRepositorioDoctor {
     //QUERYS
     obtenerDoctorByEspecialidad(especialidad: string);
 
-    obtenerDoctorByNombre(nombre: string);
+    obtenerDoctorByNombreorApellido(nombre: string);
 
     obtenerTopDoctores();
 
