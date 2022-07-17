@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Inject, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
+import { Controller, Get, Inject, Param} from '@nestjs/common';
 import { CitasSolicitadasDoctor } from 'src/cita/aplicacion/servicios/CitasSolicitadasDoctor';
 
 
@@ -11,7 +11,7 @@ export class CitaController {
   ) {}
 
   @Get('solicitadas/:doctorid')
-  async getCitasSolicitadasByDoctor(@Param('doctorid') doctorid: string) {
+  async getSolicitadas(@Param('doctorid') doctorid: string) {
     const citas = await this.citasSolicitadasDoctor.ejecutar(doctorid);
     return citas;
   }

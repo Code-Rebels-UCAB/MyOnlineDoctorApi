@@ -1,12 +1,14 @@
 import { ILogger } from "../../../commun/aplicacion/ILogger";
 import { IServicioAplicacion } from "src/commun/aplicacion/IServicioAplicacion";
 import { Resultado } from "../../../commun/aplicacion/Resultado";
-import { CitaDataDTO } from "../dto/CitaDataDTO";
 import { IRepositorioCita } from "../puertos/IRepositorioCita";
+import { CitaSolicitadasDTO } from "../dto/CitasSolicitadasDTO";
+import { IExcepcion } from "src/commun/dominio/excepcciones/IExcepcion";
 
 
 
-export class CitasSolicitadasDoctor implements IServicioAplicacion<string,any>
+
+export class CitasSolicitadasDoctor implements IServicioAplicacion<string,CitaSolicitadasDTO[]>
 {
     public constructor(
         private readonly logger: ILogger,
@@ -14,14 +16,18 @@ export class CitasSolicitadasDoctor implements IServicioAplicacion<string,any>
     ) {}
 
 
-    async ejecutar(doctorid: string): Promise<Resultado<any>> {
+    async ejecutar(doctorid: string): Promise<Resultado<CitaSolicitadasDTO[]>> {
         try{
-            const CitasSolicidas = await this.repositorioCita.obtenerCitaDeDoctorByStatus('Solicitada',doctorid);
+            const CitasSolicidas:CitaSolicitadasDTO[] = await this.repositorioCita.obtenerCitaDeDoctorByStatus('Solicitada',doctorid);
+            this.logger.log("Citas Solicitas al Doctor: " + CitasSolicidas[0].doctor.p_nombre + CitasSolicidas[0].doctor.p_apellido, '');
+            return Resultado.Exito<CitaSolicitadasDTO[]>(CitasSolicidas);
+            
 
-            return Resultado.Exito<any>(CitasSolicidas);
         }
         catch (error) {
-
+            let errores: IExcepcion = error;
+            this.logger.error("Error inesperado:", errores.mensaje);
+            return Resultado.Falla(error);
         }
 
     }

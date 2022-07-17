@@ -52,6 +52,7 @@ export class RepositorioCita implements IRepositorioCita {
   }
 
   obtenerCitaDeDoctorByStatus(statuscita: string, doctorid: string) {
+
     const citas = this.RepositorioCita.createQueryBuilder('citas')
       .leftJoinAndSelect('citas.doctor', 'doctor')
       .leftJoinAndSelect('citas.paciente', 'paciente')
@@ -59,9 +60,21 @@ export class RepositorioCita implements IRepositorioCita {
         status: statuscita,
         id: doctorid,
       })
+      .select([
+        'citas.id_cita',
+        'citas.statuscita',
+        'citas.modalidad',
+        'citas.motivo',
+        'doctor.id_doctor',
+        'doctor.p_nombre',
+        'doctor.p_apellido',
+        'paciente.id_paciente',
+        'paciente.p_nombre',
+        'paciente.p_apellido',
+      ])
       .getMany();
 
-    return citas;
+    return citas
   }
 
   crearCita() {
