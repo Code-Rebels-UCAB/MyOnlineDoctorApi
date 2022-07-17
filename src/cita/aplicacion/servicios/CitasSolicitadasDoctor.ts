@@ -1,9 +1,9 @@
 import { ILogger } from "../../../commun/aplicacion/ILogger";
-import { IServicioAplicacion } from "src/commun/aplicacion/IServicioAplicacion";
+import { IServicioAplicacion } from "../../../commun/aplicacion/IServicioAplicacion";
 import { Resultado } from "../../../commun/aplicacion/Resultado";
 import { IRepositorioCita } from "../puertos/IRepositorioCita";
 import { CitaSolicitadasDTO } from "../dto/CitasSolicitadasDTO";
-import { IExcepcion } from "src/commun/dominio/excepcciones/IExcepcion";
+import { IExcepcion } from "../../../commun/dominio/excepcciones/IExcepcion";
 
 
 
