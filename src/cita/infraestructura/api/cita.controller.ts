@@ -1,11 +1,13 @@
-import { Controller, Get, Inject, Param } from '@nestjs/common';
+import { Controller, Get, Inject, Param, Query } from '@nestjs/common';
 import { CitasSolicitadasDoctor } from 'src/cita/aplicacion/servicios/CitasSolicitadasDoctor';
+import { CantidadPacientesDoctor } from 'src/cita/aplicacion/servicios/CantidadPacientesDoctor';
 
 @Controller('api/cita')
 export class CitaController {
   constructor(
     @Inject(CitasSolicitadasDoctor)
     private readonly citasSolicitadasDoctor: CitasSolicitadasDoctor,
+    private readonly cantidadPacientesDoctor: CantidadPacientesDoctor,
   ) {}
 
   @Get('solicitadas/:doctorid')
@@ -14,9 +16,9 @@ export class CitaController {
     return citas;
   }
 
-  @Get('pacientes/:doctorId')
-  async getPacientesDoctor(@Param('doctorId') doctorId: string) {
-    const pacientes = await this.citasSolicitadasDoctor.ejecutar(doctorId);
+  @Get('pacientes/doctor')
+  async getPacientesDoctor(@Query('doctorId') doctorId: string) {
+    const pacientes = await this.cantidadPacientesDoctor.ejecutar(doctorId);
     return pacientes;
   }
 }
