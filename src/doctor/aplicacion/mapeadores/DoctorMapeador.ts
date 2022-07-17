@@ -36,7 +36,7 @@ export class DoctorMapeador{
         
 
         return new Doctor(DoctorID.crear(Guid.parse(datos.id_doctor)), NombreCompletoDoctor.crear(datos.p_apellido, datos.p_apellido), GeneroDoctor.crear(datos.sexo as any),
-                        CorreoDoctor.crear(datos.correo), PasswordDoctor.crear(datos.password), Calificacion.crear(datos.calificacion), Ubicacion.crear(Latitud.crear(datos.latitud), Longitud.crear(datos.longitud)), FotoDoctor.crear(datos.foto),
+                        CorreoDoctor.crear(datos.correo), PasswordDoctor.crear(datos.password), Calificacion.crear(datos.calificacion, datos.cantidad_calificacion), Ubicacion.crear(Latitud.crear(datos.latitud), Longitud.crear(datos.longitud)), FotoDoctor.crear(datos.foto),
                         StatusDoctor.crear(datos.status as any),especialidades );
     }
 
@@ -54,7 +54,8 @@ export class DoctorMapeador{
             nombre: doctor.getNombreDoctor().getNombre() +" "+ doctor.getNombreDoctor().getApellido(),
             sexo: doctor.getGeneroDoctor().getGeneroDoctor(),
             correo: doctor.getCorreoDoctor().getCorreoDoctor(),
-            especialidades: especialidadesString
+            especialidades: especialidadesString,
+            calificacion: doctor.getCalificacion().calcularCalificacion()
         }
 
         

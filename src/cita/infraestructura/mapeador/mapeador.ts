@@ -1,4 +1,4 @@
-import { CitaDataDTO } from "src/cita/aplicacion/dto/CitaDataDTO";
+import { CitaDataDTO } from "../../aplicacion/dto/CitaDataDTO";
 import { CitaPersistenciaDTO } from "../dto/CitaPersistenciaDTO";
 
 export class CitaMapeador{
