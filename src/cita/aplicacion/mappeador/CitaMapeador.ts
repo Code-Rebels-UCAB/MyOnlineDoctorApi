@@ -1,16 +1,16 @@
 import { Guid } from "guid-typescript";
-import { DatosCitaVO } from "src/cita/dominio/dto/DatosCitaVO";
-import { Duracion } from "src/cita/dominio/values/Duracion";
-import { FechaCita } from "src/cita/dominio/values/FechaCita";
-import { HoraCita } from "src/cita/dominio/values/HoraCita";
-import { Modalidad } from "src/cita/dominio/values/Modalidad";
-import { Motivo } from "src/cita/dominio/values/Motivo";
-import { StatusCita } from "src/cita/dominio/values/StatusCita";
-import { TipoCita } from "src/cita/dominio/values/TipoCita";
-import { TipoModalidad } from "src/cita/dominio/values/TipoModalidad";
-import { CitaID } from "src/commun/dominio/values/CitaID";
-import { DoctorID } from "src/commun/dominio/values/DoctorID";
-import { PacienteID } from "src/commun/dominio/values/PacienteID";
+import { DatosCitaVO } from "../../dominio/dto/DatosCitaVO";
+import { Duracion } from "../../dominio/values/Duracion";
+import { FechaCita } from "../../dominio/values/FechaCita";
+import { HoraCita } from "../../dominio/values/HoraCita";
+import { Modalidad } from "../../dominio/values/Modalidad";
+import { Motivo } from "../../dominio/values/Motivo";
+import { StatusCita } from "../../dominio/values/StatusCita";
+import { TipoCita } from "../../dominio/values/TipoCita";
+import { TipoModalidad } from "../../dominio/values/TipoModalidad";
+import { CitaID } from "../../../commun/dominio/values/CitaID";
+import { DoctorID } from "../../../commun/dominio/values/DoctorID";
+import { PacienteID } from "../../../commun/dominio/values/PacienteID";
 import { CitaDataDTO } from "../dto/CitaDataDTO";
 
 

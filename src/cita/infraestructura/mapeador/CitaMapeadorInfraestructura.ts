@@ -1,7 +1,8 @@
-import { CitaDataDTO } from "src/cita/aplicacion/dto/CitaDataDTO";
+import { CitaPacienteDTO } from "../../aplicacion/dto/CitasPacienteDTO";
+import { CitaDataDTO } from "../../aplicacion/dto/CitaDataDTO";
 import { CitaPersistenciaDTO } from "../dto/CitaPersistenciaDTO";
 
-export class CitaMapeador{
+export class CitaMapeadorInfraestructura{
     public static covertirInfraestructuraAplicacion(datos: CitaPersistenciaDTO):CitaDataDTO{
 
         return {

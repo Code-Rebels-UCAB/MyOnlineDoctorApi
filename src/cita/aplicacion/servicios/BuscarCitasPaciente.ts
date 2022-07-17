@@ -2,13 +2,11 @@ import { ILogger } from "../../../commun/aplicacion/ILogger";
 import { IServicioAplicacion } from "../../../commun/aplicacion/IServicioAplicacion";
 import { Resultado } from "../../../commun/aplicacion/Resultado";
 import { IRepositorioCita } from "../puertos/IRepositorioCita";
-import { CitaSolicitadasDTO } from "../dto/CitasSolicitadasDTO";
 import { IExcepcion } from "../../../commun/dominio/excepcciones/IExcepcion";
+import { CitaPacienteDTO } from "../dto/CitasPacienteDTO";
 
 
-
-
-export class CitasSolicitadasDoctor implements IServicioAplicacion<string,CitaSolicitadasDTO[]>
+export class BuscarCitasPaciente implements IServicioAplicacion<string,CitaPacienteDTO[]>
 {
     public constructor(
         private readonly logger: ILogger,
@@ -16,13 +14,16 @@ export class CitasSolicitadasDoctor implements IServicioAplicacion<string,CitaSo
     ) {}
 
 
-    async ejecutar(doctorid: string): Promise<Resultado<CitaSolicitadasDTO[]>> {
+    async ejecutar(pacienteid: string): Promise<Resultado<CitaPacienteDTO[]>> {
         try{
-            const CitasSolicidas:CitaSolicitadasDTO[] = await this.repositorioCita.obtenerCitaDeDoctorByStatus('Solicitada',doctorid);
-            this.logger.log("Citas Solicitas al Doctor: " + CitasSolicidas[0].doctor.p_nombre + CitasSolicidas[0].doctor.p_apellido, '');
-            return Resultado.Exito<CitaSolicitadasDTO[]>(CitasSolicidas);
-            
+            const CitasPaciente: CitaPacienteDTO[] = await this.repositorioCita.obtenerCitaByPaciente(pacienteid);
 
+            
+            this.logger.log("Busqueda de Todas la citas de un Paciente", "Total: " + CitasPaciente.length );
+            
+            
+            return Resultado.Exito<CitaPacienteDTO[]>(CitasPaciente);
+            
         }
         catch (error) {
             let errores: IExcepcion = error;

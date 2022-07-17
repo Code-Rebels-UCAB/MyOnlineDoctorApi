@@ -5,8 +5,8 @@ import { Guid } from "guid-typescript";
 export class HistoriaMedicaID implements IValueObject {
   private readonly id: Guid;
 
-  private constructor() {
-    this.id = Guid.create();
+  private constructor(id: Guid) {
+    this.id = id;
   }
 
   public getHistoriaMedicaID() {
@@ -17,7 +17,10 @@ export class HistoriaMedicaID implements IValueObject {
     return this.id == historiaMedicaID.getHistoriaMedicaID();
   }
 
-  public static crear(){
-    return new HistoriaMedicaID();
+  public static crear(id?: Guid){
+    if (id) {
+      return new HistoriaMedicaID(id);
+    }
+    return new HistoriaMedicaID(Guid.create());
   }
 }

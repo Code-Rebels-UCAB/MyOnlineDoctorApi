@@ -4,8 +4,8 @@ import { Guid } from 'guid-typescript';
 export class RegistroMedicoID implements IValueObject {
   private readonly id: Guid;
 
-  private constructor() {
-    this.id = Guid.create();
+  private constructor(id: Guid) {
+    this.id = id;
   }
 
   public getRegistroMedicoID(): Guid {
@@ -16,8 +16,11 @@ export class RegistroMedicoID implements IValueObject {
     return this.id == id.getRegistroMedicoID();
   }
 
-  public static crear(){
-    return new RegistroMedicoID();
+  public static crear(id?: Guid){
+    if (id){
+      return new RegistroMedicoID(id);
+    }
+    return new RegistroMedicoID(Guid.create());
   }
 
 }

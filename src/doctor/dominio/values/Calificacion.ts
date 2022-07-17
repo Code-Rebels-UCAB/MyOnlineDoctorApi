@@ -3,7 +3,7 @@ import { CalificacionInvalida } from '../excepciones/CalificacionInvalida';
 import { CalificacionVacia } from '../excepciones/CalificacionVacia';
 
 export class Calificacion implements IValueObject {
-  private constructor(private readonly puntaje: number) {}
+  private constructor(private readonly puntaje: number, private readonly cantidad: number) {}
 
   public getCalificacion() {
     return this.puntaje;
@@ -13,7 +13,7 @@ export class Calificacion implements IValueObject {
     return this.puntaje == calificacion.getCalificacion();
   }
 
-  public static crear(puntaje: number) {
+  public static crear(puntaje: number, cantidad: number) {
     if (puntaje == null || puntaje == undefined) {
       throw new CalificacionVacia(
         'La calificacción del Doctor del doctor no puede ser vacia',
@@ -24,6 +24,15 @@ export class Calificacion implements IValueObject {
       );
     }
 
-    return new Calificacion(puntaje);
+    return new Calificacion(puntaje, cantidad);
+  }
+
+  public calcularCalificacion(): number{
+    if(this.cantidad == 0 ){
+      return 0;
+    }
+    else{
+      return Number((this.puntaje / this.cantidad).toFixed(2));
+    }
   }
 }
