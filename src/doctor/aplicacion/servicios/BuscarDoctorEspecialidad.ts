@@ -2,19 +2,24 @@ import { Doctor } from "../../dominio/entidades/Doctor";
 import { ILogger } from "../../../commun/aplicacion/ILogger";
 import { DoctorMapeador } from "../mapeadores/DoctorMapeador";
 import { IRepositorioDoctor } from "../puertos/IRepositorioDoctor"
+import { IServicioAplicacion } from "src/commun/aplicacion/IServicioAplicacion";
+import { Resultado } from "src/commun/aplicacion/Resultado";
+import { ListadoDoctoresDTO } from "../dtos/ListadoDoctoresDTO";
 
-export class BuscarDoctorEspecialidad 
+export class BuscarDoctorEspecialidad implements IServicioAplicacion<string,ListadoDoctoresDTO[]>
 {
     public constructor(
         private readonly logger: ILogger,
         private readonly repositorioDoctor: IRepositorioDoctor,
     ) {}
 
-    public async ejecutar(query: string): Promise<any> {
-        try {
+
+
+    async ejecutar(data: string): Promise<Resultado<ListadoDoctoresDTO[]>> {
+         try {
             // Obtenemos los datos del empleado de persistencia
             const doctores = await this.repositorioDoctor.obtenerDoctorByEspecialidad(
-                query,
+                data,
             );
 
             //Mapear de persistencia a dominio
@@ -32,12 +37,13 @@ export class BuscarDoctorEspecialidad
             if (ListadoDoctores.length > 0) {
                 total_doctores = ListadoDoctores.length
             }
-            this.logger.log("Buscar por especailidad: " + query, "Doctores Encontrados: " + total_doctores);
+            this.logger.log("Buscar por especailidad: " + data, "Doctores Encontrados: " + total_doctores);
 
-            return ListadoDoctores;        
+            return Resultado.Exito<ListadoDoctoresDTO[]>(ListadoDoctores);
+
         }
         catch (error) {
-            throw error;
+            return Resultado.Falla(error);
         }
     }
 }
