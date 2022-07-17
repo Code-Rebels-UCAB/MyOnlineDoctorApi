@@ -11,5 +11,5 @@ export interface CitaPersistenciaDTO{
     duracion: number;
     paciente: string;
     doctor: string;
-    registroMedico: RegistroMedicoORM[];
+    registroMedico?: RegistroMedicoORM[];
 }
