@@ -1,4 +1,6 @@
-import { Body, Controller, Get, Inject, Param, Post} from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, Put} from '@nestjs/common';
+import { AgendarCitaDTO } from 'src/cita/aplicacion/dto/AgendarCitaDTO';
+import { AgendarCita } from 'src/cita/aplicacion/servicios/AgendarCita';
 import { CitasDoctor } from '../../aplicacion/servicios/CitasDoctor';
 import { CitasSolicitadasDoctor } from '../../aplicacion/servicios/CitasSolicitadasDoctor';
 
@@ -10,6 +12,7 @@ export class CitaController {
     @Inject(CitasSolicitadasDoctor)
     private readonly citasSolicitadasDoctor: CitasSolicitadasDoctor,
     private readonly citasDoctor: CitasDoctor,
+    private readonly agendarCita: AgendarCita
   ) {}
 
   @Get('getsolicitudesdoctor/:doctorid')
@@ -24,10 +27,12 @@ export class CitaController {
     return citas;
   }
 
-  @Post('agendar/:citaid')
-  async postAgendar(@Body() datos: string, @Param('citaid') citaid: string) {
-    //const citas = await this.citasDoctor.ejecutar(datos,citaid);
-    return datos;
+  @Put('putagendarcita/:citaid')
+  async postAgendar(@Body() datos: AgendarCitaDTO, @Param('citaid') citaid: string) {
+    datos.idCita = citaid;
+    const citas = await this.agendarCita.ejecutar(datos);
+    console.log(citas);
+    return citas;
   }
 
 

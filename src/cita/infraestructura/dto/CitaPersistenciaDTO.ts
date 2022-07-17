@@ -9,7 +9,11 @@ export interface CitaPersistenciaDTO{
     fechacita: Date;
     horacita: Date;
     duracion: number;
-    paciente: string;
-    doctor: string;
+    doctor: {
+        id_doctor: string,
+    };
+    paciente: {
+        id_paciente: string,
+    };
     registroMedico?: RegistroMedicoORM[];
 }
