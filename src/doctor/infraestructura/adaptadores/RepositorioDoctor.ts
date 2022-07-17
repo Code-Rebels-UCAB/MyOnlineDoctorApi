@@ -38,7 +38,9 @@ export class RepositorioDoctor implements IRepositorioDoctor {
         }else{
             nombre = '';
         }
-
+        /*
+        select * from doctores where p_nombre Like '%Eric%' or p_apellido Like '%Wilson';
+        */
         const doctoresFiltrados =  await this._doctorRepository.createQueryBuilder('doctores')
 
         return 
@@ -49,7 +51,7 @@ export class RepositorioDoctor implements IRepositorioDoctor {
         throw new Error('Method not implemented.');
     }
 
-    
+
     bloquearDoctor(id: string) {
         throw new Error('Method not implemented.');
     }

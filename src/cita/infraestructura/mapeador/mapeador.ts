@@ -12,7 +12,7 @@ export class CitaMapeador{
             modalidad: datos.modalidad,
             motivo: datos.motivo,
             fechaCita: datos.fechacita,
-            horaCita: datos.horacita,
+            horaCita: datos.horacita.toString(),
             duracion: datos.duracion.toString()
         }
     }
@@ -25,7 +25,7 @@ export class CitaMapeador{
             modalidad: datos.modalidad,
             motivo: datos.motivo,
             fechacita: datos.fechaCita,
-            horacita: datos.horaCita,
+            horacita: new Date(datos.horaCita),
             duracion: Number(datos.duracion),
             paciente: datos.idPaciente,
             doctor: datos.idDoctor
