@@ -1,28 +1,31 @@
 import { DynamicModule, Module } from '@nestjs/common';
-
+import { PacienteController } from './paciente.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from '../../../commun/infraestructura/logger/logger.module';
 import { LoggerService } from '../../../commun/infraestructura/logger/logger.service';
-import { BuscarDoctorEspecialidad } from '../../aplicacion/servicios/BuscarDoctorEspecialidad';
+import { buscarCantidadTodosLosPacientes } from 'src/paciente/aplicacion/servicios/buscarCantidadPacientesSistema';
 import { RepositorioPaciente } from '../adaptadores/RepositorioPaciente';
 import { PacienteORM } from '../persistencia/Paciente.orm';
-import { DoctorController } from '';
 
 @Module({
   imports: [TypeOrmModule.forFeature([PacienteORM]), LoggerModule],
   controllers: [PacienteController],
-  providers: [BuscarDoctorEspecialidad, RepositorioDoctor, LoggerService],
+  providers: [
+    buscarCantidadTodosLosPacientes,
+    RepositorioPaciente,
+    LoggerService,
+  ],
 })
-export class DoctorModule {
+export class PacienteModule {
   static register(): DynamicModule {
     return {
-      module: DoctorModule,
+      module: PacienteModule,
       providers: [
         {
-          inject: [LoggerService, RepositorioDoctor],
-          provide: BuscarDoctorEspecialidad,
-          useFactory: (logger: LoggerService, userRepo: RepositorioDoctor) =>
-            new BuscarDoctorEspecialidad(logger, userRepo),
+          inject: [LoggerService, RepositorioPaciente],
+          provide: buscarCantidadTodosLosPacientes,
+          useFactory: (logger: LoggerService, userRepo: RepositorioPaciente) =>
+            new buscarCantidadTodosLosPacientes(logger, userRepo),
         },
       ],
     };
