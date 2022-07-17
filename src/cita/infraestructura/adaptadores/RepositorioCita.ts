@@ -51,6 +51,21 @@ export class RepositorioCita implements IRepositorioCita {
     return listaCitas;
   }
 
+  obtenerCitaDeDoctorByStatus(statuscita: string, doctorid: string) {
+
+    const citas = this.RepositorioCita.createQueryBuilder('citas')
+      .leftJoinAndSelect('citas.doctor', 'doctor')
+      .leftJoinAndSelect('citas.paciente', 'paciente')
+      .where('citas.statuscita = :status AND citas.doctor = :id', {
+        status: statuscita,
+        id: doctorid,
+      })
+      .getMany();
+
+    return citas
+  }
+
+
   crearCita() {
     throw new Error('Method not implemented');
   }
