@@ -46,8 +46,7 @@ export class RepositorioDoctor implements IRepositorioDoctor {
                                                                .where("(doctores.p_nombre ||' '|| doctores.p_apellido) like :nombre", { nombre: `%${nombre}%`})
                                                                .getMany(); 
 
-        console.log('doctoresFiltrados', doctoresFiltrados);
-        console.log('nombre', nombre);
+
         return doctoresFiltrados;
     } 
 
