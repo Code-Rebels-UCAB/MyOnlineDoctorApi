@@ -36,8 +36,23 @@ export class RepositorioCita implements IRepositorioCita {
   }
 
   async obtenerCitaByPaciente(id_paciente: string) {
-    const listaCitas = await this.RepositorioCita.createQueryBuilder('citas')
-      .where('citas.paciente = :id', { id: id_paciente })
+
+      const listaCitas = await this.RepositorioCita.createQueryBuilder('citas')
+      .leftJoinAndSelect('citas.paciente', 'paciente')
+      .leftJoinAndSelect('citas.doctor', 'doctor')
+      .where('citas.paciente = :id', {
+        id: id_paciente,
+      })
+      .select([
+        'citas.id_cita',
+        'citas.statuscita',
+        'citas.modalidad',
+        'citas.horacita',
+        'paciente.id_paciente',
+        'doctor.id_doctor',
+        'doctor.p_nombre',
+        'doctor.p_apellido',
+      ])
       .getMany();
 
     return listaCitas;
@@ -51,8 +66,8 @@ export class RepositorioCita implements IRepositorioCita {
     return listaCitas;
   }
 
-  obtenerCitaDeDoctorByStatus(statuscita: string, doctorid: string) {
-    const citas = this.RepositorioCita.createQueryBuilder('citas')
+  async obtenerCitaDeDoctorByStatus(statuscita: string, doctorid: string) {
+    const citas = await this.RepositorioCita.createQueryBuilder('citas')
       .leftJoinAndSelect('citas.doctor', 'doctor')
       .leftJoinAndSelect('citas.paciente', 'paciente')
       .where('citas.statuscita = :status AND citas.doctor = :id', {
@@ -76,8 +91,8 @@ export class RepositorioCita implements IRepositorioCita {
     return citas;
   }
 
-  obtenerCitasDeDoctor(doctorid: string) {
-    const citas = this.RepositorioCita.createQueryBuilder('citas')
+  async obtenerCitasDeDoctor(doctorid: string) {
+    const citas = await this.RepositorioCita.createQueryBuilder('citas')
       .leftJoinAndSelect('citas.paciente', 'paciente')
       .where('citas.doctor = :id', {
         id: doctorid,

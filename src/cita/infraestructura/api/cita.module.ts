@@ -7,6 +7,7 @@ import { LoggerService } from '../../../commun/infraestructura/logger/logger.ser
 import { RepositorioCita } from '../adaptadores/RepositorioCita';
 import { CitaORM } from '../persistencia/Cita.orm';
 import { CitaController} from './cita.controller';
+import { BuscarCitasPaciente } from '../../aplicacion/servicios/BuscarCitasPaciente';
 
 
 @Module({
@@ -40,7 +41,15 @@ export class CitaModule {
             logger: LoggerService,
             userRepo: RepositorioCita,
           ) => new CitasDoctor(logger, userRepo),
-        },  
+        },
+        {
+          inject: [LoggerService, RepositorioCita],
+          provide: BuscarCitasPaciente,
+          useFactory: (
+            logger: LoggerService,
+            userRepo: RepositorioCita,
+          ) => new BuscarCitasPaciente(logger, userRepo),
+        },
         
       ],
     };
