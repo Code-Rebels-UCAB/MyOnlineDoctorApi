@@ -15,7 +15,11 @@ export class RepositorioDoctor implements IRepositorioDoctor {
     
 
     async obtenerDoctorByEspecialidad(especialidad: string) {
-        especialidad = especialidad.toLowerCase().replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+        if(especialidad !=null || especialidad != undefined){
+            especialidad = especialidad.toLowerCase().replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+        }else{
+            especialidad = '';
+        }
 
         const doctoresFiltrados =  await this._doctorRepository.createQueryBuilder('doctores')
                                         .leftJoin('doctores.especialidades', 'especialidades')
