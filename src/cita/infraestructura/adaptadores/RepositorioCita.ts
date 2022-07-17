@@ -18,13 +18,13 @@ export class RepositorioCita implements IRepositorioCita {
   }
 
   async obtenerCitaById(id_cita: string) {
-    const listaCitas = await this.RepositorioCita.find({
+    const cita = await this.RepositorioCita.find({
       where: {
         id_cita: id_cita,
       },
     });
 
-    return listaCitas;
+    return cita;
   }
 
   async obtenerCitaByDoctor(id_doctor: string) {
@@ -43,8 +43,12 @@ export class RepositorioCita implements IRepositorioCita {
     return listaCitas;
   }
 
-  obtenerCitaByFecha(fecha: string) {
-    throw new Error('Method not implemented');
+  async obtenerCitaByFecha(fecha: string) {
+    const listaCitas = await this.RepositorioCita.createQueryBuilder(
+      'citas',
+    ).where('citas.fechacita = :fecha', { fecha: fecha });
+
+    return listaCitas;
   }
 
   crearCita() {
