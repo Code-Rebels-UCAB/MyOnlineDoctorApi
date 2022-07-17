@@ -13,11 +13,18 @@ export class RepositorioCita implements IRepositorioCita {
 
   async obtenerTodasLasCitas() {
     const listaCitas = await this.RepositorioCita.find();
+
     return listaCitas;
   }
 
-  obtenerCitaById(id_cita: string) {
-    throw new Error('Method not implemented');
+  async obtenerCitaById(id_cita: string) {
+    const listaCitas = await this.RepositorioCita.find({
+      where: {
+        id_cita: id_cita,
+      },
+    });
+
+    return listaCitas;
   }
 
   obtenerCitaByDoctor(id_doctor: string) {
