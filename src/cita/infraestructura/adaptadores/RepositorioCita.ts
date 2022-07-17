@@ -11,8 +11,9 @@ export class RepositorioCita implements IRepositorioCita {
     private readonly RepositorioCita: Repository<CitaORM>,
   ) {}
 
-  obtenerTodasLasCitas() {
-    throw new Error('Method not implemented');
+  async obtenerTodasLasCitas() {
+    const listaCitas = await this.RepositorioCita.find();
+    return listaCitas;
   }
 
   obtenerCitaById(id_cita: string) {
