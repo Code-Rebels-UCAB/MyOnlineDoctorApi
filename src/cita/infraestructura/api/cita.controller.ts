@@ -11,7 +11,7 @@ export class CitaController {
     @Inject(CitasSolicitadasDoctor)
     private readonly citasSolicitadasDoctor: CitasSolicitadasDoctor,
     private readonly citasDoctor: CitasDoctor,
-    private readonly buscarCitasPaciente: BuscarCitasPaciente
+    private readonly buscarCitasPaciente: BuscarCitasPaciente,
     private readonly cantidadPacientesDoctor: CantidadPacientesDoctor,
     private readonly cantidadCitasDia: CantidadCitasDiaDoctor,
   ) {}
@@ -34,7 +34,7 @@ export class CitaController {
     return citas;
   }
 
-@Get('cantidadPacientes/doctor')
+  @Get('cantidadPacientes/doctor')
   async getPacientesDoctor(@Query('doctorId') doctorId: string) {
     const pacientes = await this.cantidadPacientesDoctor.ejecutar(doctorId);
     return pacientes;
@@ -45,5 +45,4 @@ export class CitaController {
     const citas = await this.cantidadCitasDia.ejecutar(doctorId);
     return citas;
   }
-
 }

@@ -7,14 +7,21 @@ import { LoggerModule } from '../../../commun/infraestructura/logger/logger.modu
 import { LoggerService } from '../../../commun/infraestructura/logger/logger.service';
 import { RepositorioCita } from '../adaptadores/RepositorioCita';
 import { CitaORM } from '../persistencia/Cita.orm';
-import { CitaController} from './cita.controller';
+import { CitaController } from './cita.controller';
 import { BuscarCitasPaciente } from '../../aplicacion/servicios/BuscarCitasPaciente';
 import { CantidadCitasDiaDoctor } from '../../aplicacion/servicios/CantidadCitasDiaDoctor';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CitaORM]), LoggerModule],
   controllers: [CitaController],
-  providers: [CitasSolicitadasDoctor, CitasDoctor,CantidadPacientesDoctor,CantidadCitasDiaDoctor,RepositorioCita, LoggerService],
+  providers: [
+    CitasSolicitadasDoctor,
+    CitasDoctor,
+    CantidadPacientesDoctor,
+    CantidadCitasDiaDoctor,
+    RepositorioCita,
+    LoggerService,
+  ],
 })
 export class CitaModule {
   static register(): DynamicModule {
@@ -24,26 +31,20 @@ export class CitaModule {
         {
           inject: [LoggerService, RepositorioCita],
           provide: CitasSolicitadasDoctor,
-          useFactory: (
-            logger: LoggerService,
-            userRepo: RepositorioCita,
-          ) => new CitasSolicitadasDoctor(logger, userRepo),
-        },   
+          useFactory: (logger: LoggerService, userRepo: RepositorioCita) =>
+            new CitasSolicitadasDoctor(logger, userRepo),
+        },
         {
           inject: [LoggerService, RepositorioCita],
           provide: CitasDoctor,
-          useFactory: (
-            logger: LoggerService,
-            userRepo: RepositorioCita,
-          ) => new CitasDoctor(logger, userRepo),
+          useFactory: (logger: LoggerService, userRepo: RepositorioCita) =>
+            new CitasDoctor(logger, userRepo),
         },
         {
           inject: [LoggerService, RepositorioCita],
           provide: BuscarCitasPaciente,
-          useFactory: (
-            logger: LoggerService,
-            userRepo: RepositorioCita,
-          ) => new BuscarCitasPaciente(logger, userRepo),
+          useFactory: (logger: LoggerService, userRepo: RepositorioCita) =>
+            new BuscarCitasPaciente(logger, userRepo),
         },
         {
           inject: [LoggerService, RepositorioCita],
