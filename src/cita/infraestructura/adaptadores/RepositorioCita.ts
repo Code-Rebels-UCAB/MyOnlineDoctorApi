@@ -28,15 +28,19 @@ export class RepositorioCita implements IRepositorioCita {
   }
 
   async obtenerCitaByDoctor(id_doctor: string) {
-    const listaCItas = await this.RepositorioCita.createQueryBuilder('citas')
-      .where('citas.id_cita = :id', { id: id_doctor })
+    const listaCitas = await this.RepositorioCita.createQueryBuilder('citas')
+      .where('citas.doctor = :id', { id: id_doctor })
       .getMany();
 
-    return listaCItas;
+    return listaCitas;
   }
 
-  obtenerCitaByPaciente(id_paciente: string) {
-    throw new Error('Method not implemented');
+  async obtenerCitaByPaciente(id_paciente: string) {
+    const listaCitas = await this.RepositorioCita.createQueryBuilder(
+      'citas',
+    ).where('citas.paciente = :id', { id: id_paciente });
+
+    return listaCitas;
   }
 
   obtenerCitaByFecha(fecha: string) {
