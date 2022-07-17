@@ -3,9 +3,9 @@ import { ILogger } from "../../../commun/aplicacion/ILogger";
 import { DoctorMapeador } from "../mapeadores/DoctorMapeador";
 import { IRepositorioDoctor } from "../puertos/IRepositorioDoctor"
 import { IServicioAplicacion } from "src/commun/aplicacion/IServicioAplicacion";
-import { Resultado } from "src/commun/aplicacion/Resultado";
+import { Resultado } from "../../../commun/aplicacion/Resultado";
 import { ListadoDoctoresDTO } from "../dtos/ListadoDoctoresDTO";
-import { IExcepcion } from "src/commun/dominio/excepcciones/IExcepcion";
+import { IExcepcion } from "../../../commun/dominio/excepcciones/IExcepcion";
 
 export class BuscarDoctorEspecialidad implements IServicioAplicacion<string,ListadoDoctoresDTO[]>
 {
