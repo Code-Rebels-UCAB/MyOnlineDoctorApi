@@ -35,20 +35,7 @@ export class DoctorMapeador{
         }
         
 
-        // return{
-        //     doctorid: DoctorID.crear(Guid.parse(datos.id_doctor)),
-        //     nombreDoctor: NombreCompletoDoctor.crear(datos.p_nombre, datos.p_apellido),
-        //     generoDoctor: GeneroDoctor.crear(datos.sexo as any),
-        //     correoDoctor: CorreoDoctor.crear(datos.correo),
-        //     passwordDoctor: PasswordDoctor.crear(datos.password),
-        //     calificacion: Calificacion.crear(datos.calificacion),
-        //     ubicacion: Ubicacion.crear(Latitud.crear(datos.latitud), Longitud.crear(datos.longitud)),
-        //     fotoDoctor: FotoDoctor.crear(datos.foto),
-        //     statusDoctor: StatusDoctor.crear(datos.status as any),
-        //     especialidades: especialidades
-        // }
-
-        return new Doctor(DoctorID.crear(Guid.parse(datos.id_doctor)), NombreCompletoDoctor.crear('', ''), GeneroDoctor.crear(datos.sexo as any),
+        return new Doctor(DoctorID.crear(Guid.parse(datos.id_doctor)), NombreCompletoDoctor.crear(datos.p_apellido, datos.p_apellido), GeneroDoctor.crear(datos.sexo as any),
                         CorreoDoctor.crear(datos.correo), PasswordDoctor.crear(datos.password), Calificacion.crear(datos.calificacion), Ubicacion.crear(Latitud.crear(datos.latitud), Longitud.crear(datos.longitud)), FotoDoctor.crear(datos.foto),
                         StatusDoctor.crear(datos.status as any),especialidades );
     }
