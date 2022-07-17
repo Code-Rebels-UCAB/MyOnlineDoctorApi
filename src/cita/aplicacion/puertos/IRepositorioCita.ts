@@ -10,6 +10,10 @@ export interface IRepositorioCita {
 
   obtenerCitaByFecha(fecha: string);
 
+  obtenerCitaDeDoctorByStatus(status: string, doctorid: string);
+
+  obtenerCitasDeDoctor(doctorid: string);
+
   //Comandos
   crearCita();
 

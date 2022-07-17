@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { CitaModule } from './cita/infraestructura/api/cita.module';
 import { CitaORM } from './cita/infraestructura/persistencia/Cita.orm';
 import { ConfigModule } from './commun/infraestructura/config/config.module';
 import { ConfigService } from './commun/infraestructura/config/config.service';
@@ -22,6 +23,7 @@ import { RegistroMedicoORM } from './registro_medico/infraestructura/persistenci
     DatabaseModule,
     ConfigModule,
     DoctorModule.register(),
+    CitaModule.register(),
   ],
   controllers: [AppController],
   providers: [AppService],

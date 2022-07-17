@@ -1,4 +1,4 @@
-import { CitaDataDTO } from "src/cita/aplicacion/dto/CitaDataDTO";
+import { CitaDataDTO } from "../../aplicacion/dto/CitaDataDTO";
 import { CitaPersistenciaDTO } from "../dto/CitaPersistenciaDTO";
 
 export class CitaMapeador{
@@ -12,12 +12,14 @@ export class CitaMapeador{
             modalidad: datos.modalidad,
             motivo: datos.motivo,
             fechaCita: datos.fechacita,
-            horaCita: datos.horacita.toString(),
+            horaCita: datos.horacita.getHours() + ':' + datos.horacita.getMinutes() ,
             duracion: datos.duracion.toString()
         }
     }
 
     public static covertirAplicacionInfraestructura(datos: CitaDataDTO):CitaPersistenciaDTO{
+        const horaStr = datos.horaCita.split(":");
+        var horacita = new Date(null,null,null,Number(horaStr[0]),Number(horaStr[1]));
 
         return {
             id_cita: datos.idCita,
@@ -25,7 +27,7 @@ export class CitaMapeador{
             modalidad: datos.modalidad,
             motivo: datos.motivo,
             fechacita: datos.fechaCita,
-            horacita: new Date(datos.horaCita),
+            horacita: horacita,
             duracion: Number(datos.duracion),
             paciente: datos.idPaciente,
             doctor: datos.idDoctor
