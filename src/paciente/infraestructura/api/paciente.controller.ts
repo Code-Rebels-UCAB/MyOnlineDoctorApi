@@ -9,7 +9,7 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { buscarCantidadTodosLosPacientes } from '../../aplicacion/servicios/buscarCantidadPacientesSistema';
+import { buscarCantidadTodosLosPacientes } from '../../aplicacion/servicios/buscarCantidadPacientesSistema.service';
 
 @Controller('api/paciente')
 export class PacienteController {

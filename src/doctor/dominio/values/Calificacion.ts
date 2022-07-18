@@ -9,6 +9,10 @@ export class Calificacion implements IValueObject {
     return this.puntaje;
   }
 
+  public getCantidad() {
+    return this.cantidad;
+  }
+
   public esIgual(calificacion: Calificacion): boolean {
     return this.puntaje == calificacion.getCalificacion();
   }
@@ -18,11 +22,12 @@ export class Calificacion implements IValueObject {
       throw new CalificacionVacia(
         'La calificacción del Doctor del doctor no puede ser vacia',
       );
-    } else if (Number(puntaje) < 0 || Number(puntaje) > 5) {
-      throw new CalificacionInvalida(
-        'La calificación debe ser un número entre el 0 y 5',
-      );
-    }
+    } 
+    // else if (Number(puntaje) < 0 || Number(puntaje) > 5) {
+    //   throw new CalificacionInvalida(
+    //     'La calificación debe ser un número entre el 0 y 5',
+    //   );
+    // }
 
     return new Calificacion(puntaje, cantidad);
   }

@@ -2,7 +2,7 @@ import { ILogger } from "../../../commun/aplicacion/Ilogger";
 import { IServicioAplicacion } from "../../../commun/aplicacion/IServicioAplicacion";
 import { Resultado } from "../../../commun/aplicacion/Resultado";
 import { IExcepcion } from "../../../commun/dominio/excepcciones/IExcepcion";
-import { Doctor } from "../../../doctor/dominio/entidades/Doctor";
+import { Doctor } from "../../dominio/entidades/Doctor";
 import { ListadoDoctoresDTO } from "../dtos/ListadoDoctoresDTO";
 import { DoctorMapeador } from "../mapeadores/DoctorMapeador";
 import { IRepositorioDoctor } from "../puertos/IRepositorioDoctor";

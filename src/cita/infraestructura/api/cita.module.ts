@@ -1,16 +1,16 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CitasDoctor } from '../../aplicacion/servicios/CitasDoctor';
-import { CitasSolicitadasDoctor } from '../../aplicacion/servicios/CitasSolicitadasDoctor';
-import { CantidadPacientesDoctor } from '../../aplicacion/servicios/CantidadPacientesDoctor';
+import { CitasDoctor } from '../../aplicacion/servicios/CitasDoctor.service';
+import { CitasSolicitadasDoctor } from '../../aplicacion/servicios/CitasSolicitadasDoctor.service';
+import { CantidadPacientesDoctor } from '../../aplicacion/servicios/CantidadPacientesDoctor.service';
 import { LoggerModule } from '../../../commun/infraestructura/logger/logger.module';
 import { LoggerService } from '../../../commun/infraestructura/logger/logger.service';
 import { RepositorioCita } from '../adaptadores/RepositorioCita';
 import { CitaORM } from '../persistencia/Cita.orm';
 import { CitaController} from './cita.controller';
-import { AgendarCita } from '../../aplicacion/servicios/AgendarCita';
-import { BuscarCitasPaciente } from '../../aplicacion/servicios/BuscarCitasPaciente';
-import { CantidadCitasDiaDoctor } from '../../aplicacion/servicios/CantidadCitasDiaDoctor';
+import { AgendarCita } from '../../aplicacion/servicios/AgendarCita.service';
+import { BuscarCitasPaciente } from '../../aplicacion/servicios/BuscarCitasPaciente.service';
+import { CantidadCitasDiaDoctor } from '../../aplicacion/servicios/CantidadCitasDiaDoctor.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CitaORM]), LoggerModule],

@@ -1,11 +1,11 @@
 import { Body, Controller, Get, Inject, Param, Put, Query} from '@nestjs/common';
+import { AgendarCita } from '../../aplicacion/servicios/AgendarCita.service';
+import { BuscarCitasPaciente } from '../../aplicacion/servicios/BuscarCitasPaciente.service';
+import { CitasDoctor } from '../../aplicacion/servicios/CitasDoctor.service';
+import { CitasSolicitadasDoctor } from '../../aplicacion/servicios/CitasSolicitadasDoctor.service';
+import { CantidadPacientesDoctor } from '../../aplicacion/servicios/CantidadPacientesDoctor.service';
+import { CantidadCitasDiaDoctor } from '../../aplicacion/servicios/CantidadCitasDiaDoctor.service';
 import { AgendarCitaDTO } from '../../aplicacion/dto/AgendarCitaDTO';
-import { AgendarCita } from '../../aplicacion/servicios/AgendarCita';
-import { BuscarCitasPaciente } from '../../aplicacion/servicios/BuscarCitasPaciente';
-import { CitasDoctor } from '../../aplicacion/servicios/CitasDoctor';
-import { CitasSolicitadasDoctor } from '../../aplicacion/servicios/CitasSolicitadasDoctor';
-import { CantidadPacientesDoctor } from '../../aplicacion/servicios/CantidadPacientesDoctor';
-import { CantidadCitasDiaDoctor } from '../../aplicacion/servicios/CantidadCitasDiaDoctor';
 
 @Controller('api/cita')
 export class CitaController {
