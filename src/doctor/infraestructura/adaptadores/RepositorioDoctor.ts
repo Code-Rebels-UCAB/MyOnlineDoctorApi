@@ -55,6 +55,13 @@ export class RepositorioDoctor implements IRepositorioDoctor {
         throw new Error('Method not implemented.');
     }
 
+    async obtenerDoctorById(id: string): Promise<DoctorORM> {
+        const doctor:DoctorORM = await this._doctorRepository.findOne({
+            where: { id_doctor: id },
+        });
+        return doctor;
+    }
+
 
     bloquearDoctor(id: string) {
         throw new Error('Method not implemented.');
@@ -62,6 +69,7 @@ export class RepositorioDoctor implements IRepositorioDoctor {
 
 
     calificarDoctor(id: string, calificacion: number) {
+        
         throw new Error('Method not implemented.');
     }
   

@@ -3,7 +3,7 @@ import { CalificacionInvalida } from '../excepciones/CalificacionInvalida';
 import { CalificacionVacia } from '../excepciones/CalificacionVacia';
 
 export class Calificacion implements IValueObject {
-  private constructor(private readonly puntaje: number, private readonly cantidad: number) {}
+  private constructor(private puntaje: number, private cantidad: number) {}
 
   public getCalificacion() {
     return this.puntaje;
@@ -35,4 +35,11 @@ export class Calificacion implements IValueObject {
       return Number((this.puntaje / this.cantidad).toFixed(2));
     }
   }
+
+  public static agregarCalificacion(calificacionDoctor:Calificacion, nuevaCalificacion: Calificacion): Calificacion{
+
+    return new Calificacion(calificacionDoctor.getCalificacion() + nuevaCalificacion.getCalificacion(), calificacionDoctor.cantidad + 1);
+
+  }
+
 }

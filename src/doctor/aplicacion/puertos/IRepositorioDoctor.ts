@@ -9,6 +9,8 @@ export interface IRepositorioDoctor {
 
     obtenerTopDoctores();
 
+    obtenerDoctorById(id: string);
+
     //Comandos
     bloquearDoctor(id: string);
 
