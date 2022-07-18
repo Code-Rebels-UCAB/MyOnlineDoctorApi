@@ -111,7 +111,7 @@ export class RepositorioCita implements IRepositorioCita {
     return citas;
   }
 
-  crearCita() {
+  crearCita(cita: CitaORM) {
     throw new Error('Method not implemented');
   }
 

@@ -1,3 +1,5 @@
+import { CitaORM } from "src/cita/infraestructura/persistencia/Cita.orm";
+
 export interface IRepositorioCita {
   //QUERYS
   obtenerTodasLasCitas();
@@ -15,7 +17,7 @@ export interface IRepositorioCita {
   obtenerCitasDeDoctor(doctorid: string);
 
   //Comandos
-  crearCita();
+  crearCita(cita: CitaORM);
 
   actualizarStatusCita();
 }

@@ -12,6 +12,10 @@ import { CitaID } from "../../../commun/dominio/values/CitaID";
 import { DoctorID } from "../../../commun/dominio/values/DoctorID";
 import { PacienteID } from "../../../commun/dominio/values/PacienteID";
 import { CitaDataDTO } from "../dto/CitaDataDTO";
+import { SolicitarCitaDTO } from "../dto/SolicitarCitaDTO";
+import { Cita } from "../../dominio/entidades/Cita";
+import { SolicitarCitaDataVO } from "../../dominio/dto/SolicitarCitaDataVO";
+import { SolicitarCitaPersistenciaDTO } from "../../infraestructura/persistencia/SolicitarCitaPersistenciaDTO";
 
 
 export class CitaMapeador{
@@ -41,6 +45,27 @@ export class CitaMapeador{
             fechaCita: data.fechaCita.fechaCita,
             horaCita: data.horaCita.horaCita.toString(),
             duracion: data.duracion.duracion.toString(),
+        }
+    }
+
+    public static convertirSolicitarCitaADominio( data:SolicitarCitaDTO ):SolicitarCitaDataVO {
+
+        return{
+            modalidad: Modalidad.crear(data.modalidad as any),
+            motivo: Motivo.crear(data.motivo as any),
+            idPaciente: PacienteID.crear(Guid.parse(data.id_paciente)),
+            idDoctor: DoctorID.crear(Guid.parse(data.id_doctor)),
+        }
+    }
+
+    public static convertirSolicitarCitaAPersistencia(data: Cita): SolicitarCitaPersistenciaDTO{
+        return {
+            id_cita: data.obtenerIdentificador.toString(),
+            statuscita: data.getStatus().statusCita.toString(),
+            modalidad: data.getModalidad().modalidad.toString(),
+            motivo: data.getMotivo().motivo.toString(),
+            idpaciente: data.getPaciente().getPacienteID().toString(),
+            iddoctor: data.getDoctor().getDoctorID().toString(),
         }
     }
 }
