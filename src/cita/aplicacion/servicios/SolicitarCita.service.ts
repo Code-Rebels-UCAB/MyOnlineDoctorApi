@@ -25,7 +25,10 @@ export class SolicitarCita implements IServicioAplicacion<SolicitarCitaDTO,void>
 
             //creamos el agregado de cita
             let cita = Cita.solicitarCita(citaDominioMapeado.modalidad, citaDominioMapeado.motivo, citaDominioMapeado.idPaciente, citaDominioMapeado.idDoctor);
-            
+            //AQUI SE DEBERIA HACER LO DE LOS EVENTOS
+            //var eventos = cita.obtenerEventos();
+            //cita.limpiarEventos();
+
             //mapeamos a persistencia
             let citaPersistencia = CitaMapeador.convertirSolicitarCitaAPersistencia(cita);
 
