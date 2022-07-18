@@ -2,7 +2,7 @@ import { DynamicModule, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CitasDoctor } from '../../aplicacion/servicios/CitasDoctor';
 import { CitasSolicitadasDoctor } from '../../aplicacion/servicios/CitasSolicitadasDoctor';
-import { CantidadPacientesDoctor } from 'src/cita/aplicacion/servicios/CantidadPacientesDoctor';
+import { CantidadPacientesDoctor } from '../../aplicacion/servicios/CantidadPacientesDoctor';
 import { LoggerModule } from '../../../commun/infraestructura/logger/logger.module';
 import { LoggerService } from '../../../commun/infraestructura/logger/logger.service';
 import { RepositorioCita } from '../adaptadores/RepositorioCita';

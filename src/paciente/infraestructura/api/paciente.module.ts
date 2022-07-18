@@ -3,7 +3,7 @@ import { PacienteController } from './paciente.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from '../../../commun/infraestructura/logger/logger.module';
 import { LoggerService } from '../../../commun/infraestructura/logger/logger.service';
-import { buscarCantidadTodosLosPacientes } from 'src/paciente/aplicacion/servicios/buscarCantidadPacientesSistema';
+import { buscarCantidadTodosLosPacientes } from '../../aplicacion/servicios/buscarCantidadPacientesSistema';
 import { RepositorioPaciente } from '../adaptadores/RepositorioPaciente';
 import { PacienteORM } from '../persistencia/Paciente.orm';
 

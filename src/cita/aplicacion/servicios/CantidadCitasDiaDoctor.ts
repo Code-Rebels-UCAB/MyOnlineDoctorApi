@@ -1,8 +1,8 @@
 import { IServicioAplicacion } from '../../../commun/aplicacion/IServicioAplicacion';
 import { ILogger } from '../../../commun/aplicacion/ILogger';
 import { IRepositorioCita } from '../puertos/IRepositorioCita';
-import { Resultado } from 'src/commun/aplicacion/Resultado';
-import { IExcepcion } from 'src/commun/dominio/excepcciones/IExcepcion';
+import { Resultado } from '../../../commun/aplicacion/Resultado';
+import { IExcepcion } from '../../../commun/dominio/excepcciones/IExcepcion';
 
 export class CantidadCitasDiaDoctor
   implements IServicioAplicacion<string, number>

@@ -3,8 +3,9 @@ import { IServicioAplicacion } from "../../../commun/aplicacion/IServicioAplicac
 import { Resultado } from "../../../commun/aplicacion/Resultado";
 import { IRepositorioCita } from "../puertos/IRepositorioCita";
 import { AgendarCitaDTO } from "../dto/AgendarCitaDTO";
-import { CitaMapeadorInfraestructura } from "../../infraestructura/mapeador/CitaMapeadorInfraestructura";
 import { IExcepcion } from "../../../commun/dominio/excepcciones/IExcepcion";
+import { CitaMapeador } from "../mappeador/CitaMapeador";
+import { Cita } from "../../dominio/entidades/Cita";
 
 
 export class AgendarCita implements IServicioAplicacion<AgendarCitaDTO,any>
@@ -17,14 +18,29 @@ export class AgendarCita implements IServicioAplicacion<AgendarCitaDTO,any>
 
     async ejecutar(datos: AgendarCitaDTO): Promise<Resultado<any>> {
         try{
-            const cita = await this.repositorioCita.obtenerCitaById(datos.idCita);
+            const citaPersit = await this.repositorioCita.obtenerCitaById(datos.idCita);
 
-            //console.log(cita);
-            var algo = CitaMapeadorInfraestructura.covertirInfraestructuraAplicacion(cita);
-            console.log(algo);
+            var CitaDataDTO = CitaMapeador.covertirInfraestructuraAplicacion(citaPersit);
+            var CitaVO = CitaMapeador.convertirAplicacionDominio(CitaDataDTO);
+            var cita = new Cita(
+              CitaVO.idCita,
+              CitaVO.status,
+              CitaVO.modalidad,
+              CitaVO.motivo,
+              CitaVO.idPaciente,
+              CitaVO.idDoctor,
+              CitaVO.fechaCita,
+              CitaVO.horaCita,
+              CitaVO.duracion,
+            );
+
+            cita.agendarCita(CitaVO.fechaCita,CitaVO.horaCita, CitaVO.duracion);
+            //var eventos = cita.obtenerEventos();
+            //cita.limpiarEventos();
+
             //const CitaActualizada = await this.repositorioCita.actualizarCitaAgendada(datos.fechaCita,datos.horaCita,datos.idCita);
             //this.logger.log("El doctor tiene un total de " + Citas.length.toString() + ' citas', '');
-            return Resultado.Exito<any>(algo);
+            return Resultado.Exito<any>(CitaDataDTO);
             
 
         }

@@ -4,8 +4,8 @@ import { AgendarCita } from '../../aplicacion/servicios/AgendarCita';
 import { BuscarCitasPaciente } from '../../aplicacion/servicios/BuscarCitasPaciente';
 import { CitasDoctor } from '../../aplicacion/servicios/CitasDoctor';
 import { CitasSolicitadasDoctor } from '../../aplicacion/servicios/CitasSolicitadasDoctor';
-import { CantidadPacientesDoctor } from 'src/cita/aplicacion/servicios/CantidadPacientesDoctor';
-import { CantidadCitasDiaDoctor } from 'src/cita/aplicacion/servicios/CantidadCitasDiaDoctor';
+import { CantidadPacientesDoctor } from '../../aplicacion/servicios/CantidadPacientesDoctor';
+import { CantidadCitasDiaDoctor } from '../../aplicacion/servicios/CantidadCitasDiaDoctor';
 
 @Controller('api/cita')
 export class CitaController {
