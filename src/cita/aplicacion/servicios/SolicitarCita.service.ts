@@ -6,9 +6,6 @@ import { IExcepcion } from "../../../commun/dominio/excepcciones/IExcepcion";
 import { CitaSolicitadasDTO } from "../dto/CitasSolicitadasDTO";
 import { SolicitarCitaDTO } from "../dto/SolicitarCitaDTO";
 import { Cita } from "src/cita/dominio/entidades/Cita";
-import { Modalidad } from "src/cita/dominio/values/Modalidad";
-import { Motivo } from "src/cita/dominio/values/Motivo";
-import { PacienteID } from "src/commun/dominio/values/PacienteID";
 import { CitaMapeador } from "../mappeador/CitaMapeador";
 
 
@@ -34,6 +31,7 @@ export class SolicitarCita implements IServicioAplicacion<SolicitarCitaDTO,CitaS
             //guardamos la cita
             await this.repositorioCita.crearCita(citaPersistencia);
 
+            return 
         }
         catch (error) {
             let errores: IExcepcion = error;

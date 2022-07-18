@@ -5,7 +5,7 @@ export interface CitaDataDTO {
     status: string;
     modalidad: string;
     motivo: string;
-    fechaCita: Date;
+    fechaCita: string;
     horaCita: string;
     duracion: string;
 }

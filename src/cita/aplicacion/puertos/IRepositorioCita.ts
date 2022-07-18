@@ -1,4 +1,4 @@
-import { SolicitarCitaPersistenciaDTO } from "../../../cita/infraestructura/persistencia/SolicitarCitaPersistenciaDTO";
+import { SolicitarCitaPersistenciaDTO } from "../../infraestructura/persistencia/SolicitarCitaPersistenciaDTO";
 
 export interface IRepositorioCita {
   //QUERYS
@@ -15,9 +15,15 @@ export interface IRepositorioCita {
   obtenerCitaDeDoctorByStatus(status: string, doctorid: string);
 
   obtenerCitasDeDoctor(doctorid: string);
+  
+  obtenerCantidadPacientesPorDoctor(doctorId: string);
+
+  obtenerCantidadCitasDelDiaDoctor(doctorId: string);
 
   //Comandos
   crearCita(cita: SolicitarCitaPersistenciaDTO);
 
   actualizarStatusCita();
+
+  actualizarCitaAgendada(citaid: string, fecha: string, hora: string, duracion: string);
 }

@@ -19,7 +19,9 @@ export class CitasDoctor implements IServicioAplicacion<string,CitaTodasDTO[]>
     async ejecutar(doctorid: string): Promise<Resultado<CitaTodasDTO[]>> {
         try{
             const Citas:CitaTodasDTO[] = await this.repositorioCita.obtenerCitasDeDoctor(doctorid);
-            this.logger.log("El doctor tiene un total de " + Citas.length.toString() + ' citas', '');
+            if (Citas.length > 0) {
+                this.logger.log("El doctor tiene un total de " + Citas.length.toString() + ' citas', '');
+            }
             return Resultado.Exito<CitaTodasDTO[]>(Citas);
             
 

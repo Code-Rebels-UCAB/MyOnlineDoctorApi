@@ -23,7 +23,7 @@ import { TipoCita } from "../values/TipoCita";
 export class Cita extends Agregado<CitaID> {
 
 
-    private constructor( 
+    constructor( 
         private readonly id: CitaID,
         private status: StatusCita,
         private modalidad: Modalidad,
