@@ -1,10 +1,10 @@
 import { Guid } from "guid-typescript";
-import { ILogger } from "src/commun/aplicacion/Ilogger";
-import { IServicioAplicacion } from "src/commun/aplicacion/IServicioAplicacion";
-import { Resultado } from "src/commun/aplicacion/Resultado";
-import { IExcepcion } from "src/commun/dominio/excepcciones/IExcepcion";
-import { PacienteID } from "src/commun/dominio/values/PacienteID";
-import { Calificacion } from "src/doctor/dominio/values/Calificacion";
+import { ILogger } from "../../../commun/aplicacion/Ilogger";
+import { IServicioAplicacion } from "../../../commun/aplicacion/IServicioAplicacion";
+import { Resultado } from "../../../commun/aplicacion/Resultado";
+import { IExcepcion } from "../../../commun/dominio/excepcciones/IExcepcion";
+import { PacienteID } from "../../../commun/dominio/values/PacienteID";
+import { Calificacion } from "../../dominio/values/Calificacion";
 import { CalificarDoctorDTO } from "../dtos/CalificarDoctorDTO";
 import { ListadoDoctoresDTO } from "../dtos/ListadoDoctoresDTO";
 import { DoctorMapeador } from "../mapeadores/DoctorMapeador";

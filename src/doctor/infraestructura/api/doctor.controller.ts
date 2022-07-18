@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Inject, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
-import { BuscarDoctorNombreApellido } from 'src/doctor/aplicacion/servicios/BuscarDoctorNombreApellido';
-import { CalificarDoctor } from 'src/doctor/aplicacion/servicios/CalificarDoctor';
+import { BuscarDoctorNombreApellido } from '../../aplicacion/servicios/BuscarDoctorNombreApellido';
+import { CalificarDoctor } from '../../aplicacion/servicios/CalificarDoctor';
 import { BuscarDoctorEspecialidad } from '../../aplicacion/servicios/BuscarDoctorEspecialidad';
 import { CalificarDoctorDTO } from '../../aplicacion/dtos/CalificarDoctorDTO';
 
