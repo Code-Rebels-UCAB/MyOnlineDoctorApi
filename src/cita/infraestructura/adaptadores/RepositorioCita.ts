@@ -49,8 +49,7 @@ export class RepositorioCita implements IRepositorioCita {
   }
 
   async obtenerCitaByPaciente(id_paciente: string) {
-
-      const listaCitas = await this.RepositorioCita.createQueryBuilder('citas')
+    const listaCitas = await this.RepositorioCita.createQueryBuilder('citas')
       .leftJoinAndSelect('citas.paciente', 'paciente')
       .leftJoinAndSelect('citas.doctor', 'doctor')
       .where('citas.paciente = :id', {
@@ -131,6 +130,34 @@ export class RepositorioCita implements IRepositorioCita {
     .where('citas.id_cita = :id', {
       id: citaid,
     })
+  }
+  
+  async obtenerCantidadPacientesPorDoctor(doctorId: string) {
+    const pacientesDoctor = await this.RepositorioCita.createQueryBuilder(
+      'citas',
+    )
+      .distinctOn(['citas.paciente'])
+      .where('citas.doctor = :id', { id: doctorId })
+      .getMany();
+
+    const cantidadPacientesDoctor = pacientesDoctor.length;
+
+    return cantidadPacientesDoctor;
+  }
+
+  async obtenerCantidadCitasDelDiaDoctor(doctorId: string) {
+    const citasDiaDoctor = await this.RepositorioCita.createQueryBuilder(
+      'citas',
+    )
+      .where('citas.doctor = :id', { id: doctorId })
+      .andWhere('citas.fechacita = :fecha', {
+        fecha: new Date().toISOString().split('T')[0],
+      })
+      .getMany();
+
+    const cantidadCitasDia = citasDiaDoctor.length;
+
+    return cantidadCitasDia;
   }
 
   crearCita() {

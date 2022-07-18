@@ -12,18 +12,25 @@ import { DoctorModule } from './doctor/infraestructura/api/doctor.module';
 import { DoctorORM } from './doctor/infraestructura/persistencia/Doctor.orm';
 import { EspecialidadORM } from './doctor/infraestructura/persistencia/Especialidad.orm';
 import { HistoriaMedicaORM } from './historia_medica/infraestructura/persistencia/HistoriaMedica.orm';
+import { PacienteModule } from './paciente/infraestructura/api/paciente.module';
 import { PacienteORM } from './paciente/infraestructura/persistencia/Paciente.orm';
 import { RegistroMedicoORM } from './registro_medico/infraestructura/persistencia/RegistroMedico.orm';
 
-
-
 @Module({
   imports: [
-    TypeOrmModule.forFeature([DoctorORM, EspecialidadORM, PacienteORM, CitaORM, RegistroMedicoORM, HistoriaMedicaORM]),
+    TypeOrmModule.forFeature([
+      DoctorORM,
+      EspecialidadORM,
+      PacienteORM,
+      CitaORM,
+      RegistroMedicoORM,
+      HistoriaMedicaORM,
+    ]),
     DatabaseModule,
     ConfigModule,
     DoctorModule.register(),
     CitaModule.register(),
+    PacienteModule.register(),
   ],
   controllers: [AppController],
   providers: [AppService],
