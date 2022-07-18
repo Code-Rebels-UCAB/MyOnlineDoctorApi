@@ -19,7 +19,9 @@ export class CitasSolicitadasDoctor implements IServicioAplicacion<string,CitaSo
     async ejecutar(doctorid: string): Promise<Resultado<CitaSolicitadasDTO[]>> {
         try{
             const CitasSolicidas:CitaSolicitadasDTO[] = await this.repositorioCita.obtenerCitaDeDoctorByStatus('Solicitada',doctorid);
-            this.logger.log("Citas Solicitas al Doctor: " + CitasSolicidas[0].doctor.p_nombre + CitasSolicidas[0].doctor.p_apellido, '');
+            if (CitasSolicidas.length > 0) {
+                this.logger.log("Citas Solicitas al Doctor: " + CitasSolicidas[0].doctor.p_nombre + CitasSolicidas[0].doctor.p_apellido, '');
+            }
             return Resultado.Exito<CitaSolicitadasDTO[]>(CitasSolicidas);
             
 
