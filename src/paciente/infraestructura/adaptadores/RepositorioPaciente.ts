@@ -21,4 +21,13 @@ export class RepositorioPaciente implements IRepositorioPaciente {
 
     return totalPacientes;
   }
+
+  async guardarTokenPaciente(pacienteid: string, tokenPaciente: string) {
+    await this.repositorioPaciente.createQueryBuilder('pacientes')
+    .update(PacienteORM)
+    .set({tokenF: tokenPaciente})
+    .where('id_paciente = :id', {
+      id: pacienteid,
+    }).execute();
+  }
 }
