@@ -1,3 +1,4 @@
+import { CalificarDoctorDTO } from "../dtos/CalificarDoctorDTO";
 
 
 export interface IRepositorioDoctor {  
@@ -9,10 +10,12 @@ export interface IRepositorioDoctor {
 
     obtenerTopDoctores();
 
+    obtenerDoctorById(id: string);
+
     //Comandos
     bloquearDoctor(id: string);
 
-    calificarDoctor(id: string, calificacion: number);
+    calificarDoctor(id: string, puntaje: number, cantidad: number);
 
 
 }

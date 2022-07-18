@@ -2,6 +2,7 @@ import { DynamicModule,Module } from '@nestjs/common';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BuscarDoctorNombreApellido } from '../../aplicacion/servicios/BuscarDoctorNombreApellido';
+import { CalificarDoctor } from '../../aplicacion/servicios/CalificarDoctor';
 import { LoggerModule } from '../../../commun/infraestructura/logger/logger.module';
 import { LoggerService } from '../../../commun/infraestructura/logger/logger.service';
 import { BuscarDoctorEspecialidad } from '../../aplicacion/servicios/BuscarDoctorEspecialidad';
@@ -39,7 +40,15 @@ export class DoctorModule {
             logger: LoggerService,
             userRepo: RepositorioDoctor,
           ) => new BuscarDoctorNombreApellido(logger, userRepo),
-        }        
+        },
+        {
+          inject: [LoggerService, RepositorioDoctor],
+          provide: CalificarDoctor,
+          useFactory: (
+            logger: LoggerService,
+            userRepo: RepositorioDoctor,
+          ) => new CalificarDoctor(logger, userRepo),
+        },        
       ],
     };
   }
