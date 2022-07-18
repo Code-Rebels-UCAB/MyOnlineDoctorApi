@@ -35,6 +35,7 @@ export class AgendarCita implements IServicioAplicacion<AgendarCitaDTO,void>
             );
 
             cita.agendarCita(CitaVO.fechaCita,CitaVO.horaCita, CitaVO.duracion);
+            //AQUI SE DEBERIA HACER LO DE LOS EVENTOS
             //var eventos = cita.obtenerEventos();
             //cita.limpiarEventos();
 
