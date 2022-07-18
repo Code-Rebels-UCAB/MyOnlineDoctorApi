@@ -24,4 +24,6 @@ export interface IRepositorioCita {
   actualizarStatusCita();
 
   actualizarCitaAgendada(citaid: string, fecha: string, hora: string, duracion: string);
+
+  actualizarDatosVideollamadaCita(citaid: string, nombreCanal: string, tokenCita: string);
 }

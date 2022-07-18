@@ -6,6 +6,7 @@ import { CitasSolicitadasDoctor } from '../../aplicacion/servicios/CitasSolicita
 import { CantidadPacientesDoctor } from '../../aplicacion/servicios/CantidadPacientesDoctor.service';
 import { CantidadCitasDiaDoctor } from '../../aplicacion/servicios/CantidadCitasDiaDoctor.service';
 import { AgendarCitaDTO } from '../../aplicacion/dto/AgendarCitaDTO';
+import { GenerarTokenCita } from 'src/cita/aplicacion/servicios/GenerarTokenCita.service';
 
 @Controller('api/cita')
 export class CitaController {
@@ -17,6 +18,7 @@ export class CitaController {
     private readonly buscarCitasPaciente: BuscarCitasPaciente,
     private readonly cantidadPacientesDoctor: CantidadPacientesDoctor,
     private readonly cantidadCitasDia: CantidadCitasDiaDoctor,
+    private readonly videollamadaCita: GenerarTokenCita
   ) {}
 
   @Get('getsolicitudesdoctor/:doctorid')
@@ -54,5 +56,11 @@ export class CitaController {
   async geCitasDelDiaDoctor(@Query('doctorId') doctorId: string) {
     const citas = await this.cantidadCitasDia.ejecutar(doctorId);
     return citas;
+  }
+
+  @Get('/:citaid')
+  async getGenerarTokenCita(@Param('citaid') citaid: string) {
+    const cita = await this.videollamadaCita.ejecutar(citaid);
+    return cita;
   }
 }

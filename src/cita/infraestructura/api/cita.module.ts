@@ -11,11 +11,13 @@ import { CitaController} from './cita.controller';
 import { AgendarCita } from '../../aplicacion/servicios/AgendarCita.service';
 import { BuscarCitasPaciente } from '../../aplicacion/servicios/BuscarCitasPaciente.service';
 import { CantidadCitasDiaDoctor } from '../../aplicacion/servicios/CantidadCitasDiaDoctor.service';
+import { VideollamadaCita } from '../adaptadores/VideollamadaCita';
+import { GenerarTokenCita } from 'src/cita/aplicacion/servicios/GenerarTokenCita.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CitaORM]), LoggerModule],
   controllers: [CitaController],
-  providers: [CitasSolicitadasDoctor, CitasDoctor, AgendarCita, RepositorioCita, LoggerService],
+  providers: [CitasSolicitadasDoctor, CitasDoctor, AgendarCita, RepositorioCita, LoggerService, VideollamadaCita, GenerarTokenCita],
 })
 export class CitaModule {
   static register(): DynamicModule {
@@ -59,6 +61,12 @@ export class CitaModule {
             logger: LoggerService,
             userRepo: RepositorioCita,
           ) => new AgendarCita(logger, userRepo),
+        },
+        {
+          inject: [LoggerService, VideollamadaCita, RepositorioCita],
+          provide: GenerarTokenCita,
+          useFactory: (logger: LoggerService, videollamadaCita: VideollamadaCita, userRepo: RepositorioCita) =>
+            new GenerarTokenCita(logger,videollamadaCita,userRepo),
         },
       ],
     };

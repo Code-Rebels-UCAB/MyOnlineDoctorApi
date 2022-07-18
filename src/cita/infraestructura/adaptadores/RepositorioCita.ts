@@ -131,7 +131,7 @@ export class RepositorioCita implements IRepositorioCita {
       id: citaid,
     }).execute();
   }
-  
+  30
   async obtenerCantidadPacientesPorDoctor(doctorId: string) {
     const pacientesDoctor = await this.RepositorioCita.createQueryBuilder(
       'citas',
@@ -158,6 +158,15 @@ export class RepositorioCita implements IRepositorioCita {
     const cantidadCitasDia = citasDiaDoctor.length;
 
     return cantidadCitasDia;
+  }
+
+  async actualizarDatosVideollamadaCita(citaid: string, nombreCanal: string, tokenCita: string) {
+    const datosCita = await this.RepositorioCita.createQueryBuilder('citas')
+    .update(CitaORM)
+    .set({channelA: nombreCanal, tokenA: tokenCita})
+    .where('id_cita = :id', {
+      id: citaid,
+    }).execute();
   }
 
   crearCita() {
