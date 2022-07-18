@@ -32,6 +32,8 @@ export class CalificarDoctor implements IServicioAplicacion<CalificarDoctorDTO, 
             //Eventos de dominio
             //doctorDominio.obtenerEventos()
 
+            this.repositorioDoctor.calificarDoctor(data.idDoctor, doctor.calificacion + data.calificacionDoctor, doctor.cantidad_calificacion + 1);
+
             this.logger.log("El Doctor: " + doctor.p_nombre + doctor.p_apellido + "fue calificado", "Con una calificacion: " + data.calificacionDoctor);
             return Resultado.Exito<void>();
         } catch (error) {

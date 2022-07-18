@@ -68,9 +68,13 @@ export class RepositorioDoctor implements IRepositorioDoctor {
     }
 
 
-    calificarDoctor(id: string, calificacion: number) {
-        
-        throw new Error('Method not implemented.');
+    async calificarDoctor(id: string, calificacion: number, cantidad: number):Promise<void> {
+        await this._doctorRepository.update({
+            id_doctor: id
+        }, {
+            calificacion: calificacion,
+            cantidad_calificacion: cantidad
+        });
     }
   
 }
