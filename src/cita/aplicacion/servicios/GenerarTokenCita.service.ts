@@ -19,11 +19,15 @@ export class GenerarTokenCita implements IServicioAplicacion<string,Videollamada
         try{
             const nombreCanal = citaid;
             const tokenTemp = await this.videollamadaCita.generarTokenVideollamada(nombreCanal);
+            const datosVideollamada: VideollamadaCitaDTO = {
+                nombreCanal:nombreCanal, 
+                tokenTemp:tokenTemp
+            };
 
             this.logger.log("Generación de token temporal para la cita con identificador " + citaid, "Token:" +  tokenTemp);
 
-            const datosVideollamada: VideollamadaCitaDTO = await this.repositorioCita.actualizarDatosVideollamadaCita(citaid,nombreCanal,tokenTemp);
-            this.logger.log(`La cita con identificador ${citaid}  ha sido modificada`, "");
+            await this.repositorioCita.actualizarDatosVideollamadaCita(citaid,nombreCanal,tokenTemp);
+            this.logger.log(`La cita con identificador ${citaid} ha sido modificada`, "");
 
             return Resultado.Exito<VideollamadaCitaDTO>(datosVideollamada);
         }catch(error){
