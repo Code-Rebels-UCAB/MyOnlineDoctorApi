@@ -12,11 +12,13 @@ import { AgendarCita } from '../../aplicacion/servicios/AgendarCita.service';
 import { BuscarCitasPaciente } from '../../aplicacion/servicios/BuscarCitasPaciente.service';
 import { CantidadCitasDiaDoctor } from '../../aplicacion/servicios/CantidadCitasDiaDoctor.service';
 import { SolicitarCita } from '../../aplicacion/servicios/SolicitarCita.service';
+import { DoctorORM } from '../../../doctor/infraestructura/persistencia/Doctor.orm';
+import { PacienteORM } from '../../../paciente/infraestructura/persistencia/Paciente.orm';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([CitaORM]), LoggerModule],
+  imports: [TypeOrmModule.forFeature([CitaORM, DoctorORM, PacienteORM]), LoggerModule],
   controllers: [CitaController],
-  providers: [CitasSolicitadasDoctor, CitasDoctor, AgendarCita, RepositorioCita, LoggerService],
+  providers: [CitasSolicitadasDoctor, CitasDoctor, AgendarCita, RepositorioCita, LoggerService, SolicitarCita],
 })
 export class CitaModule {
   static register(): DynamicModule {

@@ -10,7 +10,7 @@ import { CitaMapeador } from "../mappeador/CitaMapeador";
 import { CitaDataDTO } from "../dto/CitaDataDTO";
 
 
-export class SolicitarCita implements IServicioAplicacion<SolicitarCitaDTO,CitaDataDTO>
+export class SolicitarCita implements IServicioAplicacion<SolicitarCitaDTO,void>
 {
     public constructor(
         private readonly logger: ILogger,
@@ -18,7 +18,7 @@ export class SolicitarCita implements IServicioAplicacion<SolicitarCitaDTO,CitaD
     ) {}
 
 
-    async ejecutar(datos: SolicitarCitaDTO): Promise<Resultado<CitaDataDTO>> {
+    async ejecutar(datos: SolicitarCitaDTO): Promise<Resultado<void>> {
         try{
            // mapeamos de aplicacion a dominio
             let citaDominioMapeado = CitaMapeador.convertirSolicitarCitaADominio(datos);
@@ -32,7 +32,7 @@ export class SolicitarCita implements IServicioAplicacion<SolicitarCitaDTO,CitaD
             //guardamos la cita
             let cita_guardada = await this.repositorioCita.crearCita(citaPersistencia);
 
-            return Resultado.Exito<CitaDataDTO>(CitaMapeador.covertirInfraestructuraAplicacion(cita_guardada));
+            return Resultado.Exito<void>(null);
         }
         catch (error) {
             let errores: IExcepcion = error;

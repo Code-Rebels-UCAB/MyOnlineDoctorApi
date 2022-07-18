@@ -67,7 +67,7 @@ export class CitaController {
 
   @Post('solicitarcita')
   async solicitarCitaPost(@Body() datos: SolicitarCitaDTO){
-    await this.solicitarCita.ejecutar(datos);
-    return 'Cita solicitada';
+    let citasolicitada = await this.solicitarCita.ejecutar(datos);
+    return citasolicitada;
   }
 }
