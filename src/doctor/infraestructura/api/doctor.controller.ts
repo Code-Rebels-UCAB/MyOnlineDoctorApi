@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Inject, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
-import { BuscarDoctorNombreApellido } from 'src/doctor/aplicacion/servicios/BuscarDoctorNombreApellido';
+import { BuscarDoctorNombreApellido } from '../../aplicacion/servicios/BuscarDoctorNombreApellido';
 import { BuscarDoctorEspecialidad } from '../../aplicacion/servicios/BuscarDoctorEspecialidad';
 
 

@@ -13,9 +13,15 @@ export interface IRepositorioCita {
   obtenerCitaDeDoctorByStatus(status: string, doctorid: string);
 
   obtenerCitasDeDoctor(doctorid: string);
+  
+  obtenerCantidadPacientesPorDoctor(doctorId: string);
+
+  obtenerCantidadCitasDelDiaDoctor(doctorId: string);
 
   //Comandos
   crearCita();
 
   actualizarStatusCita();
+
+  actualizarCitaAgendada(citaid: string, fecha: string, hora: string, duracion: string);
 }
