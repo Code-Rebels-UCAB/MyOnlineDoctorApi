@@ -23,5 +23,5 @@ export interface IRepositorioCita {
 
   actualizarStatusCita();
 
-  actualizarCitaAgendada(citaid: string, fecha: string, hora: string);
+  actualizarCitaAgendada(citaid: string, fecha: string, hora: string, duracion: string);
 }

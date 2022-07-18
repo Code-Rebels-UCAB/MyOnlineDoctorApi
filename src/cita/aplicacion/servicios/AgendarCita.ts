@@ -8,7 +8,7 @@ import { CitaMapeador } from "../mappeador/CitaMapeador";
 import { Cita } from "../../dominio/entidades/Cita";
 
 
-export class AgendarCita implements IServicioAplicacion<AgendarCitaDTO,any>
+export class AgendarCita implements IServicioAplicacion<AgendarCitaDTO,void>
 {
     public constructor(
         private readonly logger: ILogger,
@@ -16,7 +16,7 @@ export class AgendarCita implements IServicioAplicacion<AgendarCitaDTO,any>
     ) {}
 
 
-    async ejecutar(datos: AgendarCitaDTO): Promise<Resultado<any>> {
+    async ejecutar(datos: AgendarCitaDTO): Promise<Resultado<void>> {
         try{
             const citaPersit = await this.repositorioCita.obtenerCitaById(datos.idCita);
 
@@ -38,9 +38,9 @@ export class AgendarCita implements IServicioAplicacion<AgendarCitaDTO,any>
             //var eventos = cita.obtenerEventos();
             //cita.limpiarEventos();
 
-            //const CitaActualizada = await this.repositorioCita.actualizarCitaAgendada(datos.fechaCita,datos.horaCita,datos.idCita);
-            //this.logger.log("El doctor tiene un total de " + Citas.length.toString() + ' citas', '');
-            return Resultado.Exito<any>(CitaDataDTO);
+            await this.repositorioCita.actualizarCitaAgendada(datos.idCita,datos.fechaCita,datos.horaCita, datos.duracion);
+            this.logger.log('La Cita con Identificador ' + datos.idCita + ' Ha sido Modificada', '');
+            return Resultado.Exito<void>(null);
             
 
         }

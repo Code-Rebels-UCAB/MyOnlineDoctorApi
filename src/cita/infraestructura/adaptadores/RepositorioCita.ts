@@ -123,13 +123,13 @@ export class RepositorioCita implements IRepositorioCita {
     return citas;
   }
 
-  actualizarCitaAgendada(citaid: string,fecha: string, hora: string) {
+  actualizarCitaAgendada(citaid: string,fecha: string, hora: string, duracion:string) {
     const citas = this.RepositorioCita.createQueryBuilder('citas')
     .update(CitaORM)
-    .set({fechacita: fecha, horacita: hora})
-    .where('citas.id_cita = :id', {
+    .set({fechacita: fecha, horacita: hora, duracion:Number(duracion), statuscita: 'Agendada'})
+    .where('id_cita = :id', {
       id: citaid,
-    })
+    }).execute();
   }
   
   async obtenerCantidadPacientesPorDoctor(doctorId: string) {
