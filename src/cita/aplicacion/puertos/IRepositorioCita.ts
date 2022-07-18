@@ -1,4 +1,4 @@
-import { CitaORM } from "src/cita/infraestructura/persistencia/Cita.orm";
+import { SolicitarCitaPersistenciaDTO } from "../../../cita/infraestructura/persistencia/SolicitarCitaPersistenciaDTO";
 
 export interface IRepositorioCita {
   //QUERYS
@@ -17,7 +17,7 @@ export interface IRepositorioCita {
   obtenerCitasDeDoctor(doctorid: string);
 
   //Comandos
-  crearCita(cita: CitaORM);
+  crearCita(cita: SolicitarCitaPersistenciaDTO);
 
   actualizarStatusCita();
 }

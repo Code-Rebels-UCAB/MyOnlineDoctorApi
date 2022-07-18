@@ -29,7 +29,11 @@ export class SolicitarCita implements IServicioAplicacion<SolicitarCitaDTO,CitaS
             let cita = Cita.solicitarCita(citaDominioMapeado.modalidad, citaDominioMapeado.motivo, citaDominioMapeado.idPaciente, citaDominioMapeado.idDoctor);
             
             //mapeamos a persistencia
-            
+            let citaPersistencia = CitaMapeador.convertirSolicitarCitaAPersistencia(cita);
+
+            //guardamos la cita
+            await this.repositorioCita.crearCita(citaPersistencia);
+
         }
         catch (error) {
             let errores: IExcepcion = error;
