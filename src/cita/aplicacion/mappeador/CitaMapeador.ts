@@ -94,7 +94,7 @@ export class CitaMapeador{
 
     public static convertirSolicitarCitaAPersistencia(data: Cita): SolicitarCitaPersistenciaDTO{
         return {
-            id_cita: data.obtenerIdentificador.toString(),
+            id_cita: data.obtenerIdentificador().getCitaID().toString(),
             statuscita: data.getStatus().statusCita.toString(),
             modalidad: data.getModalidad().modalidad.toString(),
             motivo: data.getMotivo().motivo.toString(),

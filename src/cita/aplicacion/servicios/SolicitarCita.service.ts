@@ -5,11 +5,12 @@ import { IRepositorioCita } from "../puertos/IRepositorioCita";
 import { IExcepcion } from "../../../commun/dominio/excepcciones/IExcepcion";
 import { CitaSolicitadasDTO } from "../dto/CitasSolicitadasDTO";
 import { SolicitarCitaDTO } from "../dto/SolicitarCitaDTO";
-import { Cita } from "src/cita/dominio/entidades/Cita";
+import { Cita } from "../../dominio/entidades/Cita";
 import { CitaMapeador } from "../mappeador/CitaMapeador";
+import { CitaDataDTO } from "../dto/CitaDataDTO";
 
 
-export class SolicitarCita implements IServicioAplicacion<SolicitarCitaDTO,CitaSolicitadasDTO>
+export class SolicitarCita implements IServicioAplicacion<SolicitarCitaDTO,CitaDataDTO>
 {
     public constructor(
         private readonly logger: ILogger,
@@ -17,7 +18,7 @@ export class SolicitarCita implements IServicioAplicacion<SolicitarCitaDTO,CitaS
     ) {}
 
 
-    async ejecutar(datos: SolicitarCitaDTO): Promise<Resultado<CitaSolicitadasDTO>> {
+    async ejecutar(datos: SolicitarCitaDTO): Promise<Resultado<CitaDataDTO>> {
         try{
            // mapeamos de aplicacion a dominio
             let citaDominioMapeado = CitaMapeador.convertirSolicitarCitaADominio(datos);
@@ -29,9 +30,9 @@ export class SolicitarCita implements IServicioAplicacion<SolicitarCitaDTO,CitaS
             let citaPersistencia = CitaMapeador.convertirSolicitarCitaAPersistencia(cita);
 
             //guardamos la cita
-            await this.repositorioCita.crearCita(citaPersistencia);
+            let cita_guardada = await this.repositorioCita.crearCita(citaPersistencia);
 
-            return 
+            return Resultado.Exito<CitaDataDTO>(CitaMapeador.covertirInfraestructuraAplicacion(cita_guardada));
         }
         catch (error) {
             let errores: IExcepcion = error;

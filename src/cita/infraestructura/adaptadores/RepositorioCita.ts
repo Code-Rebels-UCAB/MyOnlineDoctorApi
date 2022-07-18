@@ -162,7 +162,18 @@ export class RepositorioCita implements IRepositorioCita {
   }
 
   crearCita(cita: SolicitarCitaPersistenciaDTO) {
-    this.RepositorioCita.insert(cita);
+    //obtenemos al doctor
+    
+
+    this.RepositorioCita.insert({
+      id_cita: cita.id_cita,
+      statuscita: cita.statuscita,
+      modalidad: cita.modalidad,
+      motivo: cita.motivo,
+      // doctor: cita.idpaciente,
+
+    });
+    return this.obtenerCitaById(cita.id_cita);
   }
 
   actualizarStatusCita() {

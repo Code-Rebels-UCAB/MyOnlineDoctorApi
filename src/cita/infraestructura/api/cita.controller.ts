@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Param, Put, Query} from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, Put, Query, Post} from '@nestjs/common';
 import { AgendarCita } from '../../aplicacion/servicios/AgendarCita.service';
 import { BuscarCitasPaciente } from '../../aplicacion/servicios/BuscarCitasPaciente.service';
 import { CitasDoctor } from '../../aplicacion/servicios/CitasDoctor.service';
@@ -6,17 +6,26 @@ import { CitasSolicitadasDoctor } from '../../aplicacion/servicios/CitasSolicita
 import { CantidadPacientesDoctor } from '../../aplicacion/servicios/CantidadPacientesDoctor.service';
 import { CantidadCitasDiaDoctor } from '../../aplicacion/servicios/CantidadCitasDiaDoctor.service';
 import { AgendarCitaDTO } from '../../aplicacion/dto/AgendarCitaDTO';
+import { SolicitarCita } from '../../aplicacion/servicios/SolicitarCita.service';
+import { SolicitarCitaDTO } from '../../aplicacion/dto/SolicitarCitaDTO';
 
 @Controller('api/cita')
 export class CitaController {
   constructor(
     @Inject(CitasSolicitadasDoctor)
     private readonly citasSolicitadasDoctor: CitasSolicitadasDoctor,
+    @Inject(CitasDoctor)
     private readonly citasDoctor: CitasDoctor,
+    @Inject(AgendarCita)
     private readonly agendarCita: AgendarCita,
+    @Inject(BuscarCitasPaciente)
     private readonly buscarCitasPaciente: BuscarCitasPaciente,
+    @Inject(CantidadPacientesDoctor)
     private readonly cantidadPacientesDoctor: CantidadPacientesDoctor,
+    @Inject(CantidadCitasDiaDoctor)
     private readonly cantidadCitasDia: CantidadCitasDiaDoctor,
+    @Inject(SolicitarCita)
+    private readonly solicitarCita: SolicitarCita,
   ) {}
 
   @Get('getsolicitudesdoctor/:doctorid')
@@ -54,5 +63,11 @@ export class CitaController {
   async geCitasDelDiaDoctor(@Query('doctorId') doctorId: string) {
     const citas = await this.cantidadCitasDia.ejecutar(doctorId);
     return citas;
+  }
+
+  @Post('solicitarcita')
+  async solicitarCitaPost(@Body() datos: SolicitarCitaDTO){
+    await this.solicitarCita.ejecutar(datos);
+    return 'Cita solicitada';
   }
 }

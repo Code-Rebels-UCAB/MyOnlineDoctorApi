@@ -11,6 +11,7 @@ import { CitaController} from './cita.controller';
 import { AgendarCita } from '../../aplicacion/servicios/AgendarCita.service';
 import { BuscarCitasPaciente } from '../../aplicacion/servicios/BuscarCitasPaciente.service';
 import { CantidadCitasDiaDoctor } from '../../aplicacion/servicios/CantidadCitasDiaDoctor.service';
+import { SolicitarCita } from '../../aplicacion/servicios/SolicitarCita.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CitaORM]), LoggerModule],
@@ -59,6 +60,14 @@ export class CitaModule {
             logger: LoggerService,
             userRepo: RepositorioCita,
           ) => new AgendarCita(logger, userRepo),
+        },
+        {
+          inject: [LoggerService, RepositorioCita],
+          provide: SolicitarCita,
+          useFactory: (
+            logger: LoggerService,
+            userRepo: RepositorioCita,
+          ) => new SolicitarCita(logger, userRepo),
         },
       ],
     };
