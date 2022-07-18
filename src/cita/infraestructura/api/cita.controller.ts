@@ -58,7 +58,7 @@ export class CitaController {
     return citas;
   }
 
-  @Get('/:citaid')
+  @Get('/citaIniciada/:citaid')
   async getGenerarTokenCita(@Param('citaid') citaid: string) {
     const cita = await this.videollamadaCita.ejecutar(citaid);
     return cita;
