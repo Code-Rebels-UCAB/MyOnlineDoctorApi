@@ -38,7 +38,7 @@ export class Calificacion implements IValueObject {
 
   public static agregarCalificacion(calificacionDoctor:Calificacion, nuevaCalificacion: Calificacion): Calificacion{
 
-    return new Calificacion(calificacionDoctor.getCalificacion() + nuevaCalificacion.getCalificacion(), calificacionDoctor.cantidad + 1);
+    return new Calificacion(Number(calificacionDoctor.getCalificacion()) + Number(nuevaCalificacion.getCalificacion()), Number(calificacionDoctor.cantidad) + 1);
 
   }
 

@@ -32,7 +32,7 @@ export class DoctorController {
   @Put('calificar')
   async updateCalificar(@Body() calificacion: CalificarDoctorDTO) {
     await this.calificarDoctor.ejecutar(calificacion);
-    return 'success';
+    return;
   }
 
 }

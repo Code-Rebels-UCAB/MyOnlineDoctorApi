@@ -21,18 +21,20 @@ export class DoctorMapeador{
     public static covertirPersistenciaDominio(datos: DoctorPersistenciaDTO):Doctor{
         let especialidades: Especialidad[] = []
 
-        if (datos.especialidades.length >0){
-            const EspecialidadDominio = datos.especialidades.map((especialidades) =>
-            EspecialidadMapeador.covertirPersistenciaDominio(especialidades),
-            )
+        if (datos.especialidades !== undefined){
+            if (datos.especialidades.length >0){
+                const EspecialidadDominio = datos.especialidades.map((especialidades) =>
+                EspecialidadMapeador.covertirPersistenciaDominio(especialidades),
+                )
 
 
-            if (EspecialidadDominio.length > 0){
-                EspecialidadDominio.forEach(function(i){
-                    especialidades.push(i.especialidad)
-                });
+                if (EspecialidadDominio.length > 0){
+                    EspecialidadDominio.forEach(function(i){
+                        especialidades.push(i.especialidad)
+                    });
+                }
             }
-        }
+        }   
         
 
         return new Doctor(DoctorID.crear(Guid.parse(datos.id_doctor)), NombreCompletoDoctor.crear(datos.p_nombre, datos.p_apellido), GeneroDoctor.crear(datos.sexo as any),
