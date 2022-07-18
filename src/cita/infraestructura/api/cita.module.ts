@@ -2,26 +2,20 @@ import { DynamicModule, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CitasDoctor } from '../../aplicacion/servicios/CitasDoctor';
 import { CitasSolicitadasDoctor } from '../../aplicacion/servicios/CitasSolicitadasDoctor';
-import { CantidadPacientesDoctor } from 'src/cita/aplicacion/servicios/CantidadPacientesDoctor';
+import { CantidadPacientesDoctor } from '../../aplicacion/servicios/CantidadPacientesDoctor';
 import { LoggerModule } from '../../../commun/infraestructura/logger/logger.module';
 import { LoggerService } from '../../../commun/infraestructura/logger/logger.service';
 import { RepositorioCita } from '../adaptadores/RepositorioCita';
 import { CitaORM } from '../persistencia/Cita.orm';
-import { CitaController } from './cita.controller';
+import { CitaController} from './cita.controller';
+import { AgendarCita } from '../../aplicacion/servicios/AgendarCita';
 import { BuscarCitasPaciente } from '../../aplicacion/servicios/BuscarCitasPaciente';
 import { CantidadCitasDiaDoctor } from '../../aplicacion/servicios/CantidadCitasDiaDoctor';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CitaORM]), LoggerModule],
   controllers: [CitaController],
-  providers: [
-    CitasSolicitadasDoctor,
-    CitasDoctor,
-    CantidadPacientesDoctor,
-    CantidadCitasDiaDoctor,
-    RepositorioCita,
-    LoggerService,
-  ],
+  providers: [CitasSolicitadasDoctor, CitasDoctor, AgendarCita, RepositorioCita, LoggerService],
 })
 export class CitaModule {
   static register(): DynamicModule {
@@ -57,6 +51,14 @@ export class CitaModule {
           provide: CantidadCitasDiaDoctor,
           useFactory: (logger: LoggerService, userRepo: RepositorioCita) =>
             new CantidadCitasDiaDoctor(logger, userRepo),
+        },
+        {
+          inject: [LoggerService, RepositorioCita],
+          provide: AgendarCita,
+          useFactory: (
+            logger: LoggerService,
+            userRepo: RepositorioCita,
+          ) => new AgendarCita(logger, userRepo),
         },
       ],
     };
