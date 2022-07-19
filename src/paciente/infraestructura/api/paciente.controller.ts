@@ -20,6 +20,7 @@ export class PacienteController {
   constructor(
     @Inject(BuscarCantidadTodosLosPacientes)
     private readonly buscarCantidad: BuscarCantidadTodosLosPacientes,
+    @Inject(GuardarTokenPaciente)
     private readonly GuardarToken: GuardarTokenPaciente,
   ) {}
 
