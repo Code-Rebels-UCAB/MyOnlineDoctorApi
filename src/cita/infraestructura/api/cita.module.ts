@@ -23,11 +23,12 @@ import { ManejadorEventos } from '../../../commun/aplicacion/ManejadorEventos';
 import { NotificarPacienteFirebase } from '../adaptadores/NotificarPacienteFirebase';
 import { BloquearCita } from '../../aplicacion/servicios/BloquearCita.service';
 import { SuspenderCita } from '../../aplicacion/servicios/SuspenderCita.service';
+import { FinalizarCita } from 'src/cita/aplicacion/servicios/FinalizarCita.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CitaORM, DoctorORM, PacienteORM]), LoggerModule],
   controllers: [CitaController],
-  providers: [CitasSolicitadasDoctor, CitasDoctor, AgendarCita, RepositorioCita, LoggerService, SolicitarCita, AceptarCita, CancelarCita, VideollamadaCita, GenerarTokenCita, IniciarCita, BloquearCita, SuspenderCita],
+  providers: [CitasSolicitadasDoctor, CitasDoctor, AgendarCita, RepositorioCita, LoggerService, SolicitarCita, AceptarCita, CancelarCita, ManejadorEventos ,VideollamadaCita, GenerarTokenCita, IniciarCita, BloquearCita, SuspenderCita, FinalizarCita],
 })
 export class CitaModule {
   static register(): DynamicModule {
@@ -136,6 +137,14 @@ export class CitaModule {
             logger: LoggerService,
             userRepo: RepositorioCita,
           ) => new SuspenderCita(logger, userRepo),
+        },
+        {
+          inject: [LoggerService, RepositorioCita],
+          provide: FinalizarCita,
+          useFactory: (
+            logger: LoggerService,
+            userRepo: RepositorioCita,
+          ) => new FinalizarCita(logger, userRepo),
         },
       ],
     }

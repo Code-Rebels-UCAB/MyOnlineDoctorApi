@@ -56,7 +56,6 @@ export class IniciarCita implements IServicioAplicacion<string,IniciarCitaDTO>
             let citaIniciada = CitaMapeador.covertirInfraestructuraAplicacion(citaActualizada);
 
             const videollamadaCita = await this.videollamadaCita.ejecutar(citaActualizada.id_cita);
-            
             let citaIniciadaDTO: IniciarCitaDTO = {
                 idCita: citaIniciada.idCita,
                 idPaciente: citaIniciada.idPaciente,

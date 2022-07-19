@@ -8,6 +8,7 @@ export class VideollamadaCita implements IVideollamadaCita {
     public constructor() {}
 
     generarTokenVideollamada(nombreCanal: string) : string{
+
         const appID = '4fd40aec2b9b45028114e370f7c07501';
         const appCertificate = '7e07ed8c266142688a404d8ac5832679';
 

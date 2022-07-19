@@ -13,6 +13,7 @@ import { CancelarCita } from '../../aplicacion/servicios/CancelarCita.service';
 import { IniciarCita } from '../../aplicacion/servicios/IniciarCita.service';
 import { BloquearCita } from '../../aplicacion/servicios/BloquearCita.service';
 import { SuspenderCita } from '../../aplicacion/servicios/SuspenderCita.service';
+import { FinalizarCita } from '../../aplicacion/servicios/FinalizarCita.service';
 
 @Controller('api/cita')
 export class CitaController {
@@ -40,7 +41,9 @@ export class CitaController {
     @Inject(BloquearCita)
     private readonly bloquearCita: BloquearCita,
     @Inject(SuspenderCita)
-    private readonly suspenderCita: SuspenderCita
+    private readonly suspenderCita: SuspenderCita,
+    @Inject(FinalizarCita)
+    private readonly finalizarCita: FinalizarCita
   ) {}
 
   @Get('getsolicitudesdoctor/:doctorid')
@@ -80,8 +83,8 @@ export class CitaController {
     return citas;
   }
 
-  @Put('iniciarcita/:citaid')
-  async inciarCita(@Param('citaid') citaid: string) {
+  @Put('iniciarcita')
+  async inciarCitaPut(@Query('citaid') citaid: string) {
     const cita = await this.iniciarCita.ejecutar(citaid);
     return cita;
   }
@@ -115,4 +118,12 @@ export class CitaController {
     return CitaSuspender;
   }
 
+  @Put('finalizarcita')
+  async finalizarCitaPut(@Query('citaId') citaId: string){
+    const citaFinalizar = await this.finalizarCita.ejecutar(citaId);
+    console.log(citaFinalizar)
+    return citaFinalizar;
+  }
+
 }
+
