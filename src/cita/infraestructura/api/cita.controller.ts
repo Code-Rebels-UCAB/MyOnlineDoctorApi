@@ -6,6 +6,7 @@ import { CitasSolicitadasDoctor } from '../../aplicacion/servicios/CitasSolicita
 import { CantidadPacientesDoctor } from '../../aplicacion/servicios/CantidadPacientesDoctor.service';
 import { CantidadCitasDiaDoctor } from '../../aplicacion/servicios/CantidadCitasDiaDoctor.service';
 import { AgendarCitaDTO } from '../../aplicacion/dto/AgendarCitaDTO';
+import { GenerarTokenCita } from 'src/cita/aplicacion/servicios/GenerarTokenCita.service';
 import { SolicitarCita } from '../../aplicacion/servicios/SolicitarCita.service';
 import { SolicitarCitaDTO } from '../../aplicacion/dto/SolicitarCitaDTO';
 import { AceptarCita } from '../../aplicacion/servicios/AceptarCita.service';
@@ -26,6 +27,7 @@ export class CitaController {
     private readonly cantidadPacientesDoctor: CantidadPacientesDoctor,
     @Inject(CantidadCitasDiaDoctor)
     private readonly cantidadCitasDia: CantidadCitasDiaDoctor,
+    private readonly videollamadaCita: GenerarTokenCita,
     @Inject(SolicitarCita)
     private readonly solicitarCita: SolicitarCita,
     @Inject(AceptarCita)
@@ -71,6 +73,11 @@ export class CitaController {
     return citas;
   }
 
+  @Get('/citaIniciada/:citaid')
+  async getGenerarTokenCita(@Param('citaid') citaid: string) {
+    const cita = await this.videollamadaCita.ejecutar(citaid);
+    return cita;
+  }
   @Post('solicitarcita')
   async solicitarCitaPost(@Body() datos: SolicitarCitaDTO){
     let citasolicitada = await this.solicitarCita.ejecutar(datos);

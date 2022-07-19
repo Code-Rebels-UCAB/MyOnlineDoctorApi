@@ -4,7 +4,7 @@ import { Resultado } from '../../../commun/aplicacion/Resultado';
 import { IExcepcion } from '../../../commun/dominio/excepcciones/IExcepcion';
 import { RepositorioPaciente } from '../../infraestructura/adaptadores/RepositorioPaciente';
 
-export class buscarCantidadTodosLosPacientes
+export class BuscarCantidadTodosLosPacientes
   implements IServicioAplicacion<string, number>
 {
   constructor(

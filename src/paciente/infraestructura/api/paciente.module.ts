@@ -3,15 +3,17 @@ import { PacienteController } from './paciente.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from '../../../commun/infraestructura/logger/logger.module';
 import { LoggerService } from '../../../commun/infraestructura/logger/logger.service';
-import { buscarCantidadTodosLosPacientes } from '../../aplicacion/servicios/buscarCantidadPacientesSistema.service';
+import { BuscarCantidadTodosLosPacientes } from '../../aplicacion/servicios/BuscarCantidadPacientesSistema.service';
 import { RepositorioPaciente } from '../adaptadores/RepositorioPaciente';
 import { PacienteORM } from '../persistencia/Paciente.orm';
+import { GuardarTokenPaciente } from 'src/paciente/aplicacion/servicios/guardarTokenPaciente.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([PacienteORM]), LoggerModule],
   controllers: [PacienteController],
   providers: [
-    buscarCantidadTodosLosPacientes,
+    BuscarCantidadTodosLosPacientes,
+    GuardarTokenPaciente,
     RepositorioPaciente,
     LoggerService,
   ],
@@ -23,9 +25,15 @@ export class PacienteModule {
       providers: [
         {
           inject: [LoggerService, RepositorioPaciente],
-          provide: buscarCantidadTodosLosPacientes,
+          provide: BuscarCantidadTodosLosPacientes,
           useFactory: (logger: LoggerService, userRepo: RepositorioPaciente) =>
-            new buscarCantidadTodosLosPacientes(logger, userRepo),
+            new BuscarCantidadTodosLosPacientes(logger, userRepo),
+        },
+        {
+          inject: [LoggerService, RepositorioPaciente],
+          provide: GuardarTokenPaciente,
+          useFactory: (logger: LoggerService, userRepo: RepositorioPaciente) =>
+            new GuardarTokenPaciente(logger, userRepo),
         },
       ],
     };
