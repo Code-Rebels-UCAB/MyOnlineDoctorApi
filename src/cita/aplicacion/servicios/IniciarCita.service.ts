@@ -1,8 +1,8 @@
-import { Cita } from "src/cita/dominio/entidades/Cita";
-import { ILogger } from "src/commun/aplicacion/ILogger";
-import { IServicioAplicacion } from "src/commun/aplicacion/IServicioAplicacion";
-import { Resultado } from "src/commun/aplicacion/Resultado";
-import { IExcepcion } from "src/commun/dominio/excepcciones/IExcepcion";
+import { Cita } from "../../dominio/entidades/Cita";
+import { ILogger } from "../../../commun/aplicacion/ILogger";
+import { IServicioAplicacion } from "../../../commun/aplicacion/IServicioAplicacion";
+import { Resultado } from "../../../commun/aplicacion/Resultado";
+import { IExcepcion } from "../../../commun/dominio/excepcciones/IExcepcion";
 import { IniciarCitaDTO } from "../dto/IniciarCitaDTO";
 import { CitaMapeador } from "../mappeador/CitaMapeador";
 import { IRepositorioCita } from "../puertos/IRepositorioCita";
