@@ -34,7 +34,7 @@ export class SolicitarCita implements IServicioAplicacion<SolicitarCitaDTO,void>
 
             //guardamos la cita
             let cita_guardada = await this.repositorioCita.crearCita(citaPersistencia);
-
+            this.logger.log("Cita Solicitada por paciente: " + datos.id_paciente + " al Doctor: " + datos.id_doctor, "info");
             return Resultado.Exito<void>(null);
         }
         catch (error) {
