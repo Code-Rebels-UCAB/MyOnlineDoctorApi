@@ -13,6 +13,7 @@ import { AceptarCita } from '../../aplicacion/servicios/AceptarCita.service';
 import { CancelarCita } from '../../aplicacion/servicios/CancelarCita.service';
 import { BloquearCita } from '../../aplicacion/servicios/BloquearCita.service';
 import { SuspenderCita } from '../../aplicacion/servicios/SuspenderCita.service';
+import { CitasDiaDoctor } from '../../aplicacion/servicios/CitasDiaDoctor.service';
 
 @Controller('api/cita')
 export class CitaController {
@@ -39,7 +40,9 @@ export class CitaController {
     @Inject(BloquearCita)
     private readonly bloquearCita: BloquearCita,
     @Inject(SuspenderCita)
-    private readonly suspenderCita: SuspenderCita
+    private readonly suspenderCita: SuspenderCita,
+    @Inject(CitasDiaDoctor)
+    private readonly citasalDia: CitasDiaDoctor
   ) {}
 
   @Get('getsolicitudesdoctor/:doctorid')
@@ -73,10 +76,17 @@ export class CitaController {
     return pacientes;
   }
 
-  @Get('dia/doctor')
-  async geCitasDelDiaDoctor(@Query('doctorId') doctorId: string) {
-    const citas = await this.cantidadCitasDia.ejecutar(doctorId);
+  //END-POINT PARA OBTENER TODAS LAS CITAS AL DIA DEL DOCTOR
+  @Get('citasAlDiadoctor/:doctorid')
+  async getCitasDelDiaDoctor(@Param('doctorid') doctorId: string) {
+    const citas = await this.citasalDia.ejecutar(doctorId);
     return citas;
+  }
+
+  @Get('dia/doctor')
+  async getCantCitasDelDiaDoctor(@Query('doctorId') doctorId: string) {
+    const Cantcitas = await this.cantidadCitasDia.ejecutar(doctorId);
+    return Cantcitas;
   }
 
   @Get('/citaIniciada/:citaid')

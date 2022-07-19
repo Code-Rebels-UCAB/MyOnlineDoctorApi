@@ -20,7 +20,7 @@ import { CitaPersistenciaDTO } from "../../infraestructura/dto/CitaPersistenciaD
 import { AgendarCitaDTO } from "../dto/AgendarCitaDTO";
 import { AgendarCitaDataVO } from "../../dominio/dto/AgendarCitaDataVo";
 import { CitaPacienteDTO } from "../dto/CitasPacienteDTO";
-import { CitaPersistenciaDoctorDTO } from "../../infraestructura/dto/CitaPersistenciaDoctoDTO";
+import { CitaPersistenciaPacienteDTO } from "../../infraestructura/dto/CitaPersistenciaPacienteDTO";
 
 
 export class CitaMapeador{
@@ -118,7 +118,7 @@ export class CitaMapeador{
         }
     }
 
-    public static convertirCitasPacienteAAplicacion(data: CitaPersistenciaDoctorDTO): CitaPacienteDTO{
+    public static convertirCitasPacienteAAplicacion(data: CitaPersistenciaPacienteDTO): CitaPacienteDTO{
         return{
             id_cita: data.id_cita,
             statuscita: data.statuscita,

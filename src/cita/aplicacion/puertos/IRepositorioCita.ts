@@ -17,6 +17,8 @@ export interface IRepositorioCita {
 
   obtenerCitasDeDoctor(doctorid: string);
   
+  obtenerCitasDelDiaDoctor(doctorId: string);
+
   obtenerCantidadPacientesPorDoctor(doctorId: string);
 
   obtenerCantidadCitasDelDiaDoctor(doctorId: string);
