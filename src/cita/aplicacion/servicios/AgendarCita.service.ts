@@ -37,7 +37,7 @@ export class AgendarCita implements IServicioAplicacion<AgendarCitaDTO,void>
         
             this.manejador.AddEvento(...eventos);
             //SE LE PASA EL MENSAJE AL MANEJADOR DE PUBLICAR EVENTOS
-            this.manejador.Notify('Valor');
+            this.manejador.Notify('Pucca');
             //this.manejador.Notify(); //SE PUEDE O NO PASAR UN VALOR
 
             return Resultado.Exito<void>(null);
