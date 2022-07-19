@@ -12,6 +12,8 @@ export interface IRepositorioDoctor {
 
     obtenerDoctorById(id: string);
 
+    obtenerTodosDoctores();
+    
     //Comandos
     bloquearDoctor(id: string);
 
