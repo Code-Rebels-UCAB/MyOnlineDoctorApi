@@ -8,6 +8,7 @@ import { CantidadCitasDiaDoctor } from '../../aplicacion/servicios/CantidadCitas
 import { AgendarCitaDTO } from '../../aplicacion/dto/AgendarCitaDTO';
 import { SolicitarCita } from '../../aplicacion/servicios/SolicitarCita.service';
 import { SolicitarCitaDTO } from '../../aplicacion/dto/SolicitarCitaDTO';
+import { AceptarCita } from '../../aplicacion/servicios/AceptarCita.service';
 
 @Controller('api/cita')
 export class CitaController {
@@ -26,6 +27,8 @@ export class CitaController {
     private readonly cantidadCitasDia: CantidadCitasDiaDoctor,
     @Inject(SolicitarCita)
     private readonly solicitarCita: SolicitarCita,
+    @Inject(AceptarCita)
+    private readonly aceptarCita: AceptarCita
   ) {}
 
   @Get('getsolicitudesdoctor/:doctorid')
@@ -70,4 +73,11 @@ export class CitaController {
     let citasolicitada = await this.solicitarCita.ejecutar(datos);
     return citasolicitada;
   }
+
+  @Put('aceptarcita')
+  async aceptarCitaPut(@Query('citaId') citaId: string){
+    let citaAceptada = await this.aceptarCita.ejecutar(citaId);
+    return citaAceptada;
+  }
+
 }
