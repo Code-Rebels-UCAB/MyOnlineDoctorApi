@@ -187,7 +187,14 @@ export class RepositorioCita implements IRepositorioCita {
     return await this.obtenerCitaById(cita.id_cita);
   }
 
-  actualizarStatusCita() {
-    throw new Error('Method not implemented');
+  async actualizarStatusCita(citaid: string, status: string) {
+
+    //Actualizamos la cita
+    await this.RepositorioCita.update({id_cita: citaid},{statuscita: status});
+
+     //Obtenemos la cita actualizada
+     let cita = await this.obtenerCitaById(citaid);
+
+    return cita;
   }
 }

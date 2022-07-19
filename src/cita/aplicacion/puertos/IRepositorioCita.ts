@@ -23,7 +23,7 @@ export interface IRepositorioCita {
   //Comandos
   crearCita(cita: SolicitarCitaPersistenciaDTO);
 
-  actualizarStatusCita();
+  actualizarStatusCita(citaid: string, status: string);
 
   actualizarCitaAgendada(citaid: string, fecha: string, hora: string, duracion: string);
 }
