@@ -1,7 +1,7 @@
 
 export abstract class EventoDominio{
     protected Fecha: Date;
-    protected Nombre: string;
+    public Nombre: string;
 
     abstract GetInformacion():{};
 }

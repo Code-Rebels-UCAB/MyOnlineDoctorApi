@@ -18,14 +18,22 @@ import { DoctorORM } from '../../../doctor/infraestructura/persistencia/Doctor.o
 import { PacienteORM } from '../../../paciente/infraestructura/persistencia/Paciente.orm';
 import { AceptarCita } from '../../aplicacion/servicios/AceptarCita.service';
 import { CancelarCita } from '../../aplicacion/servicios/CancelarCita.service';
+import { ManejadorEventos } from 'src/commun/aplicacion/ManejadorEventos';
+import { NotificarPacienteFirebase } from '../adaptadores/NotificarPacienteFirebase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CitaORM, DoctorORM, PacienteORM]), LoggerModule],
   controllers: [CitaController],
-  providers: [CitasSolicitadasDoctor, CitasDoctor, AgendarCita, RepositorioCita, LoggerService, SolicitarCita, AceptarCita, CancelarCita, VideollamadaCita, GenerarTokenCita],
+  providers: [CitasSolicitadasDoctor, CitasDoctor, AgendarCita, RepositorioCita, LoggerService, SolicitarCita, AceptarCita, CancelarCita,ManejadorEventos, VideollamadaCita, GenerarTokenCita],
 })
 export class CitaModule {
   static register(): DynamicModule {
+    //AQUI VA LA DECLARACION DEL PROVIDER "MANEJADOR DE EVENTOS" Y 
+    //SE AGREGAN LOS OBSERVADORES QUE DEBEN ESTAR ATENTOS A CAMBIOS EN LOS ESTADOS DEL AGREGADO DE CITA (POLITICAS)
+    var manejador = new ManejadorEventos();
+    manejador.Add(new NotificarPacienteFirebase());
+    
+
     return {
       module: CitaModule,
       providers: [
@@ -60,12 +68,12 @@ export class CitaModule {
             new CantidadCitasDiaDoctor(logger, userRepo),
         },
         {
-          inject: [LoggerService, RepositorioCita],
+          inject: [LoggerService, RepositorioCita, ManejadorEventos],
           provide: AgendarCita,
           useFactory: (
             logger: LoggerService,
-            userRepo: RepositorioCita,
-          ) => new AgendarCita(logger, userRepo),
+            userRepo: RepositorioCita
+          ) => new AgendarCita(logger, userRepo, manejador),
         },
         {
           inject: [LoggerService, RepositorioCita],
