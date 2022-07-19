@@ -22,6 +22,7 @@ export class ManejadorEventos<D> implements IObservable<EventoDominio,D>{
                 observer.Update(evento, data);
             }
         }
+        this.Vaciar();
     }
 
     Add(observer: IObservador<EventoDominio,D>): void {
@@ -32,6 +33,10 @@ export class ManejadorEventos<D> implements IObservable<EventoDominio,D>{
         this.Observadores.filter( (observador, index) => {
             index != posicion;
         })
+    }
+
+    private Vaciar():void{
+        this.Eventos = [];
     }
 
 

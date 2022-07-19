@@ -13,14 +13,11 @@ export class NotificarPacienteFirebase implements IPolitica<string,void>{
 
 
     ejecutar(data: string): Promise<Resultado<void>> {
+        console.log(data);
         //LOGICA DE NOTIFICAR PACIENTE LLAMADA
         return null;
 
 
     }
 
-
-
-
-    
 }
