@@ -1,6 +1,6 @@
 import { RegistroMedicoORM } from "../../../registro_medico/infraestructura/persistencia/RegistroMedico.orm";
 
-export interface CitaPersistenciaDoctorDTO{
+export interface CitaPersistenciaPacienteDTO{
 
     id_cita: string,
     statuscita: string,
