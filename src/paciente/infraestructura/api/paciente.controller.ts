@@ -12,8 +12,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { BuscarCantidadTodosLosPacientes } from '../../aplicacion/servicios/BuscarCantidadPacientesSistema.service';
-import { GuardarTokenPaciente } from '../../../paciente/aplicacion/servicios/guardarTokenPaciente.service';
-import { TokenPacienteDTO } from '../../../paciente/aplicacion/dto/TokenPacienteDTO';
+import { GuardarTokenPaciente } from '../../aplicacion/servicios/GuardarTokenPaciente.service';
+import { TokenPacienteDTO } from '../../aplicacion/dto/TokenPacienteDTO';
 import { RepositorioPaciente } from '../adaptadores/RepositorioPaciente';
 import { PacienteORM } from '../persistencia/Paciente.orm';
 
@@ -38,15 +38,12 @@ export class PacienteController {
   async patchGuardarToken(@Body() datos: TokenPacienteDTO) {
     const token = await this.GuardarToken.ejecutar(datos);
     return token;
-
-    
   }
-  
+
   @Get('user')
-  async getUser(@Query ('id') id: string) {
-    const paciente: PacienteORM = await this.repositorioPaciente.obtenerPacienteById(id);
+  async getUser(@Query('id') id: string) {
+    const paciente: PacienteORM =
+      await this.repositorioPaciente.obtenerPacienteById(id);
     return paciente;
   }
-
 }
-
