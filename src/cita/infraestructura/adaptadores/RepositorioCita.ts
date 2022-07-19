@@ -67,7 +67,6 @@ export class RepositorioCita implements IRepositorioCita {
         'citas.id_cita',
         'citas.statuscita',
         'citas.modalidad',
-        'citas.horacita',
         'citas.fechacita',
         'citas.duracion',
         'citas.horacita',
