@@ -14,6 +14,8 @@ import {
 import { BuscarCantidadTodosLosPacientes } from '../../aplicacion/servicios/BuscarCantidadPacientesSistema.service';
 import { GuardarTokenPaciente } from 'src/paciente/aplicacion/servicios/guardarTokenPaciente.service';
 import { TokenPacienteDTO } from 'src/paciente/aplicacion/dto/TokenPacienteDTO';
+import { RepositorioPaciente } from '../adaptadores/RepositorioPaciente';
+import { PacienteORM } from '../persistencia/Paciente.orm';
 
 @Controller('api/paciente')
 export class PacienteController {
@@ -22,6 +24,8 @@ export class PacienteController {
     private readonly buscarCantidad: BuscarCantidadTodosLosPacientes,
     @Inject(GuardarTokenPaciente)
     private readonly GuardarToken: GuardarTokenPaciente,
+    @Inject(RepositorioPaciente)
+    private readonly repositorioPaciente: RepositorioPaciente,
   ) {}
 
   @Get('buscar/todos')
@@ -37,5 +41,12 @@ export class PacienteController {
 
     
   }
+  
+  @Get('user')
+  async getUser(@Query ('id') id: string) {
+    const paciente: PacienteORM = await this.repositorioPaciente.obtenerPacienteById(id);
+    return paciente;
+  }
+
 }
 

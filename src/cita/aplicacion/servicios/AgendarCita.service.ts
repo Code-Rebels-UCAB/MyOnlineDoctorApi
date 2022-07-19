@@ -18,29 +18,20 @@ export class AgendarCita implements IServicioAplicacion<AgendarCitaDTO,void>
 
     async ejecutar(datos: AgendarCitaDTO): Promise<Resultado<void>> {
         try{
-            const citaPersit = await this.repositorioCita.obtenerCitaById(datos.idCita);
+            
+            await this.repositorioCita.actualizarCitaAgendada(datos.idCita,datos.fechaCita,datos.horaCita, datos.duracion);
+            this.logger.log('La Cita con Identificador ' + datos.idCita + ' Ha sido Modificada', '');
 
-            var CitaDataDTO = CitaMapeador.covertirInfraestructuraAplicacion(citaPersit);
-            var CitaVO = CitaMapeador.convertirAplicacionDominio(CitaDataDTO);
-            var cita = new Cita(
-              CitaVO.idCita,
-              CitaVO.status,
-              CitaVO.modalidad,
-              CitaVO.motivo,
-              CitaVO.idPaciente,
-              CitaVO.idDoctor,
-              CitaVO.fechaCita,
-              CitaVO.horaCita,
-              CitaVO.duracion,
-            );
+            //GENERACION DEL EVENTO DE DOMINIO
+            const CitaVo = CitaMapeador.convertirAgendarCitaADominio(datos);
 
-            cita.agendarCita(CitaVO.fechaCita,CitaVO.horaCita, CitaVO.duracion);
+            var cita = new Cita(CitaVo.idCita,null,null,null,null,null,CitaVo.fechaCita,CitaVo.horaCita,CitaVo.duracion);
+            cita.agendarCita(CitaVo.fechaCita,CitaVo.horaCita, CitaVo.duracion);
+
             //AQUI SE DEBERIA HACER LO DE LOS EVENTOS
             //var eventos = cita.obtenerEventos();
             //cita.limpiarEventos();
 
-            await this.repositorioCita.actualizarCitaAgendada(datos.idCita,datos.fechaCita,datos.horaCita, datos.duracion);
-            this.logger.log('La Cita con Identificador ' + datos.idCita + ' Ha sido Modificada', '');
             return Resultado.Exito<void>(null);
             
 

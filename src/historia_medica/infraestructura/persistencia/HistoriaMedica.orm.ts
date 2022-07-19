@@ -9,7 +9,7 @@ export class HistoriaMedicaORM {
     id_historia: string
 
     //Relacion con Paciente
-    @OneToOne(() => PacienteORM, paciente => paciente.historiaMedica)
+    @OneToOne(() => PacienteORM, paciente => paciente.historiaMedica, { nullable: true })
     @JoinColumn({name:'id_paciente'})
     paciente: PacienteORM
 
