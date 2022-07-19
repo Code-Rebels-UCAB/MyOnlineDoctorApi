@@ -7,7 +7,7 @@ import { Resultado } from "../../../commun/aplicacion/Resultado";
 import { ListadoDoctoresDTO } from "../dtos/ListadoDoctoresDTO";
 import { IExcepcion } from "../../../commun/dominio/excepcciones/IExcepcion";
 
-export class BuscarDoctorTop implements IServicioAplicacion<string,ListadoDoctoresDTO[]>
+export class BuscarDoctorTop implements IServicioAplicacion<void,ListadoDoctoresDTO[]>
 {
     public constructor(
         private readonly logger: ILogger,
@@ -16,7 +16,7 @@ export class BuscarDoctorTop implements IServicioAplicacion<string,ListadoDoctor
 
 
 
-    async ejecutar(data: string): Promise<Resultado<ListadoDoctoresDTO[]>> {
+    async ejecutar(): Promise<Resultado<ListadoDoctoresDTO[]>> {
          try {
             // Obtenemos los datos del empleado de persistencia
             const doctores = await this.repositorioDoctor.obtenerTopDoctores();
@@ -42,7 +42,7 @@ export class BuscarDoctorTop implements IServicioAplicacion<string,ListadoDoctor
         }
         catch (error) {
             let errores: IExcepcion = error;
-            this.logger.error("Error inesperado: " + data, errores.mensaje);
+            this.logger.error("Error inesperado: ", errores.mensaje);
             return Resultado.Falla(error);
             
         }
