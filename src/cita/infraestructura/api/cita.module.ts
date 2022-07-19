@@ -12,13 +12,13 @@ import { AgendarCita } from '../../aplicacion/servicios/AgendarCita.service';
 import { BuscarCitasPaciente } from '../../aplicacion/servicios/BuscarCitasPaciente.service';
 import { CantidadCitasDiaDoctor } from '../../aplicacion/servicios/CantidadCitasDiaDoctor.service';
 import { VideollamadaCita } from '../adaptadores/VideollamadaCita';
-import { GenerarTokenCita } from 'src/cita/aplicacion/servicios/GenerarTokenCita.service';
+import { GenerarTokenCita } from '../../../cita/aplicacion/servicios/GenerarTokenCita.service';
 import { SolicitarCita } from '../../aplicacion/servicios/SolicitarCita.service';
 import { DoctorORM } from '../../../doctor/infraestructura/persistencia/Doctor.orm';
 import { PacienteORM } from '../../../paciente/infraestructura/persistencia/Paciente.orm';
 import { AceptarCita } from '../../aplicacion/servicios/AceptarCita.service';
 import { CancelarCita } from '../../aplicacion/servicios/CancelarCita.service';
-import { ManejadorEventos } from 'src/commun/aplicacion/ManejadorEventos';
+import { ManejadorEventos } from '../../../commun/aplicacion/ManejadorEventos';
 import { NotificarPacienteFirebase } from '../adaptadores/NotificarPacienteFirebase';
 
 @Module({

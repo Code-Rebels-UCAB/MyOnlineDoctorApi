@@ -9,7 +9,7 @@ import { BuscarDoctorEspecialidad } from '../../aplicacion/servicios/BuscarDocto
 import { RepositorioDoctor } from '../adaptadores/RepositorioDoctor';
 import { DoctorORM } from '../persistencia/Doctor.orm';
 import { DoctorController } from './doctor.controller';
-import { BuscarDoctorTop } from 'src/doctor/aplicacion/servicios/BuscarDoctorTop.service';
+import { BuscarDoctorTop } from '../../../doctor/aplicacion/servicios/BuscarDoctorTop.service';
 
 
 @Module({

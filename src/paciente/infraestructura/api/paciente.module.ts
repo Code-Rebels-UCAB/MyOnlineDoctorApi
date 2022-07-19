@@ -6,7 +6,7 @@ import { LoggerService } from '../../../commun/infraestructura/logger/logger.ser
 import { BuscarCantidadTodosLosPacientes } from '../../aplicacion/servicios/BuscarCantidadPacientesSistema.service';
 import { RepositorioPaciente } from '../adaptadores/RepositorioPaciente';
 import { PacienteORM } from '../persistencia/Paciente.orm';
-import { GuardarTokenPaciente } from 'src/paciente/aplicacion/servicios/guardarTokenPaciente.service';
+import { GuardarTokenPaciente } from '../../../paciente/aplicacion/servicios/guardarTokenPaciente.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([PacienteORM]), LoggerModule],
