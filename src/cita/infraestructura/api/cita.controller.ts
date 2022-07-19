@@ -11,6 +11,7 @@ import { SolicitarCita } from '../../aplicacion/servicios/SolicitarCita.service'
 import { SolicitarCitaDTO } from '../../aplicacion/dto/SolicitarCitaDTO';
 import { AceptarCita } from '../../aplicacion/servicios/AceptarCita.service';
 import { CancelarCita } from '../../aplicacion/servicios/CancelarCita.service';
+import { BloquearCita } from '../../aplicacion/servicios/BloquearCita.service';
 
 @Controller('api/cita')
 export class CitaController {
@@ -34,6 +35,8 @@ export class CitaController {
     private readonly aceptarCita: AceptarCita,
     @Inject(CancelarCita)
     private readonly cancelarCita: CancelarCita,
+    @Inject(BloquearCita)
+    private readonly bloquearCita: BloquearCita
   ) {}
 
   @Get('getsolicitudesdoctor/:doctorid')
@@ -94,6 +97,12 @@ export class CitaController {
   async cancelarCitaPut(@Query('citaId') citaId: string){
     const CitaCancelada = await this.cancelarCita.ejecutar(citaId);
     return CitaCancelada;
+  }
+
+  @Put('bloquearcita')
+  async bloquearCitaPut(@Query('citaId') citaId: string){
+    const CitaBloquear = await this.bloquearCita.ejecutar(citaId);
+    return CitaBloquear;
   }
 
 }
