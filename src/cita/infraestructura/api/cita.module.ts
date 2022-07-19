@@ -11,6 +11,8 @@ import { CitaController} from './cita.controller';
 import { AgendarCita } from '../../aplicacion/servicios/AgendarCita.service';
 import { BuscarCitasPaciente } from '../../aplicacion/servicios/BuscarCitasPaciente.service';
 import { CantidadCitasDiaDoctor } from '../../aplicacion/servicios/CantidadCitasDiaDoctor.service';
+import { VideollamadaCita } from '../adaptadores/VideollamadaCita';
+import { GenerarTokenCita } from 'src/cita/aplicacion/servicios/GenerarTokenCita.service';
 import { SolicitarCita } from '../../aplicacion/servicios/SolicitarCita.service';
 import { DoctorORM } from '../../../doctor/infraestructura/persistencia/Doctor.orm';
 import { PacienteORM } from '../../../paciente/infraestructura/persistencia/Paciente.orm';
@@ -20,7 +22,7 @@ import { CancelarCita } from '../../aplicacion/servicios/CancelarCita.service';
 @Module({
   imports: [TypeOrmModule.forFeature([CitaORM, DoctorORM, PacienteORM]), LoggerModule],
   controllers: [CitaController],
-  providers: [CitasSolicitadasDoctor, CitasDoctor, AgendarCita, RepositorioCita, LoggerService, SolicitarCita, AceptarCita, CancelarCita],
+  providers: [CitasSolicitadasDoctor, CitasDoctor, AgendarCita, RepositorioCita, LoggerService, SolicitarCita, AceptarCita, CancelarCita, VideollamadaCita, GenerarTokenCita],
 })
 export class CitaModule {
   static register(): DynamicModule {
@@ -89,7 +91,16 @@ export class CitaModule {
             userRepo: RepositorioCita,
           ) => new CancelarCita(logger, userRepo),
         },
+        {
+          inject: [LoggerService, VideollamadaCita, RepositorioCita],
+          provide: GenerarTokenCita,
+          useFactory: (
+            logger: LoggerService,
+            videollamadaCita: VideollamadaCita, 
+            userRepo: RepositorioCita,
+          ) => new GenerarTokenCita(logger,videollamadaCita,userRepo),
+        },
       ],
-    };
+    }
   }
 }

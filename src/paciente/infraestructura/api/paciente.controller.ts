@@ -5,19 +5,25 @@ import {
   Get,
   Inject,
   ParseIntPipe,
+  Patch,
   Post,
   Put,
+  Param,
   Query,
 } from '@nestjs/common';
+import { BuscarCantidadTodosLosPacientes } from '../../aplicacion/servicios/BuscarCantidadPacientesSistema.service';
+import { GuardarTokenPaciente } from 'src/paciente/aplicacion/servicios/guardarTokenPaciente.service';
+import { TokenPacienteDTO } from 'src/paciente/aplicacion/dto/TokenPacienteDTO';
 import { RepositorioPaciente } from '../adaptadores/RepositorioPaciente';
-import { buscarCantidadTodosLosPacientes } from '../../aplicacion/servicios/buscarCantidadPacientesSistema.service';
 import { PacienteORM } from '../persistencia/Paciente.orm';
 
 @Controller('api/paciente')
 export class PacienteController {
   constructor(
-    @Inject(buscarCantidadTodosLosPacientes)
-    private readonly buscarCantidad: buscarCantidadTodosLosPacientes,
+    @Inject(BuscarCantidadTodosLosPacientes)
+    private readonly buscarCantidad: BuscarCantidadTodosLosPacientes,
+    @Inject(GuardarTokenPaciente)
+    private readonly GuardarToken: GuardarTokenPaciente,
     @Inject(RepositorioPaciente)
     private readonly repositorioPaciente: RepositorioPaciente,
   ) {}
@@ -28,6 +34,14 @@ export class PacienteController {
     return cantidad;
   }
 
+  @Patch('guardar/token')
+  async patchGuardarToken(@Body() datos: TokenPacienteDTO) {
+    const token = await this.GuardarToken.ejecutar(datos);
+    return token;
+
+    
+  }
+  
   @Get('user')
   async getUser(@Query ('id') id: string) {
     const paciente: PacienteORM = await this.repositorioPaciente.obtenerPacienteById(id);
@@ -35,3 +49,4 @@ export class PacienteController {
   }
 
 }
+
