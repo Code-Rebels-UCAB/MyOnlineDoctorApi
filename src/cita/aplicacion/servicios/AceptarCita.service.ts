@@ -46,7 +46,10 @@ export class AceptarCita implements IServicioAplicacion<string,CitaDataDTO>
 
             //Generamos el Evento de Dominio
             cita.aceptarCita();
-  
+            //AQUI SE DEBERIA HACER LO DE LOS EVENTOS
+            //var eventos = cita.obtenerEventos();
+            //cita.limpiarEventos();
+            
             //guardamos en persistencia
             let  citaActualizada = await this.repositorioCita.actualizarStatusCita(cita.obtenerIdentificador().getCitaID().toString(), cita.getStatus().statusCita.toString());
             this.logger.log('La Cita con Identificador ' + datos + ' fue aceptada', '');
