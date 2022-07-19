@@ -193,7 +193,7 @@ export class RepositorioCita implements IRepositorioCita {
     await this.RepositorioCita.update({id_cita: citaid},{statuscita: status});
 
      //Obtenemos la cita actualizada
-     let cita = await this.obtenerCitaById(citaid);
+    let cita = await this.obtenerCitaById(citaid);
 
     return cita;
   }
