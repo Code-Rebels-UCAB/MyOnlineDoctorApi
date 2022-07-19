@@ -17,12 +17,13 @@ import { Cita } from "../../dominio/entidades/Cita";
 import { SolicitarCitaDataVO } from "../../dominio/dto/SolicitarCitaDataVO";
 import { SolicitarCitaPersistenciaDTO } from "../../infraestructura/persistencia/SolicitarCitaPersistenciaDTO";
 import { CitaPersistenciaDTO } from "../../infraestructura/dto/CitaPersistenciaDTO";
+import { AgendarCitaDTO } from "../dto/AgendarCitaDTO";
+import { AgendarCitaDataVO } from "../../dominio/dto/AgendarCitaDataVo";
 
 
 export class CitaMapeador{
 
     public static covertirInfraestructuraAplicacion(datos: CitaPersistenciaDTO):CitaDataDTO{
-
         return {
             idCita: datos.id_cita,
             idPaciente: datos.paciente.id_paciente,
@@ -33,7 +34,8 @@ export class CitaMapeador{
             fechaCita: datos.fechacita,
             horaCita: datos.horacita,
             duracion: datos.duracion.toString()
-        };
+        }; 
+
     }
 
     public static covertirAplicacionInfraestructura(datos: CitaDataDTO):CitaPersistenciaDTO{
@@ -79,6 +81,17 @@ export class CitaMapeador{
             fechaCita: data.fechaCita.fechaCita.toString(),
             horaCita: data.horaCita.horaCita.toString(),
             duracion: data.duracion.duracion.toString(),
+        }
+    }
+
+
+    public static convertirAgendarCitaADominio( data:AgendarCitaDTO ):AgendarCitaDataVO {
+        const hora = data.horaCita.split(":");
+        return {
+            idCita: CitaID.crear(Guid.parse(data.idCita)),
+            fechaCita: FechaCita.crear(data.fechaCita),
+            horaCita: HoraCita.crear(Number(hora[0]), Number(hora[1])),
+            duracion: Duracion.crear(Number(data.duracion)),
         }
     }
 
