@@ -6,7 +6,7 @@ import { CitasSolicitadasDoctor } from '../../aplicacion/servicios/CitasSolicita
 import { CantidadPacientesDoctor } from '../../aplicacion/servicios/CantidadPacientesDoctor.service';
 import { CantidadCitasDiaDoctor } from '../../aplicacion/servicios/CantidadCitasDiaDoctor.service';
 import { AgendarCitaDTO } from '../../aplicacion/dto/AgendarCitaDTO';
-import { GenerarTokenCita } from 'src/cita/aplicacion/servicios/GenerarTokenCita.service';
+import { GenerarTokenCita } from '../../aplicacion/servicios/GenerarTokenCita.service';
 import { SolicitarCita } from '../../aplicacion/servicios/SolicitarCita.service';
 import { SolicitarCitaDTO } from '../../aplicacion/dto/SolicitarCitaDTO';
 import { AceptarCita } from '../../aplicacion/servicios/AceptarCita.service';

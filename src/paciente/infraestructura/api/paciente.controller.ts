@@ -12,8 +12,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { BuscarCantidadTodosLosPacientes } from '../../aplicacion/servicios/BuscarCantidadPacientesSistema.service';
-import { GuardarTokenPaciente } from 'src/paciente/aplicacion/servicios/guardarTokenPaciente.service';
-import { TokenPacienteDTO } from 'src/paciente/aplicacion/dto/TokenPacienteDTO';
+import { GuardarTokenPaciente } from '../../../paciente/aplicacion/servicios/guardarTokenPaciente.service';
+import { TokenPacienteDTO } from '../../../paciente/aplicacion/dto/TokenPacienteDTO';
 import { RepositorioPaciente } from '../adaptadores/RepositorioPaciente';
 import { PacienteORM } from '../persistencia/Paciente.orm';
 
