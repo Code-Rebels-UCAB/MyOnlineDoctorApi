@@ -13,6 +13,7 @@ export interface CitaPersistenciaPacienteDTO{
         id_doctor: string,
         p_nombre: string,
         p_apellido: string,
+        sexo: string,
     },
     paciente: {
         id_paciente: string,

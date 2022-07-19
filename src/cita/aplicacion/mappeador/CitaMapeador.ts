@@ -130,6 +130,7 @@ export class CitaMapeador{
             doctor:{
                 id_doctor: data.doctor.id_doctor,
                 nombreDoctor: data.doctor.p_nombre + " " + data.doctor.p_apellido,
+                sexoDoctor: data.doctor.sexo
             }
             
         }

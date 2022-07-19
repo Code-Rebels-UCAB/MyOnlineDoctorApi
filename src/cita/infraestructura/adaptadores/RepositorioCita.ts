@@ -74,6 +74,7 @@ export class RepositorioCita implements IRepositorioCita {
         'doctor.id_doctor',
         'doctor.p_nombre',
         'doctor.p_apellido',
+        'doctor.sexo'
       ])
       .getMany();
 

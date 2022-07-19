@@ -8,7 +8,8 @@ export interface CitaPacienteDTO {
     id_paciente?: string,
     doctor?:{
         id_doctor?: string,
-        nombreDoctor?:string
+        nombreDoctor?:string,
+        sexoDoctor?: string
     }
 
 }
