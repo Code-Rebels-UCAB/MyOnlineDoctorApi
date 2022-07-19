@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Param, Put, Query} from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, Put, Query, Post} from '@nestjs/common';
 import { AgendarCita } from '../../aplicacion/servicios/AgendarCita.service';
 import { BuscarCitasPaciente } from '../../aplicacion/servicios/BuscarCitasPaciente.service';
 import { CitasDoctor } from '../../aplicacion/servicios/CitasDoctor.service';
@@ -7,18 +7,33 @@ import { CantidadPacientesDoctor } from '../../aplicacion/servicios/CantidadPaci
 import { CantidadCitasDiaDoctor } from '../../aplicacion/servicios/CantidadCitasDiaDoctor.service';
 import { AgendarCitaDTO } from '../../aplicacion/dto/AgendarCitaDTO';
 import { GenerarTokenCita } from 'src/cita/aplicacion/servicios/GenerarTokenCita.service';
+import { SolicitarCita } from '../../aplicacion/servicios/SolicitarCita.service';
+import { SolicitarCitaDTO } from '../../aplicacion/dto/SolicitarCitaDTO';
+import { AceptarCita } from '../../aplicacion/servicios/AceptarCita.service';
+import { CancelarCita } from '../../aplicacion/servicios/CancelarCita.service';
 
 @Controller('api/cita')
 export class CitaController {
   constructor(
     @Inject(CitasSolicitadasDoctor)
     private readonly citasSolicitadasDoctor: CitasSolicitadasDoctor,
+    @Inject(CitasDoctor)
     private readonly citasDoctor: CitasDoctor,
+    @Inject(AgendarCita)
     private readonly agendarCita: AgendarCita,
+    @Inject(BuscarCitasPaciente)
     private readonly buscarCitasPaciente: BuscarCitasPaciente,
+    @Inject(CantidadPacientesDoctor)
     private readonly cantidadPacientesDoctor: CantidadPacientesDoctor,
+    @Inject(CantidadCitasDiaDoctor)
     private readonly cantidadCitasDia: CantidadCitasDiaDoctor,
-    private readonly videollamadaCita: GenerarTokenCita
+    private readonly videollamadaCita: GenerarTokenCita,
+    @Inject(SolicitarCita)
+    private readonly solicitarCita: SolicitarCita,
+    @Inject(AceptarCita)
+    private readonly aceptarCita: AceptarCita,
+    @Inject(CancelarCita)
+    private readonly cancelarCita: CancelarCita,
   ) {}
 
   @Get('getsolicitudesdoctor/:doctorid')
@@ -63,4 +78,22 @@ export class CitaController {
     const cita = await this.videollamadaCita.ejecutar(citaid);
     return cita;
   }
+  @Post('solicitarcita')
+  async solicitarCitaPost(@Body() datos: SolicitarCitaDTO){
+    let citasolicitada = await this.solicitarCita.ejecutar(datos);
+    return citasolicitada;
+  }
+
+  @Put('aceptarcita')
+  async aceptarCitaPut(@Query('citaId') citaId: string){
+    let citaAceptada = await this.aceptarCita.ejecutar(citaId);
+    return citaAceptada;
+  }
+
+  @Put('cancelarcita')
+  async cancelarCitaPut(@Query('citaId') citaId: string){
+    const CitaCancelada = await this.cancelarCita.ejecutar(citaId);
+    return CitaCancelada;
+  }
+
 }

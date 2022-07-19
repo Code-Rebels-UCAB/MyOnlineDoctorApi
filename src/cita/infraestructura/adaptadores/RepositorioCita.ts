@@ -3,12 +3,20 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { IRepositorioCita } from '../../aplicacion/puertos/IRepositorioCita';
 import { CitaORM } from '../persistencia/Cita.orm';
 import { Repository } from 'typeorm';
+import { SolicitarCitaPersistenciaDTO } from '../persistencia/SolicitarCitaPersistenciaDTO';
+import { DoctorORM } from '../../../doctor/infraestructura/persistencia/Doctor.orm';
+import { PacienteORM } from '../../../paciente/infraestructura/persistencia/Paciente.orm';
+// import { RepositorioDoctor } from '../../../doctor/infraestructura/adaptadores/RepositorioDoctor';
 
 @Injectable()
 export class RepositorioCita implements IRepositorioCita {
   constructor(
     @InjectRepository(CitaORM)
     private readonly RepositorioCita: Repository<CitaORM>,
+    @InjectRepository(DoctorORM)
+    private readonly RepositorioDoctor: Repository<DoctorORM>,
+    @InjectRepository(PacienteORM)
+    private readonly RepositorioPaciente: Repository<PacienteORM>,
   ) {}
 
   async obtenerTodasLasCitas() {
@@ -122,16 +130,7 @@ export class RepositorioCita implements IRepositorioCita {
 
     return citas;
   }
-
-  actualizarCitaAgendada(citaid: string,fecha: string, hora: string, duracion:string) {
-    const citas = this.RepositorioCita.createQueryBuilder('citas')
-    .update(CitaORM)
-    .set({fechacita: fecha, horacita: hora, duracion:Number(duracion), statuscita: 'Agendada'})
-    .where('id_cita = :id', {
-      id: citaid,
-    }).execute();
-  }
-  30
+  
   async obtenerCantidadPacientesPorDoctor(doctorId: string) {
     const pacientesDoctor = await this.RepositorioCita.createQueryBuilder(
       'citas',
@@ -159,6 +158,45 @@ export class RepositorioCita implements IRepositorioCita {
 
     return cantidadCitasDia;
   }
+  
+  async crearCita(cita: SolicitarCitaPersistenciaDTO) {
+    //obtenemos al doctor por su id
+    const doctor = await this.RepositorioDoctor.findOneBy({id_doctor: cita.iddoctor});
+    
+    //obtenemos al paciente por su id
+    const paciente = await this.RepositorioPaciente.findOneBy({id_paciente: cita.idpaciente});
+
+    await this.RepositorioCita.insert({
+      id_cita: cita.id_cita,
+      statuscita: cita.statuscita,
+      modalidad: cita.modalidad,
+      motivo: cita.motivo,
+      doctor: doctor,
+      paciente: paciente,
+
+    });
+    return await this.obtenerCitaById(cita.id_cita);
+  }
+
+  async actualizarStatusCita(citaid: string, status: string) {
+
+    //Actualizamos la cita
+    await this.RepositorioCita.update({id_cita: citaid},{statuscita: status});
+
+     //Obtenemos la cita actualizada
+    let cita = await this.obtenerCitaById(citaid);
+
+    return cita;
+  }
+
+  async actualizarCitaAgendada(citaid: string,fecha: string, hora: string, duracion:string) {
+    const citas = this.RepositorioCita.createQueryBuilder('citas')
+    .update(CitaORM)
+    .set({fechacita: fecha, horacita: hora, duracion:Number(duracion), statuscita: 'Agendada'})
+    .where('id_cita = :id', {
+      id: citaid,
+    }).execute();
+  }
 
   async actualizarDatosVideollamadaCita(citaid: string, nombreCanal: string, tokenCita: string) {
     const datosCita = await this.RepositorioCita.createQueryBuilder('citas')
@@ -169,11 +207,7 @@ export class RepositorioCita implements IRepositorioCita {
     }).execute();
   }
 
-  crearCita() {
-    throw new Error('Method not implemented');
-  }
-
-  actualizarStatusCita() {
-    throw new Error('Method not implemented');
-  }
 }
+
+
+

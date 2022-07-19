@@ -25,11 +25,11 @@ export class Cita extends Agregado<CitaID> {
 
     constructor( 
         private readonly id: CitaID,
-        private status: StatusCita,
-        private modalidad: Modalidad,
-        private motivo: Motivo,
-        private readonly paciente: PacienteID,
-        private readonly doctor: DoctorID,
+        private status?: StatusCita,
+        private modalidad?: Modalidad,
+        private motivo?: Motivo,
+        private paciente?: PacienteID,
+        private doctor?: DoctorID,
         private fecha?: FechaCita,
         private hora?: HoraCita,
         private duracion?: Duracion
@@ -37,7 +37,17 @@ export class Cita extends Agregado<CitaID> {
         
     ) {
         super();
+        this.id = id;
+        this.setDoctor(doctor);
+        this.setPaciente(paciente);
+        this.setStatus(status);
+        this.setModalidad(modalidad);
+        this.setMotivo(motivo);
+        this.setFecha(fecha);
+        this.setHora(hora);
+        this.setDuracion(duracion);
     }
+
 
     //GETTERS DE VALUE OBJECTS 
     obtenerIdentificador(): CitaID {
@@ -78,28 +88,53 @@ export class Cita extends Agregado<CitaID> {
 
     //setters de value objects
 
+    
+    private setPaciente(paciente: PacienteID): void {
+        if (paciente != null && paciente != undefined) {
+            this.paciente = paciente;
+        }
+    }
+
+    private setDoctor(doctor: DoctorID): void {
+        if (doctor != null && doctor != undefined) {
+            this.doctor = doctor;
+        }
+    }
+
     private setModalidad(modalidad: Modalidad): void {
-        this.modalidad = modalidad;
+        if (modalidad != null && modalidad != undefined) {
+            this.modalidad = modalidad;
+        }
     }
 
     private setMotivo(motivo: Motivo): void {
-        this.motivo = motivo;
+        if (motivo != null && motivo != undefined) {
+            this.motivo = motivo;
+        }
     }
 
     private setStatus(status: StatusCita): void {
-        this.status = status;
+        if (status != null && status != undefined) {
+            this.status = status;
+        }
     }
 
     private setFecha(fecha: FechaCita): void {
-        this.fecha = fecha;
+        if (fecha != null && fecha != undefined) {
+            this.fecha = fecha;
+        }
     }
 
     private setHora(hora: HoraCita): void { 
-        this.hora = hora;
+        if (hora != null && hora != undefined) {
+            this.hora = hora;
+        }
     }
 
     private setDuracion(duracion: Duracion): void {
-        this.duracion = duracion;
+        if (duracion != null && duracion != undefined) {
+            this.duracion = duracion;
+        }
     }
     
     //METODOS ADICIONALES
@@ -136,21 +171,17 @@ export class Cita extends Agregado<CitaID> {
         this.setHora(hora);
         this.setDuracion(duracion);
 
-        const id_doctor = this.getDoctor()
-        const id_paciente = this.getPaciente()
-        const id_cita = this.obtenerIdentificador()
 
         this.agregarEvento(
             new CitaAgendada(
-              id_doctor.getDoctorID().toString(),
-              id_paciente.getPacienteID().toString(),
-              id_cita.getCitaID().toString(),
+              this.id.getCitaID().toString(),
               TipoCita.Agendada,
+              fecha.fechaCita,
               hora.horaCita,
               duracion.duracion.toString(),
               new Date(),
             ),
-          );
+        );
     }    
 
     public finalizarCita (){

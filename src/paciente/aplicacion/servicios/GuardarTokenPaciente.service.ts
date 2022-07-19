@@ -19,7 +19,6 @@ export class GuardarTokenPaciente implements IServicioAplicacion<TokenPacienteDT
         try{
             
             let datosP = PacienteTokenMapeador.convertirAplicacionInfraestructura(datos);
-            const tokenGuardado = await this.repositorioPaciente.guardarTokenPaciente(datosP.id_paciente,datosP.token_Firebase);
             
             this.logger.log("Actualizacion del token firebase para el paciente con identificador " + datosP.id_paciente, "Token:" +  datosP.token_Firebase);
             

@@ -30,4 +30,11 @@ export class RepositorioPaciente implements IRepositorioPaciente {
       id: pacienteid,
     }).execute();
   }
+  
+  async obtenerPacienteById(id: string): Promise<PacienteORM> {
+    const paciente:PacienteORM = await this.repositorioPaciente.findOne({
+        where: { id_paciente: id },
+    });
+    return paciente;
+  }
 }

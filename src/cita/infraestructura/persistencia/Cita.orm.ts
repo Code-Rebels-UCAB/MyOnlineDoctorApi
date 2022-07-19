@@ -17,22 +17,22 @@ export class CitaORM {
   @PrimaryColumn()
   id_cita: string;
 
-  @Column()
+  @Column({nullable: true})
   statuscita: string;
 
-  @Column()
+  @Column({nullable: true})
   modalidad: string;
 
-  @Column()
+  @Column({nullable: true})
   motivo: string;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'date', nullable: true })
   fechacita: Date;
 
-  @Column({ type: 'time without time zone' })
+  @Column({ type: 'time without time zone', nullable: true })
   horacita: Date;
 
-  @Column()
+  @Column({nullable: true})
   duracion: number;
 
   @Column({name: 'tokenA', type: 'varchar', nullable: true})
@@ -42,12 +42,12 @@ export class CitaORM {
   channelA: string;
 
   //Relacion Con Paciente
-  @ManyToOne(() => PacienteORM, (paciente) => paciente.cita)
-  @JoinColumn({ name: 'paciente' })
+  @ManyToOne(() => PacienteORM, (paciente) => paciente.cita, { nullable: true })
+  @JoinColumn({ name: 'paciente'})
   paciente: PacienteORM;
 
   //Relacion Con Doctor
-  @ManyToOne(() => DoctorORM, (doctor) => doctor.cita)
+  @ManyToOne(() => DoctorORM, (doctor) => doctor.cita, { nullable: true })
   @JoinColumn({ name: 'doctor' })
   doctor: DoctorORM;
 

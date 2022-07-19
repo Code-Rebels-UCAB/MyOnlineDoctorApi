@@ -9,6 +9,7 @@ import { BuscarDoctorEspecialidad } from '../../aplicacion/servicios/BuscarDocto
 import { RepositorioDoctor } from '../adaptadores/RepositorioDoctor';
 import { DoctorORM } from '../persistencia/Doctor.orm';
 import { DoctorController } from './doctor.controller';
+import { BuscarDoctorTop } from 'src/doctor/aplicacion/servicios/BuscarDoctorTop.service';
 
 
 @Module({
@@ -18,7 +19,7 @@ import { DoctorController } from './doctor.controller';
     
   ],
   controllers: [DoctorController],
-  providers: [BuscarDoctorEspecialidad,RepositorioDoctor, LoggerService],
+  providers: [BuscarDoctorEspecialidad,RepositorioDoctor, LoggerService, BuscarDoctorNombreApellido, BuscarDoctorTop, CalificarDoctor],
 })
 export class DoctorModule {
   static register(): DynamicModule {
@@ -40,6 +41,14 @@ export class DoctorModule {
             logger: LoggerService,
             userRepo: RepositorioDoctor,
           ) => new BuscarDoctorNombreApellido(logger, userRepo),
+        },
+        {
+          inject: [LoggerService, RepositorioDoctor],
+          provide: BuscarDoctorTop,
+          useFactory: (
+            logger: LoggerService,
+            userRepo: RepositorioDoctor,
+          ) => new BuscarDoctorTop(logger, userRepo),
         },
         {
           inject: [LoggerService, RepositorioDoctor],

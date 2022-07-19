@@ -44,13 +44,13 @@ export class PacienteORM{
     @Column({name: 'alergia', type: 'varchar', nullable: true})
     alergia: string;
 
-    @Column({name: 'contrasena', type: 'varchar'})
+    @Column({name: 'contrasena', type: 'varchar', nullable: true})
     contrasena: string;
 
-    @Column({name: 'correo', type: 'varchar'})
+    @Column({name: 'correo', type: 'varchar', nullable: true})
     correo: string;
 
-    @Column({name: 'fecha_nacimiento', type: 'date'})
+    @Column({name: 'fecha_nacimiento', type: 'date', nullable: true})
     fecha_nacimiento: Date;
 
     @Column({name: 'tokenF', type: 'varchar', nullable: true})
@@ -61,7 +61,7 @@ export class PacienteORM{
     @OneToMany(() => CitaORM, cita => cita.paciente)
     cita: CitaORM[];
 
-    @OneToOne(() => HistoriaMedicaORM, historiaMedica => historiaMedica.paciente)
+    @OneToOne(() => HistoriaMedicaORM, historiaMedica => historiaMedica.paciente, { nullable: true })
     historiaMedica: HistoriaMedicaORM;
 
 }

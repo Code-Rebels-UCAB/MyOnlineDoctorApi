@@ -13,11 +13,16 @@ import { BuscarCitasPaciente } from '../../aplicacion/servicios/BuscarCitasPacie
 import { CantidadCitasDiaDoctor } from '../../aplicacion/servicios/CantidadCitasDiaDoctor.service';
 import { VideollamadaCita } from '../adaptadores/VideollamadaCita';
 import { GenerarTokenCita } from 'src/cita/aplicacion/servicios/GenerarTokenCita.service';
+import { SolicitarCita } from '../../aplicacion/servicios/SolicitarCita.service';
+import { DoctorORM } from '../../../doctor/infraestructura/persistencia/Doctor.orm';
+import { PacienteORM } from '../../../paciente/infraestructura/persistencia/Paciente.orm';
+import { AceptarCita } from '../../aplicacion/servicios/AceptarCita.service';
+import { CancelarCita } from '../../aplicacion/servicios/CancelarCita.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([CitaORM]), LoggerModule],
+  imports: [TypeOrmModule.forFeature([CitaORM, DoctorORM, PacienteORM]), LoggerModule],
   controllers: [CitaController],
-  providers: [CitasSolicitadasDoctor, CitasDoctor, AgendarCita, RepositorioCita, LoggerService, VideollamadaCita, GenerarTokenCita],
+  providers: [CitasSolicitadasDoctor, CitasDoctor, AgendarCita, RepositorioCita, LoggerService, SolicitarCita, AceptarCita, CancelarCita, VideollamadaCita, GenerarTokenCita],
 })
 export class CitaModule {
   static register(): DynamicModule {
@@ -63,12 +68,39 @@ export class CitaModule {
           ) => new AgendarCita(logger, userRepo),
         },
         {
+          inject: [LoggerService, RepositorioCita],
+          provide: SolicitarCita,
+          useFactory: (
+            logger: LoggerService,
+            userRepo: RepositorioCita,
+          ) => new SolicitarCita(logger, userRepo),
+        },
+        {
+          inject: [LoggerService, RepositorioCita],
+          provide: AceptarCita,
+          useFactory: (
+            logger: LoggerService,
+            userRepo: RepositorioCita,
+          ) => new AceptarCita(logger, userRepo),
+        },
+        {
+          inject: [LoggerService, RepositorioCita],
+          provide: CancelarCita,
+          useFactory: (
+            logger: LoggerService,
+            userRepo: RepositorioCita,
+          ) => new CancelarCita(logger, userRepo),
+        },
+        {
           inject: [LoggerService, VideollamadaCita, RepositorioCita],
           provide: GenerarTokenCita,
-          useFactory: (logger: LoggerService, videollamadaCita: VideollamadaCita, userRepo: RepositorioCita) =>
-            new GenerarTokenCita(logger,videollamadaCita,userRepo),
+          useFactory: (
+            logger: LoggerService,
+            videollamadaCita: VideollamadaCita, 
+            userRepo: RepositorioCita,
+          ) => new GenerarTokenCita(logger,videollamadaCita,userRepo),
         },
       ],
-    };
+    }
   }
 }
