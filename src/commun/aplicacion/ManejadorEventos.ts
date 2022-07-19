@@ -3,23 +3,28 @@ import { IObservable } from "./IObservable";
 import { IObservador } from "./IObservador";
 
 
-export class ManejadorEventos implements IObservable<EventoDominio>{
+export class ManejadorEventos<D> implements IObservable<EventoDominio,D>{
     private Eventos: EventoDominio[];
-    private Observadores: IObservador<EventoDominio>[];
+    private Observadores: IObservador<EventoDominio,D>[];
 
-    public AddEvento(...eventos:EventoDominio[]){
-        this.Eventos.concat(eventos);
+    constructor(){
+       this.Eventos = [];
+       this.Observadores = [];
     }
 
-    Notify(): void {
+    public AddEvento(...eventos:EventoDominio[]){
+        this.Eventos = this.Eventos.concat(eventos);
+    }
+
+    Notify(data?: D): void {
         for (const observer of this.Observadores) {
             for (const evento of this.Eventos) {
-                observer.Update(evento);
+                observer.Update(evento, data);
             }
         }
     }
 
-    Add(observer: IObservador<EventoDominio>): void {
+    Add(observer: IObservador<EventoDominio,D>): void {
         this.Observadores.push(observer);
     }
 

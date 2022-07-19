@@ -1,7 +1,7 @@
 
 
-    export interface IObservador<E>{
+    export interface IObservador<E,D>{
 
-        Update(context:E):void;
+        Update(context:E, data: D):void;
 
     }
