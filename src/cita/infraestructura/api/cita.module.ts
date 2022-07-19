@@ -12,22 +12,24 @@ import { AgendarCita } from '../../aplicacion/servicios/AgendarCita.service';
 import { BuscarCitasPaciente } from '../../aplicacion/servicios/BuscarCitasPaciente.service';
 import { CantidadCitasDiaDoctor } from '../../aplicacion/servicios/CantidadCitasDiaDoctor.service';
 import { VideollamadaCita } from '../adaptadores/VideollamadaCita';
-import { GenerarTokenCita } from '../../../cita/aplicacion/servicios/GenerarTokenCita.service';
+import { GenerarTokenCita } from '../../aplicacion/servicios/GenerarTokenCita.service';
 import { SolicitarCita } from '../../aplicacion/servicios/SolicitarCita.service';
 import { DoctorORM } from '../../../doctor/infraestructura/persistencia/Doctor.orm';
 import { PacienteORM } from '../../../paciente/infraestructura/persistencia/Paciente.orm';
 import { AceptarCita } from '../../aplicacion/servicios/AceptarCita.service';
 import { CancelarCita } from '../../aplicacion/servicios/CancelarCita.service';
+import { IniciarCita } from '../../aplicacion/servicios/IniciarCita.service';
 import { ManejadorEventos } from '../../../commun/aplicacion/ManejadorEventos';
 import { NotificarPacienteFirebase } from '../adaptadores/NotificarPacienteFirebase';
 import { BloquearCita } from '../../aplicacion/servicios/BloquearCita.service';
 import { SuspenderCita } from '../../aplicacion/servicios/SuspenderCita.service';
+import { FinalizarCita } from 'src/cita/aplicacion/servicios/FinalizarCita.service';
 import { CitasDiaDoctor } from '../../aplicacion/servicios/CitasDiaDoctor.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CitaORM, DoctorORM, PacienteORM]), LoggerModule],
   controllers: [CitaController],
-  providers: [CitasSolicitadasDoctor, CitasDoctor, AgendarCita, RepositorioCita, LoggerService, SolicitarCita, AceptarCita, CancelarCita,ManejadorEventos, VideollamadaCita, GenerarTokenCita, BloquearCita, SuspenderCita],
+  providers: [CitasSolicitadasDoctor, CitasDoctor, AgendarCita, RepositorioCita, LoggerService, SolicitarCita, AceptarCita, CancelarCita, ManejadorEventos ,VideollamadaCita, GenerarTokenCita, IniciarCita, BloquearCita, SuspenderCita, FinalizarCita],
 })
 export class CitaModule {
   static register(): DynamicModule {
@@ -118,6 +120,16 @@ export class CitaModule {
           ) => new GenerarTokenCita(logger,videollamadaCita,userRepo),
         },
         {
+          inject: [LoggerService, RepositorioCita, GenerarTokenCita, VideollamadaCita],
+          provide: IniciarCita,
+          useFactory: (
+            logger: LoggerService,
+            userRepo: RepositorioCita,
+            tokenCita: GenerarTokenCita,
+            videollamadaCita: VideollamadaCita
+          ) => new IniciarCita(logger,userRepo, new GenerarTokenCita(logger,videollamadaCita,userRepo)),
+        },
+        {
           inject: [LoggerService, RepositorioCita],
           provide: BloquearCita,
           useFactory: (
@@ -132,6 +144,14 @@ export class CitaModule {
             logger: LoggerService,
             userRepo: RepositorioCita,
           ) => new SuspenderCita(logger, userRepo),
+        },
+        {
+          inject: [LoggerService, RepositorioCita],
+          provide: FinalizarCita,
+          useFactory: (
+            logger: LoggerService,
+            userRepo: RepositorioCita,
+          ) => new FinalizarCita(logger, userRepo),
         },
       ],
     }

@@ -205,7 +205,7 @@ export class RepositorioCita implements IRepositorioCita {
   }
 
   async actualizarStatusCita(citaid: string, status: string) {
-
+      console.log(citaid)
     //Actualizamos la cita
     await this.RepositorioCita.update({id_cita: citaid},{statuscita: status});
 
