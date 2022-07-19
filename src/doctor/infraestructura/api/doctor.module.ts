@@ -18,7 +18,7 @@ import { DoctorController } from './doctor.controller';
     
   ],
   controllers: [DoctorController],
-  providers: [BuscarDoctorEspecialidad,RepositorioDoctor, LoggerService],
+  providers: [BuscarDoctorEspecialidad,RepositorioDoctor, LoggerService, BuscarDoctorNombreApellido, CalificarDoctor],
 })
 export class DoctorModule {
   static register(): DynamicModule {
