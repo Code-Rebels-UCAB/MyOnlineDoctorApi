@@ -17,39 +17,39 @@ export class RegistroMedicoORM {
   @PrimaryColumn()
   id_registro: string;
 
-  @Column()
+  @Column({ nullable: true })
   examenes: string;
 
-  @Column()
+  @Column({ nullable: true })
   historia: string;
 
-  @Column()
+  @Column({ nullable: true })
   prescripcion: string;
 
-  @Column()
+  @Column({ nullable: true })
   plan: string;
 
-  @Column()
+  @Column({ nullable: true })
   diagonistico: string;
 
-  @Column()
+  @Column({ nullable: true })
   motivo: string;
 
-  @Column({name: 'fechaCita', type: 'date'})
+  @Column({name: 'fechaCita', type: 'date', nullable: true})
   fechaCita: Date;
 
   //Relacion con Doctor
-  @ManyToOne(() => DoctorORM, doctor => doctor.registroMedico)
+  @ManyToOne(() => DoctorORM, doctor => doctor.registroMedico, { nullable: true })
   @JoinColumn({name:'doctor'})
   doctor: DoctorORM;
 
   //Relacion con Cita
-  @ManyToOne(() => CitaORM, cita => cita.registroMedico)
+  @ManyToOne(() => CitaORM, cita => cita.registroMedico, { nullable: true })
   @JoinColumn({name:'cita'})
   cita: CitaORM;
 
   //Relacion con Historia Medica
-  @ManyToOne(() => HistoriaMedicaORM, (HistoriaMedica) => HistoriaMedica.registroMedico)
+  @ManyToOne(() => HistoriaMedicaORM, (HistoriaMedica) => HistoriaMedica.registroMedico, { nullable: true })
   @JoinColumn({name:'historiaMedica'})  
   historiaMedica: HistoriaMedicaORM;
 

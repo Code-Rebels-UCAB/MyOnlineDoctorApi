@@ -10,37 +10,37 @@ export class DoctorORM{
     @PrimaryColumn({name: 'id_doctor', type: 'varchar'})
     id_doctor: string;
 
-    @Column({name: 'p_nombre', type: 'varchar'})
+    @Column({name: 'p_nombre', type: 'varchar', nullable: true})
     p_nombre: string;
 
-    @Column({name: 'p_apellido', type: 'varchar'})
+    @Column({name: 'p_apellido', type: 'varchar', nullable: true})
     p_apellido: string;
 
-    @Column({name: 'sexo', type: 'varchar', length:1})
+    @Column({name: 'sexo', type: 'varchar', length:1, nullable: true})
     sexo: string;
 
-    @Column({name: 'correo', type: 'varchar'})
+    @Column({name: 'correo', type: 'varchar', nullable: true})
     correo: string;
 
-    @Column({name: 'password', type: 'varchar'})
+    @Column({name: 'password', type: 'varchar', nullable: true})
     password: string;
 
-    @Column({name: 'latitud', type: 'varchar'})
+    @Column({name: 'latitud', type: 'varchar', nullable: true})
     latitud: string;
 
-    @Column({name: 'longitud', type: 'varchar'})
+    @Column({name: 'longitud', type: 'varchar', nullable: true})
     longitud: string;
 
-    @Column({name: 'foto', type: 'varchar'})
+    @Column({name: 'foto', type: 'varchar', nullable: true})
     foto: string;
 
-    @Column({name: 'calificacion', type: 'numeric'})
+    @Column({name: 'calificacion', type: 'numeric', nullable: true})
     calificacion: number;
 
-    @Column({name: 'cantidad_calificacion', type: 'numeric'})
+    @Column({name: 'cantidad_calificacion', type: 'numeric', nullable: true})
     cantidad_calificacion: number;
 
-    @Column({name: 'status', type: 'varchar'})
+    @Column({name: 'status', type: 'varchar', nullable: true})
     status: string;
 
     @Column({name: 'tokenF', type: 'varchar', nullable: true})
