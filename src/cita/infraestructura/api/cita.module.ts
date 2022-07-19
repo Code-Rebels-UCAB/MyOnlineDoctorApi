@@ -24,6 +24,7 @@ import { NotificarPacienteFirebase } from '../adaptadores/NotificarPacienteFireb
 import { BloquearCita } from '../../aplicacion/servicios/BloquearCita.service';
 import { SuspenderCita } from '../../aplicacion/servicios/SuspenderCita.service';
 import { FinalizarCita } from 'src/cita/aplicacion/servicios/FinalizarCita.service';
+import { CitasDiaDoctor } from '../../aplicacion/servicios/CitasDiaDoctor.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CitaORM, DoctorORM, PacienteORM]), LoggerModule],
@@ -58,6 +59,12 @@ export class CitaModule {
           provide: BuscarCitasPaciente,
           useFactory: (logger: LoggerService, userRepo: RepositorioCita) =>
             new BuscarCitasPaciente(logger, userRepo),
+        },
+        {
+          inject: [LoggerService, RepositorioCita],
+          provide: CitasDiaDoctor,
+          useFactory: (logger: LoggerService, userRepo: RepositorioCita) =>
+            new CitasDiaDoctor(logger, userRepo),
         },
         {
           inject: [LoggerService, RepositorioCita],
