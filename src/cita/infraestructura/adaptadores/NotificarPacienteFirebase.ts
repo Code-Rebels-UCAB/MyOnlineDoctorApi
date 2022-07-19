@@ -6,7 +6,7 @@ import { EventoDominio } from "../../../commun/dominio/eventos/Evento";
 export class NotificarPacienteFirebase implements IPolitica<string,void>{
 
     Update(context: EventoDominio, data: string): void {
-        if (context.Nombre = 'CitaAgendada') {
+        if (context.Nombre == 'CitaAgendada') {
             this.ejecutar(data)
         }
     }

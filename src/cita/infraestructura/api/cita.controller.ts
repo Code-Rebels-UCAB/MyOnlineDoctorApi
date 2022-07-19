@@ -6,13 +6,14 @@ import { CitasSolicitadasDoctor } from '../../aplicacion/servicios/CitasSolicita
 import { CantidadPacientesDoctor } from '../../aplicacion/servicios/CantidadPacientesDoctor.service';
 import { CantidadCitasDiaDoctor } from '../../aplicacion/servicios/CantidadCitasDiaDoctor.service';
 import { AgendarCitaDTO } from '../../aplicacion/dto/AgendarCitaDTO';
-import { GenerarTokenCita } from '../../aplicacion/servicios/GenerarTokenCita.service';
 import { SolicitarCita } from '../../aplicacion/servicios/SolicitarCita.service';
 import { SolicitarCitaDTO } from '../../aplicacion/dto/SolicitarCitaDTO';
 import { AceptarCita } from '../../aplicacion/servicios/AceptarCita.service';
 import { CancelarCita } from '../../aplicacion/servicios/CancelarCita.service';
+import { IniciarCita } from '../../aplicacion/servicios/IniciarCita.service';
 import { BloquearCita } from '../../aplicacion/servicios/BloquearCita.service';
 import { SuspenderCita } from '../../aplicacion/servicios/SuspenderCita.service';
+import { FinalizarCita } from '../../aplicacion/servicios/FinalizarCita.service';
 import { CitasDiaDoctor } from '../../aplicacion/servicios/CitasDiaDoctor.service';
 
 @Controller('api/cita')
@@ -30,7 +31,8 @@ export class CitaController {
     private readonly cantidadPacientesDoctor: CantidadPacientesDoctor,
     @Inject(CantidadCitasDiaDoctor)
     private readonly cantidadCitasDia: CantidadCitasDiaDoctor,
-    private readonly videollamadaCita: GenerarTokenCita,
+    @Inject(IniciarCita)
+    private readonly iniciarCita: IniciarCita,
     @Inject(SolicitarCita)
     private readonly solicitarCita: SolicitarCita,
     @Inject(AceptarCita)
@@ -41,6 +43,8 @@ export class CitaController {
     private readonly bloquearCita: BloquearCita,
     @Inject(SuspenderCita)
     private readonly suspenderCita: SuspenderCita,
+    @Inject(FinalizarCita)
+    private readonly finalizarCita: FinalizarCita,
     @Inject(CitasDiaDoctor)
     private readonly citasalDia: CitasDiaDoctor
   ) {}
@@ -89,11 +93,12 @@ export class CitaController {
     return Cantcitas;
   }
 
-  @Get('/citaIniciada/:citaid')
-  async getGenerarTokenCita(@Param('citaid') citaid: string) {
-    const cita = await this.videollamadaCita.ejecutar(citaid);
+  @Put('iniciarcita')
+  async inciarCitaPut(@Query('citaid') citaid: string) {
+    const cita = await this.iniciarCita.ejecutar(citaid);
     return cita;
   }
+  
   @Post('solicitarcita')
   async solicitarCitaPost(@Body() datos: SolicitarCitaDTO){
     let citasolicitada = await this.solicitarCita.ejecutar(datos);
@@ -124,4 +129,12 @@ export class CitaController {
     return CitaSuspender;
   }
 
+  @Put('finalizarcita')
+  async finalizarCitaPut(@Query('citaId') citaId: string){
+    const citaFinalizar = await this.finalizarCita.ejecutar(citaId);
+    console.log(citaFinalizar)
+    return citaFinalizar;
+  }
+
 }
+
