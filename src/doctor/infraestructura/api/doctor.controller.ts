@@ -4,6 +4,7 @@ import { CalificarDoctor } from '../../aplicacion/servicios/CalificarDoctor.serv
 import { BuscarDoctorEspecialidad } from '../../aplicacion/servicios/BuscarDoctorEspecialidad.service';
 import { CalificarDoctorDTO } from '../../aplicacion/dtos/CalificarDoctorDTO';
 import { BuscarDoctorTop } from '../../../doctor/aplicacion/servicios/BuscarDoctorTop.service';
+import { BuscarTodosDoctores } from '../../../doctor/aplicacion/servicios/BuscarTodosDoctores.service';
 
 
 @Controller('api/doctor')
@@ -17,6 +18,8 @@ export class DoctorController {
     private readonly calificarDoctor: CalificarDoctor,
     @Inject(BuscarDoctorTop)
     private readonly buscarDoctorTop: BuscarDoctorTop,
+    @Inject(BuscarTodosDoctores)
+    private readonly buscarTodosDoctores: BuscarTodosDoctores,
   ) {}
   
 
@@ -42,6 +45,12 @@ export class DoctorController {
   async updateCalificar(@Body() calificacion: CalificarDoctorDTO) {
     await this.calificarDoctor.ejecutar(calificacion);
     return;
+  }
+
+  @Get('todos')
+  async getAll() {
+    const doctores = await this.buscarTodosDoctores.ejecutar();
+    return doctores;
   }
 
 }

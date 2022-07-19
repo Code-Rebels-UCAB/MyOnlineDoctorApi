@@ -85,4 +85,8 @@ export class RepositorioDoctor implements IRepositorioDoctor {
         });
     }
   
+    async obtenerTodosDoctores(): Promise<DoctorORM[]> {
+        const doctores = await this._doctorRepository.find();
+        return doctores;
+    }
 }

@@ -10,6 +10,7 @@ import { RepositorioDoctor } from '../adaptadores/RepositorioDoctor';
 import { DoctorORM } from '../persistencia/Doctor.orm';
 import { DoctorController } from './doctor.controller';
 import { BuscarDoctorTop } from '../../../doctor/aplicacion/servicios/BuscarDoctorTop.service';
+import { BuscarTodosDoctores } from '../../../doctor/aplicacion/servicios/BuscarTodosDoctores.service';
 
 
 @Module({
@@ -57,7 +58,15 @@ export class DoctorModule {
             logger: LoggerService,
             userRepo: RepositorioDoctor,
           ) => new CalificarDoctor(logger, userRepo),
-        },        
+        },   
+        {
+          inject: [LoggerService, RepositorioDoctor],
+          provide: BuscarTodosDoctores,
+          useFactory: (
+            logger: LoggerService,
+            userRepo: RepositorioDoctor,
+          ) => new BuscarTodosDoctores(logger, userRepo),
+        },       
       ],
     };
   }
