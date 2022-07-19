@@ -21,11 +21,12 @@ import { CancelarCita } from '../../aplicacion/servicios/CancelarCita.service';
 import { ManejadorEventos } from '../../../commun/aplicacion/ManejadorEventos';
 import { NotificarPacienteFirebase } from '../adaptadores/NotificarPacienteFirebase';
 import { BloquearCita } from '../../aplicacion/servicios/BloquearCita.service';
+import { SuspenderCita } from '../../aplicacion/servicios/SuspenderCita.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CitaORM, DoctorORM, PacienteORM]), LoggerModule],
   controllers: [CitaController],
-  providers: [CitasSolicitadasDoctor, CitasDoctor, AgendarCita, RepositorioCita, LoggerService, SolicitarCita, AceptarCita, CancelarCita,ManejadorEventos, VideollamadaCita, GenerarTokenCita, BloquearCita],
+  providers: [CitasSolicitadasDoctor, CitasDoctor, AgendarCita, RepositorioCita, LoggerService, SolicitarCita, AceptarCita, CancelarCita,ManejadorEventos, VideollamadaCita, GenerarTokenCita, BloquearCita, SuspenderCita],
 })
 export class CitaModule {
   static register(): DynamicModule {
@@ -116,6 +117,14 @@ export class CitaModule {
             logger: LoggerService,
             userRepo: RepositorioCita,
           ) => new BloquearCita(logger, userRepo),
+        },
+        {
+          inject: [LoggerService, RepositorioCita],
+          provide: SuspenderCita,
+          useFactory: (
+            logger: LoggerService,
+            userRepo: RepositorioCita,
+          ) => new SuspenderCita(logger, userRepo),
         },
       ],
     }
