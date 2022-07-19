@@ -87,7 +87,7 @@ export class CitaModule {
           useFactory: (
             logger: LoggerService,
             userRepo: RepositorioCita,
-          ) => new AceptarCita(logger, userRepo),
+          ) => new CancelarCita(logger, userRepo),
         },
       ],
     };
