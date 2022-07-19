@@ -15,11 +15,12 @@ import { SolicitarCita } from '../../aplicacion/servicios/SolicitarCita.service'
 import { DoctorORM } from '../../../doctor/infraestructura/persistencia/Doctor.orm';
 import { PacienteORM } from '../../../paciente/infraestructura/persistencia/Paciente.orm';
 import { AceptarCita } from '../../aplicacion/servicios/AceptarCita.service';
+import { CancelarCita } from '../../aplicacion/servicios/CancelarCita.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CitaORM, DoctorORM, PacienteORM]), LoggerModule],
   controllers: [CitaController],
-  providers: [CitasSolicitadasDoctor, CitasDoctor, AgendarCita, RepositorioCita, LoggerService, SolicitarCita, AceptarCita],
+  providers: [CitasSolicitadasDoctor, CitasDoctor, AgendarCita, RepositorioCita, LoggerService, SolicitarCita, AceptarCita, CancelarCita],
 })
 export class CitaModule {
   static register(): DynamicModule {
@@ -79,6 +80,14 @@ export class CitaModule {
             logger: LoggerService,
             userRepo: RepositorioCita,
           ) => new AceptarCita(logger, userRepo),
+        },
+        {
+          inject: [LoggerService, RepositorioCita],
+          provide: CancelarCita,
+          useFactory: (
+            logger: LoggerService,
+            userRepo: RepositorioCita,
+          ) => new CancelarCita(logger, userRepo),
         },
       ],
     };
