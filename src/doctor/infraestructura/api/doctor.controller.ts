@@ -34,7 +34,7 @@ export class DoctorController {
 
   @Get('filtrar/top')
   async getByTop() {
-    const doctores = await this.buscarDoctorTop.ejecutar(null);
+    const doctores = await this.buscarDoctorTop.ejecutar();
     return doctores;
   }
 
