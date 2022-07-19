@@ -19,14 +19,24 @@ import { PacienteORM } from '../../../paciente/infraestructura/persistencia/Paci
 import { AceptarCita } from '../../aplicacion/servicios/AceptarCita.service';
 import { CancelarCita } from '../../aplicacion/servicios/CancelarCita.service';
 import { IniciarCita } from '../../aplicacion/servicios/IniciarCita.service';
+import { ManejadorEventos } from '../../../commun/aplicacion/ManejadorEventos';
+import { NotificarPacienteFirebase } from '../adaptadores/NotificarPacienteFirebase';
+import { BloquearCita } from '../../aplicacion/servicios/BloquearCita.service';
+import { SuspenderCita } from '../../aplicacion/servicios/SuspenderCita.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CitaORM, DoctorORM, PacienteORM]), LoggerModule],
   controllers: [CitaController],
-  providers: [CitasSolicitadasDoctor, CitasDoctor, AgendarCita, RepositorioCita, LoggerService, SolicitarCita, AceptarCita, CancelarCita, VideollamadaCita, GenerarTokenCita, IniciarCita],
+  providers: [CitasSolicitadasDoctor, CitasDoctor, AgendarCita, RepositorioCita, LoggerService, SolicitarCita, AceptarCita, CancelarCita, VideollamadaCita, GenerarTokenCita, IniciarCita, BloquearCita, SuspenderCita],
 })
 export class CitaModule {
   static register(): DynamicModule {
+    //AQUI VA LA DECLARACION DEL PROVIDER "MANEJADOR DE EVENTOS" Y 
+    //SE AGREGAN LOS OBSERVADORES QUE DEBEN ESTAR ATENTOS A CAMBIOS EN LOS ESTADOS DEL AGREGADO DE CITA (POLITICAS)
+    var manejador = new ManejadorEventos();
+    manejador.Add(new NotificarPacienteFirebase());
+    
+
     return {
       module: CitaModule,
       providers: [
@@ -61,12 +71,12 @@ export class CitaModule {
             new CantidadCitasDiaDoctor(logger, userRepo),
         },
         {
-          inject: [LoggerService, RepositorioCita],
+          inject: [LoggerService, RepositorioCita, ManejadorEventos],
           provide: AgendarCita,
           useFactory: (
             logger: LoggerService,
-            userRepo: RepositorioCita,
-          ) => new AgendarCita(logger, userRepo),
+            userRepo: RepositorioCita
+          ) => new AgendarCita(logger, userRepo, manejador),
         },
         {
           inject: [LoggerService, RepositorioCita],
@@ -110,6 +120,22 @@ export class CitaModule {
             tokenCita: GenerarTokenCita,
             videollamadaCita: VideollamadaCita
           ) => new IniciarCita(logger,userRepo, new GenerarTokenCita(logger,videollamadaCita,userRepo)),
+        },
+        {
+          inject: [LoggerService, RepositorioCita],
+          provide: BloquearCita,
+          useFactory: (
+            logger: LoggerService,
+            userRepo: RepositorioCita,
+          ) => new BloquearCita(logger, userRepo),
+        },
+        {
+          inject: [LoggerService, RepositorioCita],
+          provide: SuspenderCita,
+          useFactory: (
+            logger: LoggerService,
+            userRepo: RepositorioCita,
+          ) => new SuspenderCita(logger, userRepo),
         },
       ],
     }

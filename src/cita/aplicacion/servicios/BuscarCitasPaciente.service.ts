@@ -4,6 +4,7 @@ import { Resultado } from "../../../commun/aplicacion/Resultado";
 import { IRepositorioCita } from "../puertos/IRepositorioCita";
 import { IExcepcion } from "../../../commun/dominio/excepcciones/IExcepcion";
 import { CitaPacienteDTO } from "../dto/CitasPacienteDTO";
+import { CitaMapeador } from "../mappeador/CitaMapeador";
 
 
 export class BuscarCitasPaciente implements IServicioAplicacion<string,CitaPacienteDTO[]>
@@ -16,9 +17,13 @@ export class BuscarCitasPaciente implements IServicioAplicacion<string,CitaPacie
 
     async ejecutar(pacienteid: string): Promise<Resultado<CitaPacienteDTO[]>> {
         try{
-            const CitasPaciente: CitaPacienteDTO[] = await this.repositorioCita.obtenerCitaByPaciente(pacienteid);
+            // const CitasPaciente: CitaPacienteDTO[] = await this.repositorioCita.obtenerCitaByPaciente(pacienteid);
+            const CitasPacienteInfraestructura= await this.repositorioCita.obtenerCitaByPaciente(pacienteid);
 
-            
+            //Mapeamos a la vista
+            const CitasPaciente:CitaPacienteDTO[] = CitasPacienteInfraestructura.map((datos) =>
+                CitaMapeador.convertirCitasPacienteAAplicacion(datos),
+            )
             this.logger.log("Busqueda de Todas la citas de un Paciente", "Total: " + CitasPaciente.length );
             
             

@@ -57,7 +57,7 @@ export class DoctorMapeador{
             sexo: doctor.getGeneroDoctor().getGeneroDoctor(),
             correo: doctor.getCorreoDoctor().getCorreoDoctor(),
             especialidades: especialidadesString,
-            calificacion: doctor.getCalificacion().getCalificacion()
+            calificacion: doctor.getCalificacion().calcularCalificacion()
         }
 
         

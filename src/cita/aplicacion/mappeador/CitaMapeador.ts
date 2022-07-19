@@ -19,6 +19,8 @@ import { SolicitarCitaPersistenciaDTO } from "../../infraestructura/persistencia
 import { CitaPersistenciaDTO } from "../../infraestructura/dto/CitaPersistenciaDTO";
 import { AgendarCitaDTO } from "../dto/AgendarCitaDTO";
 import { AgendarCitaDataVO } from "../../dominio/dto/AgendarCitaDataVo";
+import { CitaPacienteDTO } from "../dto/CitasPacienteDTO";
+import { CitaPersistenciaDoctorDTO } from "../../infraestructura/dto/CitaPersistenciaDoctoDTO";
 
 
 export class CitaMapeador{
@@ -114,5 +116,23 @@ export class CitaMapeador{
             idpaciente: data.getPaciente().getPacienteID().toString(),
             iddoctor: data.getDoctor().getDoctorID().toString(),
         }
+    }
+
+    public static convertirCitasPacienteAAplicacion(data: CitaPersistenciaDoctorDTO): CitaPacienteDTO{
+        return{
+            id_cita: data.id_cita,
+            statuscita: data.statuscita,
+            modalidad: data.modalidad,
+            fechaCita: data.fechacita,
+            duracion: data.duracion,
+            horacita: data.horacita,
+            id_paciente: data.paciente.id_paciente,
+            doctor:{
+                id_doctor: data.doctor.id_doctor,
+                nombreDoctor: data.doctor.p_nombre + " " + data.doctor.p_apellido,
+            }
+            
+        }
+
     }
 }

@@ -3,7 +3,7 @@ import { BuscarDoctorNombreApellido } from '../../aplicacion/servicios/BuscarDoc
 import { CalificarDoctor } from '../../aplicacion/servicios/CalificarDoctor.service';
 import { BuscarDoctorEspecialidad } from '../../aplicacion/servicios/BuscarDoctorEspecialidad.service';
 import { CalificarDoctorDTO } from '../../aplicacion/dtos/CalificarDoctorDTO';
-import { BuscarDoctorTop } from 'src/doctor/aplicacion/servicios/BuscarDoctorTop.service';
+import { BuscarDoctorTop } from '../../../doctor/aplicacion/servicios/BuscarDoctorTop.service';
 
 
 @Controller('api/doctor')
@@ -34,7 +34,7 @@ export class DoctorController {
 
   @Get('filtrar/top')
   async getByTop() {
-    const doctores = await this.buscarDoctorTop.ejecutar(null);
+    const doctores = await this.buscarDoctorTop.ejecutar();
     return doctores;
   }
 
