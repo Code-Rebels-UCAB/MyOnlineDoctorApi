@@ -51,8 +51,16 @@ export class RepositorioDoctor implements IRepositorioDoctor {
     } 
 
 
-    obtenerTopDoctores() {
-        throw new Error('Method not implemented.');
+    async obtenerTopDoctores() {
+
+        const doctoresFiltrados =  await this._doctorRepository.createQueryBuilder('doctores')
+                                        .leftJoinAndSelect('doctores.especialidades', 'EspecialidadesSelect')
+                                        .orderBy('doctores.calificacion', 'DESC')
+                                        .getMany();
+
+        
+        return doctoresFiltrados;
+
     }
 
     async obtenerDoctorById(id: string): Promise<DoctorORM> {
