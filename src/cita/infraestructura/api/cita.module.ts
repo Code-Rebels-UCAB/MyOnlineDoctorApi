@@ -22,6 +22,7 @@ import { ManejadorEventos } from '../../../commun/aplicacion/ManejadorEventos';
 import { NotificarPacienteFirebase } from '../adaptadores/NotificarPacienteFirebase';
 import { BloquearCita } from '../../aplicacion/servicios/BloquearCita.service';
 import { SuspenderCita } from '../../aplicacion/servicios/SuspenderCita.service';
+import { CitasDiaDoctor } from '../../aplicacion/servicios/CitasDiaDoctor.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CitaORM, DoctorORM, PacienteORM]), LoggerModule],
@@ -56,6 +57,12 @@ export class CitaModule {
           provide: BuscarCitasPaciente,
           useFactory: (logger: LoggerService, userRepo: RepositorioCita) =>
             new BuscarCitasPaciente(logger, userRepo),
+        },
+        {
+          inject: [LoggerService, RepositorioCita],
+          provide: CitasDiaDoctor,
+          useFactory: (logger: LoggerService, userRepo: RepositorioCita) =>
+            new CitasDiaDoctor(logger, userRepo),
         },
         {
           inject: [LoggerService, RepositorioCita],
