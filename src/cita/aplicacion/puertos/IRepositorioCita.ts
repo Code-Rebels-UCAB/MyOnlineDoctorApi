@@ -1,5 +1,6 @@
 import { SolicitarCitaPersistenciaDTO } from "../../infraestructura/persistencia/SolicitarCitaPersistenciaDTO";
 
+
 export interface IRepositorioCita {
   //QUERYS
   obtenerTodasLasCitas();
