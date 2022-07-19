@@ -130,15 +130,6 @@ export class RepositorioCita implements IRepositorioCita {
 
     return citas;
   }
-
-  actualizarCitaAgendada(citaid: string,fecha: string, hora: string, duracion:string) {
-    const citas = this.RepositorioCita.createQueryBuilder('citas')
-    .update(CitaORM)
-    .set({fechacita: fecha, horacita: hora, duracion:Number(duracion), statuscita: 'Agendada'})
-    .where('id_cita = :id', {
-      id: citaid,
-    }).execute();
-  }
   
   async obtenerCantidadPacientesPorDoctor(doctorId: string) {
     const pacientesDoctor = await this.RepositorioCita.createQueryBuilder(
@@ -167,7 +158,7 @@ export class RepositorioCita implements IRepositorioCita {
 
     return cantidadCitasDia;
   }
-
+  
   async crearCita(cita: SolicitarCitaPersistenciaDTO) {
     //obtenemos al doctor por su id
     const doctor = await this.RepositorioDoctor.findOneBy({id_doctor: cita.iddoctor});
@@ -197,4 +188,26 @@ export class RepositorioCita implements IRepositorioCita {
 
     return cita;
   }
+
+  async actualizarCitaAgendada(citaid: string,fecha: string, hora: string, duracion:string) {
+    const citas = this.RepositorioCita.createQueryBuilder('citas')
+    .update(CitaORM)
+    .set({fechacita: fecha, horacita: hora, duracion:Number(duracion), statuscita: 'Agendada'})
+    .where('id_cita = :id', {
+      id: citaid,
+    }).execute();
+  }
+
+  async actualizarDatosVideollamadaCita(citaid: string, nombreCanal: string, tokenCita: string) {
+    const datosCita = await this.RepositorioCita.createQueryBuilder('citas')
+    .update(CitaORM)
+    .set({channelA: nombreCanal, tokenA: tokenCita})
+    .where('id_cita = :id', {
+      id: citaid,
+    }).execute();
+  }
+
 }
+
+
+
