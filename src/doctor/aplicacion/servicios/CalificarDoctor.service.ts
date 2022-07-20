@@ -11,14 +11,14 @@ import { DoctorMapeador } from '../mapeadores/DoctorMapeador';
 import { IRepositorioDoctor } from '../puertos/IRepositorioDoctor';
 
 export class CalificarDoctor
-  implements IServicioAplicacion<CalificarDoctorDTO, void>
+  implements IServicioAplicacion<CalificarDoctorDTO, ListadoDoctoresDTO>
 {
   constructor(
     private readonly logger: ILogger,
     private readonly repositorioDoctor: IRepositorioDoctor,
   ) {}
 
-  async ejecutar(data: CalificarDoctorDTO): Promise<Resultado<void>> {
+  async ejecutar(data: CalificarDoctorDTO): Promise<Resultado<ListadoDoctoresDTO>> {
     try {
       const doctor = await this.repositorioDoctor.obtenerDoctorById(
         data.idDoctor,
@@ -43,11 +43,13 @@ export class CalificarDoctor
         doctorDominio.getCalificacion().getCantidad(),
       );
 
+      const doctorRespuesta = DoctorMapeador.ConvertirDoctoresEnListado(doctorDominio);
+
       this.logger.log(
         'El Doctor: ' + doctor.p_nombre + doctor.p_apellido + 'fue calificado',
         'Con una calificacion: ' + data.calificacionDoctor,
       );
-      return Resultado.Exito<void>();
+      return Resultado.Exito<ListadoDoctoresDTO>(doctorRespuesta);
     } catch (error) {
       let errores: IExcepcion = error;
       this.logger.error('Error inesperado: ' + data, errores.mensaje);
