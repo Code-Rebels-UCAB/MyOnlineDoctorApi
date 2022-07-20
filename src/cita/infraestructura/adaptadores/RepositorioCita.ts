@@ -123,6 +123,7 @@ export class RepositorioCita implements IRepositorioCita {
       .select([
         'citas.id_cita',
         'citas.horacita',
+        'citas.fechacita',
         'citas.modalidad',
         'citas.statuscita',
         'paciente.id_paciente',

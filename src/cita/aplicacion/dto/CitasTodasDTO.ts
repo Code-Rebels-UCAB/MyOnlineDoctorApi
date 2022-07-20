@@ -3,6 +3,7 @@ export interface CitaTodasDTO {
     statuscita: string;
     modalidad: string;
     horacita: string;
+    fechacita:string;
     paciente:{
         id_paciente: string,
         p_nombre: string,
