@@ -1,5 +1,5 @@
 import { Doctor } from "../../dominio/entidades/Doctor";
-import { ILogger } from "../../../commun/aplicacion/ILogger";
+import { ILogger } from "../../../commun/aplicacion/puertos/ILogger";
 import { DoctorMapeador } from "../mapeadores/DoctorMapeador";
 import { IRepositorioDoctor } from "../puertos/IRepositorioDoctor"
 import { IServicioAplicacion } from "../../../commun/aplicacion/IServicioAplicacion";

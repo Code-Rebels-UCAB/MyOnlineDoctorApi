@@ -1,5 +1,5 @@
 import { Resultado } from "../../../commun/aplicacion/Resultado";
-import { ILogger } from "../../../commun/aplicacion/ILogger";
+import { ILogger } from "../../../commun/aplicacion/puertos/ILogger";
 import { IServicioAplicacion } from "../../../commun/aplicacion/IServicioAplicacion";
 import { IRepositorioCita } from "../puertos/IRepositorioCita";
 import { IExcepcion } from "../../../commun/dominio/excepcciones/IExcepcion";
