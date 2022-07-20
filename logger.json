@@ -1,0 +1,5 @@
+{
+  "context": "End Request for /apda",
+  "message": "method=GET status=404 code_error=null message=Cannot GET /apda",
+  "date": "2022-07-20T19:32:44.369Z"
+}

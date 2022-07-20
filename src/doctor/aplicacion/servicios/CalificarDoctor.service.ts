@@ -1,5 +1,5 @@
 import { Guid } from 'guid-typescript';
-import { ILogger } from '../../../commun/aplicacion/ILogger';
+import { ILogger } from '../../../commun/aplicacion/puertos/ILogger';
 import { IServicioAplicacion } from '../../../commun/aplicacion/IServicioAplicacion';
 import { Resultado } from '../../../commun/aplicacion/Resultado';
 import { IExcepcion } from '../../../commun/dominio/excepcciones/IExcepcion';

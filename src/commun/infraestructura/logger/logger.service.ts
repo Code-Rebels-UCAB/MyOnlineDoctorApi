@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { ILogger } from 'src/commun/aplicacion/ILogger';
+import { ILogger } from '../../aplicacion/puertos/ILogger';
+import { LoggerJSON } from './loggerJson.service';
 
 @Injectable()
 export class LoggerService extends Logger implements ILogger {
@@ -22,4 +23,8 @@ export class LoggerService extends Logger implements ILogger {
       super.verbose(`[VERBOSE] ${message}`, context);
     }
   }
+  save(context: string, message: string){
+    LoggerJSON.saveJson(context, message);
+  }
+
 }
