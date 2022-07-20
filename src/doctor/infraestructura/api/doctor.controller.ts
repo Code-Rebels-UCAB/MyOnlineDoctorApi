@@ -43,8 +43,8 @@ export class DoctorController {
 
   @Put('calificar')
   async updateCalificar(@Body() calificacion: CalificarDoctorDTO) {
-    await this.calificarDoctor.ejecutar(calificacion);
-    return;
+    const doctor = await this.calificarDoctor.ejecutar(calificacion);
+    return doctor;
   }
 
   @Get('todos')
