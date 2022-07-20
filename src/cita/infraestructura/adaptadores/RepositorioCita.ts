@@ -235,6 +235,30 @@ export class RepositorioCita implements IRepositorioCita {
     }).execute();
   }
 
+  async obtenerCitaIniciada(id_cita: string) {
+    const datosCita = await this.RepositorioCita.createQueryBuilder('citas')
+    .leftJoinAndSelect('citas.paciente', 'paciente')
+    .where('citas.id_cita = :id', {
+      id: id_cita
+    })
+    .select([
+      'citas.tokenA',
+      'citas.channelA',
+    ])
+    .getOne();
+    return datosCita
+  }
+
+  async obtenerTokenF(id_cita: string){
+    const datosCita = await this.RepositorioCita.createQueryBuilder('citas')
+    .leftJoinAndSelect('citas.paciente', 'paciente')
+    .where('citas.id_cita = :id', {
+      id: id_cita
+    })
+    .getOne();
+    return datosCita.paciente.tokenF
+
+  }
 }
 
 

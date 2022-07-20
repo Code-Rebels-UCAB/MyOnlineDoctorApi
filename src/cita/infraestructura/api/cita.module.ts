@@ -20,11 +20,12 @@ import { AceptarCita } from '../../aplicacion/servicios/AceptarCita.service';
 import { CancelarCita } from '../../aplicacion/servicios/CancelarCita.service';
 import { IniciarCita } from '../../aplicacion/servicios/IniciarCita.service';
 import { ManejadorEventos } from '../../../commun/aplicacion/ManejadorEventos';
-import { NotificarPacienteFirebase } from '../adaptadores/NotificarPacienteFirebase';
+import { NotificarPacienteFirebase } from '../servicios/NotificarPacienteFirebase';
 import { BloquearCita } from '../../aplicacion/servicios/BloquearCita.service';
 import { SuspenderCita } from '../../aplicacion/servicios/SuspenderCita.service';
-import { FinalizarCita } from 'src/cita/aplicacion/servicios/FinalizarCita.service';
+import { FinalizarCita } from '../../aplicacion/servicios/FinalizarCita.service';
 import { CitasDiaDoctor } from '../../aplicacion/servicios/CitasDiaDoctor.service';
+
 
 @Module({
   imports: [TypeOrmModule.forFeature([CitaORM, DoctorORM, PacienteORM]), LoggerModule],
@@ -36,7 +37,7 @@ export class CitaModule {
     //AQUI VA LA DECLARACION DEL PROVIDER "MANEJADOR DE EVENTOS" Y 
     //SE AGREGAN LOS OBSERVADORES QUE DEBEN ESTAR ATENTOS A CAMBIOS EN LOS ESTADOS DEL AGREGADO DE CITA (POLITICAS)
     var manejador = new ManejadorEventos();
-    manejador.Add(new NotificarPacienteFirebase());
+    
     
 
     return {
@@ -120,14 +121,14 @@ export class CitaModule {
           ) => new GenerarTokenCita(logger,videollamadaCita,userRepo),
         },
         {
-          inject: [LoggerService, RepositorioCita, GenerarTokenCita, VideollamadaCita],
+          inject: [LoggerService, RepositorioCita, GenerarTokenCita, VideollamadaCita, ManejadorEventos],
           provide: IniciarCita,
           useFactory: (
             logger: LoggerService,
             userRepo: RepositorioCita,
             tokenCita: GenerarTokenCita,
             videollamadaCita: VideollamadaCita
-          ) => new IniciarCita(logger,userRepo, new GenerarTokenCita(logger,videollamadaCita,userRepo)),
+          ) => new IniciarCita(logger,userRepo, new GenerarTokenCita(logger,videollamadaCita,userRepo), manejador),
         },
         {
           inject: [LoggerService, RepositorioCita],
@@ -153,7 +154,17 @@ export class CitaModule {
             userRepo: RepositorioCita,
           ) => new FinalizarCita(logger, userRepo),
         },
+        {
+          inject: [RepositorioCita],
+          provide: NotificarPacienteFirebase,
+          useFactory: (
+            userRepo: RepositorioCita,
+          ) => {manejador.Add(new NotificarPacienteFirebase(userRepo))},
+        },
       ],
     }
   }
 }
+
+
+;

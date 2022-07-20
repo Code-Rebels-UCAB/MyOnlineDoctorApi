@@ -27,6 +27,7 @@
     "@nestjs/typeorm": "^9.0.0",
     "agora-access-token": "^2.0.4",
     "dotenv": "^16.0.1",
+    "firebase-admin": "^11.0.0",
     "guid-typescript": "^1.0.9",
     "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",

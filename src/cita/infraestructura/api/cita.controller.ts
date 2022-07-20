@@ -94,7 +94,7 @@ export class CitaController {
   }
 
   @Put('iniciarcita')
-  async inciarCitaPut(@Query('citaid') citaid: string) {
+  async iniciarCitaPut(@Query('citaid') citaid: string) {
     const cita = await this.iniciarCita.ejecutar(citaid);
     return cita;
   }
