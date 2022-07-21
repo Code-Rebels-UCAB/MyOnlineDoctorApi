@@ -8,9 +8,10 @@ import { SolicitarCitaDTO } from "../dto/SolicitarCitaDTO";
 import { Cita } from "../../dominio/entidades/Cita";
 import { CitaMapeador } from "../mappeador/CitaMapeador";
 import { CitaDataDTO } from "../dto/CitaDataDTO";
+import { SolicitarCitaPersistenciaDTO } from "src/cita/infraestructura/persistencia/SolicitarCitaPersistenciaDTO";
 
 
-export class SolicitarCita implements IServicioAplicacion<SolicitarCitaDTO,void>
+export class SolicitarCita implements IServicioAplicacion<SolicitarCitaDTO,SolicitarCitaPersistenciaDTO>
 {
     public constructor(
         private readonly logger: ILogger,
@@ -18,7 +19,7 @@ export class SolicitarCita implements IServicioAplicacion<SolicitarCitaDTO,void>
     ) {}
 
 
-    async ejecutar(datos: SolicitarCitaDTO): Promise<Resultado<void>> {
+    async ejecutar(datos: SolicitarCitaDTO): Promise<Resultado<SolicitarCitaPersistenciaDTO>> {
         try{
            // mapeamos de aplicacion a dominio
             let citaDominioMapeado = CitaMapeador.convertirSolicitarCitaADominio(datos);
@@ -35,7 +36,8 @@ export class SolicitarCita implements IServicioAplicacion<SolicitarCitaDTO,void>
             //guardamos la cita
             let cita_guardada = await this.repositorioCita.crearCita(citaPersistencia);
             this.logger.log("Cita Solicitada por paciente: " + datos.id_paciente + " al Doctor: " + datos.id_doctor, "info");
-            return Resultado.Exito<void>(null);
+
+            return Resultado.Exito<SolicitarCitaPersistenciaDTO>(citaPersistencia);
         }
         catch (error) {
             let errores: IExcepcion = error;
