@@ -80,12 +80,12 @@ export class CitaModule {
             new CantidadCitasDiaDoctor(logger, userRepo),
         },
         {
-          inject: [LoggerService, RepositorioCita, ManejadorEventos],
+          inject: [LoggerService, RepositorioCita],
           provide: AgendarCita,
           useFactory: (
             logger: LoggerService,
             userRepo: RepositorioCita
-          ) => new AgendarCita(logger, userRepo, manejador),
+          ) => new AgendarCita(logger, userRepo),
         },
         {
           inject: [LoggerService, RepositorioCita],

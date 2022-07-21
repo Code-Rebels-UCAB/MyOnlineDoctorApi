@@ -6,24 +6,19 @@ import { AgendarCitaDTO } from "../dto/AgendarCitaDTO";
 import { IExcepcion } from "../../../commun/dominio/excepcciones/IExcepcion";
 import { CitaMapeador } from "../mappeador/CitaMapeador";
 import { Cita } from "../../dominio/entidades/Cita";
-import { ManejadorEventos } from "../../../commun/aplicacion/ManejadorEventos";
 
 
 export class AgendarCita implements IServicioAplicacion<AgendarCitaDTO,void>
 {
     public constructor(
         private readonly logger: ILogger,
-        private readonly repositorioCita: IRepositorioCita,
-        private readonly manejador: ManejadorEventos<any>
+        private readonly repositorioCita: IRepositorioCita
     ) {}
 
 
     async ejecutar(datos: AgendarCitaDTO): Promise<Resultado<void>> {
         try{
             
-            await this.repositorioCita.actualizarCitaAgendada(datos.idCita,datos.fechaCita,datos.horaCita, datos.duracion);
-            this.logger.log('La Cita con Identificador ' + datos.idCita + ' Ha sido Modificada', '');
-
             //GENERACION DEL EVENTO DE DOMINIO
             const CitaVo = CitaMapeador.convertirAgendarCitaADominio(datos);
 
@@ -31,14 +26,12 @@ export class AgendarCita implements IServicioAplicacion<AgendarCitaDTO,void>
             cita.agendarCita(CitaVo.fechaCita,CitaVo.horaCita, CitaVo.duracion);
 
             //AQUI SE DEBERIA HACER LO DE LOS EVENTOS
-            var eventos = cita.obtenerEventos();
-            cita.limpiarEventos();
+            //var eventos = cita.obtenerEventos();
+            //cita.limpiarEventos();
 
-        
-            this.manejador.AddEvento(...eventos);
-            //SE LE PASA EL MENSAJE AL MANEJADOR DE PUBLICAR EVENTOS
-            this.manejador.Notify('Pucca');
-            //this.manejador.Notify(); //SE PUEDE O NO PASAR UN VALOR
+            await this.repositorioCita.actualizarCitaAgendada(datos.idCita,datos.fechaCita,datos.horaCita, datos.duracion);
+            this.logger.log('La Cita con Identificador ' + datos.idCita + ' Ha sido Modificada', '');
+
 
             return Resultado.Exito<void>(null);
             
