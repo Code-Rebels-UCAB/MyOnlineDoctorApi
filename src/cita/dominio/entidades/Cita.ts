@@ -165,7 +165,7 @@ export class Cita extends Agregado<CitaID> {
     }
 
     public agendarCita (fecha : FechaCita, hora : HoraCita, duracion : Duracion ){
-        const statusCita = StatusCita.crear(TipoCita.Aceptada);
+        const statusCita = StatusCita.crear(TipoCita.Agendada);
         this.setStatus(statusCita);
         this.setFecha(fecha);
         this.setHora(hora);
