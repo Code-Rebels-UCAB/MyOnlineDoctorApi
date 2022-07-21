@@ -49,15 +49,8 @@ export class IniciarCita implements IServicioAplicacion<string,IniciarCitaDTO>
              //AQUI SE DEBERIA HACER LO DE LOS EVENTOS
              var eventos = cita.obtenerEventos();
              cita.limpiarEventos();
- 
-         
-             this.manejador.AddEvento(...eventos);
-             //SE LE PASA EL MENSAJE AL MANEJADOR DE PUBLICAR EVENTOS
-             this.manejador.Notify(cita.obtenerIdentificador().getCitaID().toString());
-             //this.manejador.Notify(); //SE PUEDE O NO PASAR UN VALOR
-
             
-            //guardamos en persistencia
+             //guardamos en persistencia
             let  citaActualizada = await this.repositorioCita.actualizarStatusCita(cita.obtenerIdentificador().getCitaID().toString(), cita.getStatus().statusCita.toString());
             this.logger.log('La Cita con Identificador ' + datos + ' fue iniciada', '');
             
@@ -80,6 +73,14 @@ export class IniciarCita implements IServicioAplicacion<string,IniciarCitaDTO>
                     tokenTemp: videollamadaCita.valor.tokenTemp
                 }
             };
+         
+             this.manejador.AddEvento(...eventos);
+             //SE LE PASA EL MENSAJE AL MANEJADOR DE PUBLICAR EVENTOS
+             this.manejador.Notify(cita.obtenerIdentificador().getCitaID().toString());
+             //this.manejador.Notify(); //SE PUEDE O NO PASAR UN VALOR
+
+            
+            
 
             return Resultado.Exito<IniciarCitaDTO>(citaIniciadaDTO);
         }
