@@ -18,9 +18,9 @@ export const databaseProviders = [
         autoLoadEntities: true,
         synchronize: true,
         retryDelay: 3000,
-        retryAttempts: 10
+        retryAttempts: 10,
+        ssl: { rejectUnauthorized: false },
       } as ConnectionOptions;
-            
     },
   }),
 ];
