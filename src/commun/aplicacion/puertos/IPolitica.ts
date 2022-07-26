@@ -7,5 +7,4 @@ export interface IPolitica<E,T> extends IObservador<EventoDominio,E>, IServicioA
 
     Update(context:EventoDominio, data: E):void;
     ejecutar(data: E): Promise<Resultado<T>>;
-    notificarCitaIniciada(data: E): Promise<Resultado<T>>;
 }

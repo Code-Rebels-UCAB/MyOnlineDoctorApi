@@ -21,36 +21,34 @@ export class NotificarPacienteFirebase implements IPolitica<string,void>{
 
     Update(context: EventoDominio, data: string): void {
         if (context.Nombre == 'CitaIniciada') {
-            this.notificarCitaIniciada(data)
+            this.ejecutar(data)
         }
     }
 
-    ejecutar(data: string): Promise<Resultado<void>> {
-        console.log(data);
-        //LOGICA DE NOTIFICAR PACIENTE LLAMADA
-        return null;
+    async ejecutar(data: string): Promise<Resultado<void>> {
+      console.log(serviceAccount);
 
-    }
-
-    async notificarCitaIniciada(data: string): Promise<Resultado<void>> {
-        console.log(serviceAccount);
+      if (!admin.apps.length) {
         admin.initializeApp({
-            credential: admin.credential.cert(serviceAccountVar as ServiceAccount),
-          });
-          
-          const citaT: CitaPersistenciaIniciadaDTO = await this.repositorioCita.obtenerCitaIniciada(data);
-          const tokenf: string = await this.repositorioCita.obtenerTokenF(data);
-          const payload = {
-            notification: {
-              title: 'llamada entrante',
-              body: `Nombre del canal: ${citaT.channelA}, Token: ${citaT.tokenA}`,
-            },
-          };
-          Promise.all([await admin.messaging().sendToDevice(tokenf, payload)]);
-          console.log('Notificación enviada');
+          credential: admin.credential.cert(serviceAccountVar as ServiceAccount),
+        });
+     }else {
+      admin.app(); // if already initialized, use that one
+     }
+
+        const citaT: CitaPersistenciaIniciadaDTO = await this.repositorioCita.obtenerCitaIniciada(data);
+        const tokenf: string = await this.repositorioCita.obtenerTokenF(data);
+        const payload = {
+          notification: {
+            title: 'llamada entrante',
+            body: `Nombre del canal: ${citaT.channelA}, Token: ${citaT.tokenA}`,
+          },
+        };
+        Promise.all([await admin.messaging().sendToDevice(tokenf, payload)]);
+        console.log('Notificación enviada');
 
 
-        return null;
+      return null;  
+
     }
-
 }
