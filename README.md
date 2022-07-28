@@ -48,6 +48,7 @@ $ npm run start
 
 ![App Screenshot](./ArqHexagonal_CodeRebels.jpg)
 <p></p>
+
 ## Integrantes y Commits
 
 | Integrantes | Commits mas importantes | Pull Request |
