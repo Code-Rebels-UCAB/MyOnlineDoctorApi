@@ -8,7 +8,7 @@
     "PORT": "3000"
   },
   "scripts": {
-    "predeploy": "npm i typeorm && npm install && npm run build"
+    "predeploy": "npm install && npm run build"
   },
   "addons": ["heroku-postgresql"]
 }
