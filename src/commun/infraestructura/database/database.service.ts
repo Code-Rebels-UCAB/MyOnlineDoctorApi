@@ -15,10 +15,10 @@ export const databaseProviders = [
         username: process.env.POSTGRES_USER,
         password: process.env.POSTGRES_PASSWORD,
         database: process.env.POSTGRES_DATABASE,
-        ssl: true,
-        extra: {
-          ssl: { rejectUnauthorized: false },
-        },
+        ssl:
+          process.env.NODE_ENV === 'production'
+            ? { rejectUnauthorized: false }
+            : false,
         autoLoadEntities: true,
         synchronize: true,
         retryDelay: 3000,
