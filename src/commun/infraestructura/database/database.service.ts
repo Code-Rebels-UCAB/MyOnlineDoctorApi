@@ -10,17 +10,20 @@ export const databaseProviders = [
     async useFactory(config: ConfigService) {
       return {
         type: 'postgres',
-        host: config.get('POSTGRES_HOST'),
-        port: parseInt(<string>config.get('POSTGRES_PORT')),
-        username: config.get('POSTGRES_USER'),
-        password: config.get('POSTGRES_PASSWORD'),
-        database: config.get('POSTGRES_DATABASE'),
+        host: process.env.POSTGRES_HOST,
+        port: Number(process.env.POSTGRES_PORT),
+        username: process.env.POSTGRES_USER,
+        password: process.env.POSTGRES_PASSWORD,
+        database: process.env.POSTGRES_DATABASE,
+        // ssl: true,
+        // extra: {
+        //   ssl: { rejectUnauthorized: false },
+        // },
         autoLoadEntities: true,
         synchronize: true,
         retryDelay: 3000,
-        retryAttempts: 10
+        retryAttempts: 10,
       } as ConnectionOptions;
-            
     },
   }),
 ];

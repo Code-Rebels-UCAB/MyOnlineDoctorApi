@@ -1,0 +1,14 @@
+{
+  "env": {
+    "POSTGRES_HOST": "ec2-44-196-223-128.compute-1.amazonaws.com",
+    "POSTGRES_PORT": "5432",
+    "POSTGRES_USER": "riipavhmoeolqi",
+    "POSTGRES_PASSWORD": "0af0530a1b2db6cfc7f13eb70e300c2e0b16956f0972837bd2298fbc22389f5f",
+    "POSTGRES_DATABASE": "d6p2cbkkl0sddt",
+    "PORT": "3000"
+  },
+  "scripts": {
+    "predeploy": "npm install && npm run build"
+  },
+  "addons": ["heroku-postgresql"]
+}
