@@ -4,31 +4,30 @@ import { Resultado } from "../../../commun/aplicacion/Resultado";
 import { IExcepcion } from "../../../commun/dominio/excepcciones/IExcepcion";
 import { Paciente } from "../../../paciente/dominio/entidades/Paciente";
 import { ConsultarPacienteRespuestaDTO } from "../dto/queries/ConsultarPaciente.query";
+import { PacienteInfoDTO } from "../dto/queries/PacienteInfoDTO";
 import { PacienteMapeador } from "../mappeador/PacienteMapeador";
 import { IRepositorioPaciente } from "../puertos/IRepositorioPaciente";
 
 
 export class BuscarPacienteNombre
-  implements IServicioAplicacion<string, ConsultarPacienteRespuestaDTO[]>
+  implements IServicioAplicacion<string, PacienteInfoDTO[]>
 {
   constructor(
     private readonly logger: ILogger,
     private readonly repositorioPaciente: IRepositorioPaciente,
   ) {}
 
-  async ejecutar(data: string): Promise<Resultado<ConsultarPacienteRespuestaDTO[]>> {
+  async ejecutar(data: string): Promise<Resultado<PacienteInfoDTO[]>> {
     try {
       const pacientes =
         await this.repositorioPaciente.obtenerPacienteByNombreorApellido(data);  
          
-      const PacienteDominio: Paciente[] = pacientes.map((datos) =>
-        PacienteMapeador.covertirPersistenciaDominio(datos),
-      );
-      const ListadoPaciente = PacienteDominio.map((datos) =>
-        PacienteMapeador.covertirDominioPersistencia(datos),
+      const PacienteLista: PacienteInfoDTO[] = pacientes.map((datos) =>
+        PacienteMapeador.ConvertirPersistenciaEnInfoPaciente(datos),
       );
 
-      return Resultado.Exito<ConsultarPacienteRespuestaDTO[]>(ListadoPaciente);
+
+      return Resultado.Exito<PacienteInfoDTO[]>(PacienteLista);
     } catch (error) {
       let errores: IExcepcion = error;
       this.logger.error('Error inesperado: ' + data, errores.mensaje);
