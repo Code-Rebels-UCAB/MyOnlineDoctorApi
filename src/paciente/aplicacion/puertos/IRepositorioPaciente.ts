@@ -9,4 +9,5 @@ export interface IRepositorioPaciente {
 
   //COMANDOS
   bloquearPaciente(id: string);
+  suspenderPaciente(id: string);
 }
