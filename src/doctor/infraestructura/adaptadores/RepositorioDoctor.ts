@@ -71,8 +71,12 @@ export class RepositorioDoctor implements IRepositorioDoctor {
     }
 
 
-    bloquearDoctor(id: string) {
-        throw new Error('Method not implemented.');
+    async bloquearDoctor(id: string) {
+        await this._doctorRepository.update({
+            id_doctor: id
+        }, {
+            status:'Bloqueado'
+        });
     }
 
 
