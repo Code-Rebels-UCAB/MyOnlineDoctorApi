@@ -35,4 +35,7 @@ export interface IRepositorioCita {
   obtenerCitaIniciada(citaid: string);
 
   obtenerTokenF(citaid: string);
+
+  obtenerDoctorCita(citaid: string);
+
 }

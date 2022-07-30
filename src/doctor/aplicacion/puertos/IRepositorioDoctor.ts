@@ -19,6 +19,8 @@ export interface IRepositorioDoctor {
 
     calificarDoctor(id: string, puntaje: number, cantidad: number);
 
+    obtenerDoctorNoti(id_doctor: string);
+
 
 }
   
