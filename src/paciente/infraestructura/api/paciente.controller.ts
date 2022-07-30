@@ -17,6 +17,7 @@ import { PacienteORM } from '../persistencia/Paciente.orm';
 import { ConsultarPacienteRespuestaDTO } from '../../../paciente/aplicacion/dto/queries/ConsultarPaciente.query';
 import { BuscarPacienteTelefono } from '../../aplicacion/servicios/BuscarPacienteTelefono.service';
 import { BloquearPaciente } from '../../aplicacion/servicios/BloquearPaciente.service';
+import { SuspenderPaciente } from '../../aplicacion/servicios/SuspenderPaciente.service';
 
 @Controller('api/paciente')
 export class PacienteController {
@@ -35,6 +36,8 @@ export class PacienteController {
     private readonly ObtenerInfoPersonalPaciente: ObtenerInfoPersonalPaciente,
     @Inject(BloquearPaciente)
     private readonly bloquearPaciente: BloquearPaciente,
+    @Inject(SuspenderPaciente)
+    private readonly suspenderPaciente: SuspenderPaciente,
   ) {}
 
   @Get('buscar/todos')
@@ -77,6 +80,12 @@ export class PacienteController {
   @Put('bloquear')
   async bloquear(@Query('id') id: string) {
     const resultado = await this.bloquearPaciente.ejecutar(id);
+    return resultado;
+  }
+
+  @Put('suspender')
+  async suspender(@Query('id') id: string) {
+    const resultado = await this.suspenderPaciente.ejecutar(id);
     return resultado;
   }
 }

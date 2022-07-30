@@ -78,4 +78,15 @@ export class RepositorioPaciente implements IRepositorioPaciente {
       },
     );
   }
+
+  async suspenderPaciente(id: string) {
+    await this.repositorioPaciente.update(
+      {
+        id_paciente: id,
+      },
+      {
+        status_suscripcion: 'Suspendido',
+      },
+    );
+  }
 }
