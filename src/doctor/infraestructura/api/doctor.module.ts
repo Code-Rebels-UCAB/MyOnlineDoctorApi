@@ -10,6 +10,7 @@ import { DoctorORM } from '../persistencia/Doctor.orm';
 import { DoctorController } from './doctor.controller';
 import { BuscarDoctorTop } from '../../../doctor/aplicacion/servicios/BuscarDoctorTop.service';
 import { BuscarTodosDoctores } from '../../../doctor/aplicacion/servicios/BuscarTodosDoctores.service';
+import { AutenticarDoctor } from '../../aplicacion/servicios/AutenticarDoctor.service';
 import { BuscarDatosPerfil } from '../../aplicacion/servicios/BuscarDatosPerfil.service';
 import { BloquearDoctor } from '../../aplicacion/servicios/BloquearDoctor.service';
 import { BloquearCita } from '../../../cita/aplicacion/servicios/BloquearCita.service';
@@ -20,16 +21,13 @@ import { PacienteORM } from '../../../paciente/infraestructura/persistencia/Paci
 import { ManejadorEventos } from '../../../commun/aplicacion/ManejadorEventos';
 import { BloquearCitasDoctor } from '../../../cita/aplicacion/servicios/BloquearCitasDoctor.service';
 
-
-
-
 @Module({
   imports: [
     TypeOrmModule.forFeature([CitaORM, DoctorORM, PacienteORM]),
     LoggerModule,
   ],
   controllers: [DoctorController],
-  providers: [BuscarDoctorEspecialidad,RepositorioDoctor,RepositorioCita, LoggerService, BuscarDoctorNombreApellido, BuscarDoctorTop, CalificarDoctor, BloquearCita],
+  providers: [BuscarDoctorEspecialidad,RepositorioDoctor,RepositorioCita, LoggerService, BuscarDoctorNombreApellido, BuscarDoctorTop, CalificarDoctor, BloquearCita,AutenticarDoctor],
 })
 export class DoctorModule {
   static register(): DynamicModule {
@@ -73,6 +71,12 @@ export class DoctorModule {
             new BuscarDatosPerfil(logger, userRepo),
         },
         {
+          inject: [LoggerService, RepositorioDoctor],
+          provide: AutenticarDoctor,
+          useFactory: (logger: LoggerService, userRepo: RepositorioDoctor) =>
+            new AutenticarDoctor(logger, userRepo),
+        },
+        {
           inject: [LoggerService, RepositorioDoctor, RepositorioCita],
           provide: BloquearDoctor,
           useFactory: (
@@ -90,4 +94,3 @@ export class DoctorModule {
     };
   }
 }
-
