@@ -1,14 +1,9 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   Inject,
-  ParseIntPipe,
   Patch,
-  Post,
-  Put,
-  Param,
   Query,
 } from '@nestjs/common';
 import { BuscarCantidadTodosLosPacientes } from '../../aplicacion/servicios/BuscarCantidadPacientesSistema.service';
@@ -19,6 +14,7 @@ import { ObtenerInfoPersonalPaciente } from '../../aplicacion/servicios/ObtenerI
 import { RepositorioPaciente } from '../adaptadores/RepositorioPaciente';
 import { PacienteORM } from '../persistencia/Paciente.orm';
 import { ConsultarPacienteRespuestaDTO } from '../../../paciente/aplicacion/dto/queries/ConsultarPaciente.query';
+import { BuscarPacienteTelefono } from '../../aplicacion/servicios/BuscarPacienteTelefono.service';
 
 @Controller('api/paciente')
 export class PacienteController {
@@ -29,6 +25,8 @@ export class PacienteController {
     private readonly GuardarToken: GuardarTokenPaciente,
     @Inject(BuscarPacienteNombre)
     private readonly buscarPacienteNombre: BuscarPacienteNombre,
+    @Inject(BuscarPacienteTelefono)
+    private readonly buscarPacienteTelefono: BuscarPacienteTelefono,
     @Inject(RepositorioPaciente)
     private readonly repositorioPaciente: RepositorioPaciente,
     @Inject(ObtenerInfoPersonalPaciente)
@@ -63,6 +61,12 @@ export class PacienteController {
   @Get('filtrar/nombre')
   async getByNombreOrApellido(@Query('nombre') nombre: string) {
     const pacientes = await this.buscarPacienteNombre.ejecutar(nombre);
+    return pacientes;
+  }
+
+  @Get('filtrar/telefono')
+  async getByNumberPhone(@Query('telefono') telefono: string) {
+    const pacientes = await this.buscarPacienteTelefono.ejecutar(telefono);
     return pacientes;
   }
 
