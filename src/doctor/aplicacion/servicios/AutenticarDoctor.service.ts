@@ -35,8 +35,6 @@ export class AutenticarDoctor
 
         return Resultado.Falla(response);
       }
-
-      return Resultado.Exito<string>(response);
     } catch (error) {
       const errores: IExcepcion = error;
       this.logger.error('Error inesperado: ', errores.mensaje);
