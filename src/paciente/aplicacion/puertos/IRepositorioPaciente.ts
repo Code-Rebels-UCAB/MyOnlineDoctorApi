@@ -5,4 +5,5 @@ export interface IRepositorioPaciente {
   obtenerPacienteById(id: string);
 
   obtenerPacienteByNombreorApellido(nombre: string);
+  obtenerPacienteByTelefono(telefono: string);
 }
