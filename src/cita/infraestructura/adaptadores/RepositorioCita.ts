@@ -237,13 +237,14 @@ export class RepositorioCita implements IRepositorioCita {
 
   async obtenerCitaIniciada(id_cita: string) {
     const datosCita = await this.RepositorioCita.createQueryBuilder('citas')
-    .leftJoinAndSelect('citas.paciente', 'paciente')
+    .leftJoinAndSelect('citas.doctor', 'doctores')
     .where('citas.id_cita = :id', {
       id: id_cita
     })
     .select([
+      'doctores.id_doctor',
       'citas.tokenA',
-      'citas.channelA',
+      'citas.channelA'
     ])
     .getOne();
     return datosCita
@@ -258,6 +259,16 @@ export class RepositorioCita implements IRepositorioCita {
     .getOne();
     return datosCita.paciente.tokenF
 
+  }
+
+  async obtenerDoctorCita(id_cita: string){
+    const datosCitaD = await this.RepositorioCita.createQueryBuilder('citas')
+    .leftJoinAndSelect('citas.doctor', 'doctores')
+    .where('citas.id_cita = :id',{
+      id: id_cita
+    })
+    .getOne();
+    return datosCitaD.doctor.id_doctor
   }
 }
 

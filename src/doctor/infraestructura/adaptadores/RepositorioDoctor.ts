@@ -71,8 +71,12 @@ export class RepositorioDoctor implements IRepositorioDoctor {
     }
 
 
-    bloquearDoctor(id: string) {
-        throw new Error('Method not implemented.');
+    async bloquearDoctor(id: string) {
+        await this._doctorRepository.update({
+            id_doctor: id
+        }, {
+            status:'Bloqueado'
+        });
     }
 
 
@@ -88,5 +92,35 @@ export class RepositorioDoctor implements IRepositorioDoctor {
     async obtenerTodosDoctores(): Promise<DoctorORM[]> {
         const doctores = await this._doctorRepository.find();
         return doctores;
+    }
+
+    async obtenerDoctorNoti(id_doctor: string){
+        const datosDoctor = await this._doctorRepository.createQueryBuilder('doctores')
+        .where('doctores.id_doctor = :id', {
+        id: id_doctor
+        })
+        .select([
+        'doctores.p_nombre',
+        'doctores.p_apellido',
+        'doctores.sexo',
+        'doctores.foto'
+        ])
+        .getOne();
+        return datosDoctor
+    };
+    async obtenerDatosDoctor(id: string){
+        const doctor =  await this._doctorRepository.createQueryBuilder('doctores')
+        .select([
+            'doctores.p_nombre', 
+            'doctores.p_apellido',
+            'doctores.sexo',
+            'doctores.foto',
+            'doctores.calificacion',
+          ])
+        .leftJoinAndSelect('doctores.especialidades', 'especialidades')
+        .where('doctores.id_doctor = :doctorid', { doctorid: id})
+        .getOne();
+        return doctor;
+
     }
 }
