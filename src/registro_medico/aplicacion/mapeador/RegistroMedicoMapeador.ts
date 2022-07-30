@@ -1,3 +1,4 @@
+/*
 import { Guid } from "guid-typescript";
 import { Imapeador } from "src/commun/aplicacion/Imapeador";
 import { CitaID } from "src/commun/dominio/values/CitaID";
@@ -40,3 +41,4 @@ export class RegistroMedicoMapeador  implements Imapeador<RegistroMedico,Registr
 
     
 }
+*/
