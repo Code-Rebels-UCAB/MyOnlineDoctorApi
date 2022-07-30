@@ -24,7 +24,10 @@ export class BuscarPacienteNombre
         PacienteMapeador.ConvertirPersistenciaEnInfoPaciente(datos),
       );
 
-
+      this.logger.log(
+        'Buscar por Nombre y Apellido: ' + data,
+        'Pacientes Encontrados: ' + PacienteLista.length,
+      );  
       return Resultado.Exito<PacienteInfoDTO[]>(PacienteLista);
     } catch (error) {
       let errores: IExcepcion = error;
