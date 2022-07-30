@@ -98,6 +98,10 @@ export class Paciente extends Agregado<PacienteID>{
     return this.antecedentes;
   }
 
+  public getPacienteID(): PacienteID {
+    return this.id;
+  }
+
   //SETTERS
   public setNombrePaciente(nombre: NombrePaciente): void {
     this.nombre = nombre;
@@ -126,6 +130,24 @@ export class Paciente extends Agregado<PacienteID>{
   public setOperacion(operacion: Operacion): void {
     this.operacion = operacion;
   }
+
+
+  public static crear(id: PacienteID,
+                      genero: GeneroPaciente,
+                      altura: Altura,
+                      peso: Peso,
+                      numero: NumeroTelefonico,
+                      antecedentes: Antecedentes,
+                      operacion: Operacion,
+                      status: StatusSuscripcion,
+                      alergia: Alergia,
+                      password: PasswordPaciente,
+                      correo: CorreoPaciente,
+                      fechaNacimiento: FechaDeNacimiento,
+                      nombre: NombrePaciente): Paciente {
+    return new Paciente(id, genero, altura, peso, numero, antecedentes, operacion, status, alergia, password, correo, fechaNacimiento, nombre);
+  }
+
 
   //Eventos de Dominio Paciente
   public static registrarPaciente(nombrePaciente: NombrePaciente, correo: CorreoPaciente, password: PasswordPaciente, genero: GeneroPaciente, 

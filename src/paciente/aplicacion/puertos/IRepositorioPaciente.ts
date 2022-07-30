@@ -3,4 +3,6 @@ export interface IRepositorioPaciente {
   obtenerCantidadTotalPacientes();
   guardarTokenPaciente(pacienteid: string, tokenPaciente: string);
   obtenerPacienteById(id: string);
+
+  obtenerPacienteByNombreorApellido(nombre: string);
 }
