@@ -11,6 +11,7 @@ import { DoctorController } from './doctor.controller';
 import { BuscarDoctorTop } from '../../../doctor/aplicacion/servicios/BuscarDoctorTop.service';
 import { BuscarTodosDoctores } from '../../../doctor/aplicacion/servicios/BuscarTodosDoctores.service';
 import { BuscarDatosPerfil } from '../../aplicacion/servicios/BuscarDatosPerfil.service';
+import { BloquearDoctor } from '../../aplicacion/servicios/BloquearDoctor.service';
 
 
 @Module({
@@ -74,7 +75,15 @@ export class DoctorModule {
             logger: LoggerService,
             userRepo: RepositorioDoctor,
           ) => new BuscarDatosPerfil(logger, userRepo),
-        },          
+        },    
+        {
+          inject: [LoggerService, RepositorioDoctor],
+          provide: BloquearDoctor,
+          useFactory: (
+            logger: LoggerService,
+            userRepo: RepositorioDoctor,
+          ) => new BloquearDoctor(logger, userRepo),
+        },       
       ],
     };
   }

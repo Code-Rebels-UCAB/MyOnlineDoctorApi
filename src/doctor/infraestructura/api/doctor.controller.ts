@@ -6,6 +6,7 @@ import { CalificarDoctorDTO } from '../../aplicacion/dtos/CalificarDoctorDTO';
 import { BuscarDoctorTop } from '../../../doctor/aplicacion/servicios/BuscarDoctorTop.service';
 import { BuscarTodosDoctores } from '../../../doctor/aplicacion/servicios/BuscarTodosDoctores.service';
 import { BuscarDatosPerfil } from "../../aplicacion/servicios/BuscarDatosPerfil.service";
+import { BloquearDoctor } from '../../aplicacion/servicios/BloquearDoctor.service';
 
 
 @Controller('api/doctor')
@@ -23,6 +24,8 @@ export class DoctorController {
     private readonly buscarTodosDoctores: BuscarTodosDoctores,
     @Inject(BuscarDatosPerfil)
     private readonly buscarDatosPerfil: BuscarDatosPerfil,
+    @Inject(BloquearDoctor)
+    private readonly bloquearDoctor: BloquearDoctor,
   ) {}
   
 
@@ -61,6 +64,12 @@ export class DoctorController {
     const doctor = await this.buscarDatosPerfil.ejecutar(doctorId);
     return doctor;
   }
+
+  @Put('bloquear/:doctorid')
+  async updateBloquear(@Param('doctorid') doctorId: string) {
+    return await this.bloquearDoctor.ejecutar(doctorId);
+  }
+
 
 }
  
