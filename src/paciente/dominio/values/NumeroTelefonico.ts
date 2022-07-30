@@ -18,10 +18,7 @@ export class NumeroTelefonico implements IValueObject {
       throw new NumeroVacio(
         'El Numero Telefonico del Paciente no puede estar vacio',
       );
-    } else if (valor.length != 11) {
-      throw new NumeroInvalido('El Numero Telefonico es Invalido');
-    }
-
+    } 
     return new NumeroTelefonico(valor);
   }
 }

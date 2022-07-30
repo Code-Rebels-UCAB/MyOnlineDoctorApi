@@ -37,4 +37,18 @@ export class RepositorioPaciente implements IRepositorioPaciente {
     });
     return paciente;
   }
+
+  async obtenerPacienteByNombreorApellido(nombre: string): Promise<PacienteORM[]> {
+    if(nombre !=null || nombre != undefined){
+      nombre = nombre.toLowerCase().replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+    }else{
+      nombre = '';
+    }
+
+    const pacientesFiltrados =  await this.repositorioPaciente.createQueryBuilder('pacientes')
+                                                         .where("(pacientes.p_nombre ||' '|| pacientes.p_apellido) like :nombre", { nombre: `%${nombre}%`})
+                                                         .getMany(); 
+    return pacientesFiltrados;
+  }
+
 }
