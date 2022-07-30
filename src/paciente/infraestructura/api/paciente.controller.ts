@@ -13,6 +13,7 @@ import {
 } from '@nestjs/common';
 import { BuscarCantidadTodosLosPacientes } from '../../aplicacion/servicios/BuscarCantidadPacientesSistema.service';
 import { GuardarTokenPaciente } from '../../aplicacion/servicios/GuardarTokenPaciente.service';
+import { BuscarPacienteNombre } from '../../aplicacion/servicios/BuscarPacienteNombre.service';
 import { TokenPacienteDTO } from '../../aplicacion/dto/TokenPacienteDTO';
 import { ObtenerInfoPersonalPaciente } from '../../aplicacion/servicios/ObtenerInfoPersonalPaciente.service';
 import { RepositorioPaciente } from '../adaptadores/RepositorioPaciente';
@@ -26,6 +27,8 @@ export class PacienteController {
     private readonly buscarCantidad: BuscarCantidadTodosLosPacientes,
     @Inject(GuardarTokenPaciente)
     private readonly GuardarToken: GuardarTokenPaciente,
+    @Inject(BuscarPacienteNombre)
+    private readonly buscarPacienteNombre: BuscarPacienteNombre,
     @Inject(RepositorioPaciente)
     private readonly repositorioPaciente: RepositorioPaciente,
     @Inject(ObtenerInfoPersonalPaciente)
@@ -56,5 +59,12 @@ export class PacienteController {
     const paciente =  await this.ObtenerInfoPersonalPaciente.ejecutar(id);
     return paciente;
   }
+
+  @Get('filtrar/nombre')
+  async getByNombreOrApellido(@Query('nombre') nombre: string) {
+    const pacientes = await this.buscarPacienteNombre.ejecutar(nombre);
+    return pacientes;
+  }
+
 
 }
