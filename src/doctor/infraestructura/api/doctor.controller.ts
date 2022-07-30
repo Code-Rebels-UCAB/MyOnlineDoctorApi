@@ -5,9 +5,10 @@ import { BuscarDoctorEspecialidad } from '../../aplicacion/servicios/BuscarDocto
 import { CalificarDoctorDTO } from '../../aplicacion/dtos/CalificarDoctorDTO';
 import { BuscarDoctorTop } from '../../../doctor/aplicacion/servicios/BuscarDoctorTop.service';
 import { BuscarTodosDoctores } from '../../../doctor/aplicacion/servicios/BuscarTodosDoctores.service';
+import { AutenticarDoctorDTO } from '../../aplicacion/dtos/AutenticarDoctorDTO';
+import { AutenticarDoctor } from '../../aplicacion/servicios/AutenticarDoctor.service';
 import { BuscarDatosPerfil } from "../../aplicacion/servicios/BuscarDatosPerfil.service";
 import { BloquearDoctor } from '../../aplicacion/servicios/BloquearDoctor.service';
-
 
 @Controller('api/doctor')
 export class DoctorController {
@@ -22,12 +23,13 @@ export class DoctorController {
     private readonly buscarDoctorTop: BuscarDoctorTop,
     @Inject(BuscarTodosDoctores)
     private readonly buscarTodosDoctores: BuscarTodosDoctores,
+    @Inject(AutenticarDoctor)
+    private readonly autenticarDoctor: AutenticarDoctor,
     @Inject(BuscarDatosPerfil)
     private readonly buscarDatosPerfil: BuscarDatosPerfil,
     @Inject(BloquearDoctor)
     private readonly bloquearDoctor: BloquearDoctor,
   ) {}
-  
 
   @Get('filtrar/especialidad')
   async getByEspecialidad(@Query('especialidad') especialidad: string) {
@@ -59,6 +61,12 @@ export class DoctorController {
     return doctores;
   }
 
+  @Put('autenticar')
+  async autenticar(@Body() data: AutenticarDoctorDTO) {
+    const response = await this.autenticarDoctor.ejecutar(data);
+    return response;
+  }
+  
   @Get('perfil/:doctorid')
   async getDatosPerfil(@Param('doctorid') doctorId: string) {
     const doctor = await this.buscarDatosPerfil.ejecutar(doctorId);
@@ -70,6 +78,4 @@ export class DoctorController {
     return await this.bloquearDoctor.ejecutar(doctorId);
   }
 
-
 }
- 
