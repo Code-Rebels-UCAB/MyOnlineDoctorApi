@@ -15,8 +15,10 @@ import { BuscarCantidadTodosLosPacientes } from '../../aplicacion/servicios/Busc
 import { GuardarTokenPaciente } from '../../aplicacion/servicios/GuardarTokenPaciente.service';
 import { BuscarPacienteNombre } from '../../aplicacion/servicios/BuscarPacienteNombre.service';
 import { TokenPacienteDTO } from '../../aplicacion/dto/TokenPacienteDTO';
+import { ObtenerInfoPersonalPaciente } from '../../aplicacion/servicios/ObtenerInfoPersonalPaciente.service';
 import { RepositorioPaciente } from '../adaptadores/RepositorioPaciente';
 import { PacienteORM } from '../persistencia/Paciente.orm';
+import { ConsultarPacienteRespuestaDTO } from '../../../paciente/aplicacion/dto/queries/ConsultarPaciente.query';
 
 @Controller('api/paciente')
 export class PacienteController {
@@ -29,6 +31,8 @@ export class PacienteController {
     private readonly buscarPacienteNombre: BuscarPacienteNombre,
     @Inject(RepositorioPaciente)
     private readonly repositorioPaciente: RepositorioPaciente,
+    @Inject(ObtenerInfoPersonalPaciente)
+    private readonly ObtenerInfoPersonalPaciente: ObtenerInfoPersonalPaciente,
   ) {}
 
   @Get('buscar/todos')
@@ -47,6 +51,12 @@ export class PacienteController {
   async getUser(@Query('id') id: string) {
     const paciente: PacienteORM =
       await this.repositorioPaciente.obtenerPacienteById(id);
+    return paciente;
+  }
+
+  @Get('info')
+  async getPacienteInfo(@Query('id') id: string) {
+    const paciente =  await this.ObtenerInfoPersonalPaciente.ejecutar(id);
     return paciente;
   }
 
