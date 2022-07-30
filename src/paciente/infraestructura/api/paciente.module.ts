@@ -7,6 +7,7 @@ import { BuscarCantidadTodosLosPacientes } from '../../aplicacion/servicios/Busc
 import { RepositorioPaciente } from '../adaptadores/RepositorioPaciente';
 import { PacienteORM } from '../persistencia/Paciente.orm';
 import { GuardarTokenPaciente } from '../../aplicacion/servicios/GuardarTokenPaciente.service';
+import { ObtenerInfoPersonalPaciente } from '../../../paciente/aplicacion/servicios/ObtenerInfoPersonalPaciente.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([PacienteORM]), LoggerModule],
@@ -16,6 +17,7 @@ import { GuardarTokenPaciente } from '../../aplicacion/servicios/GuardarTokenPac
     GuardarTokenPaciente,
     RepositorioPaciente,
     LoggerService,
+    ObtenerInfoPersonalPaciente
   ],
 })
 export class PacienteModule {
@@ -34,6 +36,12 @@ export class PacienteModule {
           provide: GuardarTokenPaciente,
           useFactory: (logger: LoggerService, userRepo: RepositorioPaciente) =>
             new GuardarTokenPaciente(logger, userRepo),
+        },
+        {
+          inject: [LoggerService, RepositorioPaciente],
+          provide: ObtenerInfoPersonalPaciente,
+          useFactory: (logger: LoggerService, userRepo: RepositorioPaciente) =>
+            new ObtenerInfoPersonalPaciente(logger, userRepo),
         },
       ],
     };
