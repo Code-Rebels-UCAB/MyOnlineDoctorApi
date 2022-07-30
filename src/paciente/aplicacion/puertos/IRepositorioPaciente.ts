@@ -6,4 +6,8 @@ export interface IRepositorioPaciente {
 
   obtenerPacienteByNombreorApellido(nombre: string);
   obtenerPacienteByTelefono(telefono: string);
+
+  //COMANDOS
+  bloquearPaciente(id: string);
+  suspenderPaciente(id: string);
 }
