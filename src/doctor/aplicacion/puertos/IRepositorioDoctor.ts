@@ -1,24 +1,21 @@
-import { CalificarDoctorDTO } from "../dtos/CalificarDoctorDTO";
+import { CalificarDoctorDTO } from '../dtos/CalificarDoctorDTO';
 
+export interface IRepositorioDoctor {
+  //QUERYS
+  obtenerDoctorByEspecialidad(especialidad: string);
 
-export interface IRepositorioDoctor {  
-    
-    //QUERYS
-    obtenerDoctorByEspecialidad(especialidad: string);
+  obtenerDoctorByNombreorApellido(nombre: string);
 
-    obtenerDoctorByNombreorApellido(nombre: string);
+  obtenerTopDoctores();
 
-    obtenerTopDoctores();
+  obtenerDoctorById(id: string);
 
-    obtenerDoctorById(id: string);
+  obtenerTodosDoctores();
 
-    obtenerTodosDoctores();
-    
-    //Comandos
-    bloquearDoctor(id: string);
+  //Comandos
+  bloquearDoctor(id: string);
 
-    calificarDoctor(id: string, puntaje: number, cantidad: number);
+  calificarDoctor(id: string, puntaje: number, cantidad: number);
 
-
+  autenticarDoctor(correo: string, password: string);
 }
-  

@@ -1,11 +1,22 @@
-import { Body, Controller, Delete, Get, Inject, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Inject,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 import { BuscarDoctorNombreApellido } from '../../aplicacion/servicios/BuscarDoctorNombreApellido.service';
 import { CalificarDoctor } from '../../aplicacion/servicios/CalificarDoctor.service';
 import { BuscarDoctorEspecialidad } from '../../aplicacion/servicios/BuscarDoctorEspecialidad.service';
 import { CalificarDoctorDTO } from '../../aplicacion/dtos/CalificarDoctorDTO';
 import { BuscarDoctorTop } from '../../../doctor/aplicacion/servicios/BuscarDoctorTop.service';
 import { BuscarTodosDoctores } from '../../../doctor/aplicacion/servicios/BuscarTodosDoctores.service';
-
+import { AutenticarDoctorDTO } from '../../aplicacion/dtos/AutenticarDoctorDTO';
+import { AutenticarDoctor } from '../../aplicacion/servicios/AutenticarDoctor.service';
 
 @Controller('api/doctor')
 export class DoctorController {
@@ -20,8 +31,9 @@ export class DoctorController {
     private readonly buscarDoctorTop: BuscarDoctorTop,
     @Inject(BuscarTodosDoctores)
     private readonly buscarTodosDoctores: BuscarTodosDoctores,
+    @Inject(AutenticarDoctor)
+    private readonly autenticarDoctor: AutenticarDoctor,
   ) {}
-  
 
   @Get('filtrar/especialidad')
   async getByEspecialidad(@Query('especialidad') especialidad: string) {
@@ -53,5 +65,9 @@ export class DoctorController {
     return doctores;
   }
 
+  @Put('autenticar')
+  async autenticar(@Body() data: AutenticarDoctorDTO) {
+    const response = await this.autenticarDoctor.ejecutar(data);
+    return response;
+  }
 }
- 
