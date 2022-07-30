@@ -1,5 +1,4 @@
 import { DynamicModule,Module } from '@nestjs/common';
-
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BuscarDoctorNombreApellido } from '../../aplicacion/servicios/BuscarDoctorNombreApellido.service';
 import { CalificarDoctor } from '../../aplicacion/servicios/CalificarDoctor.service';
@@ -11,6 +10,7 @@ import { DoctorORM } from '../persistencia/Doctor.orm';
 import { DoctorController } from './doctor.controller';
 import { BuscarDoctorTop } from '../../../doctor/aplicacion/servicios/BuscarDoctorTop.service';
 import { BuscarTodosDoctores } from '../../../doctor/aplicacion/servicios/BuscarTodosDoctores.service';
+import { BuscarDatosPerfil } from '../../aplicacion/servicios/BuscarDatosPerfil.service';
 
 
 @Module({
@@ -66,7 +66,15 @@ export class DoctorModule {
             logger: LoggerService,
             userRepo: RepositorioDoctor,
           ) => new BuscarTodosDoctores(logger, userRepo),
-        },       
+        }, 
+        {
+          inject: [LoggerService, RepositorioDoctor],
+          provide: BuscarDatosPerfil,
+          useFactory: (
+            logger: LoggerService,
+            userRepo: RepositorioDoctor,
+          ) => new BuscarDatosPerfil(logger, userRepo),
+        },          
       ],
     };
   }

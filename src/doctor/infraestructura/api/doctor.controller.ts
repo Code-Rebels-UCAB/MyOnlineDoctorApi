@@ -1,10 +1,11 @@
-import { Body, Controller, Delete, Get, Inject, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, Put, Query } from '@nestjs/common';
 import { BuscarDoctorNombreApellido } from '../../aplicacion/servicios/BuscarDoctorNombreApellido.service';
 import { CalificarDoctor } from '../../aplicacion/servicios/CalificarDoctor.service';
 import { BuscarDoctorEspecialidad } from '../../aplicacion/servicios/BuscarDoctorEspecialidad.service';
 import { CalificarDoctorDTO } from '../../aplicacion/dtos/CalificarDoctorDTO';
 import { BuscarDoctorTop } from '../../../doctor/aplicacion/servicios/BuscarDoctorTop.service';
 import { BuscarTodosDoctores } from '../../../doctor/aplicacion/servicios/BuscarTodosDoctores.service';
+import { BuscarDatosPerfil } from "../../aplicacion/servicios/BuscarDatosPerfil.service";
 
 
 @Controller('api/doctor')
@@ -20,6 +21,8 @@ export class DoctorController {
     private readonly buscarDoctorTop: BuscarDoctorTop,
     @Inject(BuscarTodosDoctores)
     private readonly buscarTodosDoctores: BuscarTodosDoctores,
+    @Inject(BuscarDatosPerfil)
+    private readonly buscarDatosPerfil: BuscarDatosPerfil,
   ) {}
   
 
@@ -51,6 +54,12 @@ export class DoctorController {
   async getAll() {
     const doctores = await this.buscarTodosDoctores.ejecutar();
     return doctores;
+  }
+
+  @Get('perfil/:doctorid')
+  async getDatosPerfil(@Param('doctorid') doctorId: string) {
+    const doctor = await this.buscarDatosPerfil.ejecutar(doctorId);
+    return doctor;
   }
 
 }
