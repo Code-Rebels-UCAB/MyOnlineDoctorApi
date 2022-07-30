@@ -25,12 +25,13 @@ import { BloquearCita } from '../../aplicacion/servicios/BloquearCita.service';
 import { SuspenderCita } from '../../aplicacion/servicios/SuspenderCita.service';
 import { FinalizarCita } from '../../aplicacion/servicios/FinalizarCita.service';
 import { CitasDiaDoctor } from '../../aplicacion/servicios/CitasDiaDoctor.service';
+import { RepositorioDoctor } from '../../../doctor/infraestructura/adaptadores/RepositorioDoctor';
 
 
 @Module({
   imports: [TypeOrmModule.forFeature([CitaORM, DoctorORM, PacienteORM]), LoggerModule],
   controllers: [CitaController],
-  providers: [CitasSolicitadasDoctor, CitasDoctor, AgendarCita, RepositorioCita, LoggerService, SolicitarCita, AceptarCita, CancelarCita, ManejadorEventos ,VideollamadaCita, GenerarTokenCita, IniciarCita, BloquearCita, SuspenderCita, FinalizarCita],
+  providers: [CitasSolicitadasDoctor, CitasDoctor, AgendarCita, RepositorioCita, LoggerService, SolicitarCita, AceptarCita, CancelarCita, ManejadorEventos ,VideollamadaCita, GenerarTokenCita, IniciarCita, BloquearCita, SuspenderCita, FinalizarCita, RepositorioDoctor],
 })
 export class CitaModule {
   static register(): DynamicModule {
@@ -155,11 +156,12 @@ export class CitaModule {
           ) => new FinalizarCita(logger, userRepo),
         },
         {
-          inject: [RepositorioCita],
+          inject: [RepositorioCita, RepositorioDoctor],
           provide: NotificarPacienteFirebase,
           useFactory: (
             userRepo: RepositorioCita,
-          ) => {manejador.Add(new NotificarPacienteFirebase(userRepo))},
+            userRepo2: RepositorioDoctor,
+          ) => {manejador.Add(new NotificarPacienteFirebase(userRepo,userRepo2))},
         },
       ],
     }

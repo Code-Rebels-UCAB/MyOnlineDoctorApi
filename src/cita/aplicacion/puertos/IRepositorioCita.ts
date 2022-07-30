@@ -23,6 +23,12 @@ export interface IRepositorioCita {
 
   obtenerCantidadCitasDelDiaDoctor(doctorId: string);
 
+  obtenerCitaIniciada(citaid: string);
+
+  obtenerTokenF(citaid: string);
+
+  obtenerDoctorCita(citaid: string);
+
   //Comandos
   crearCita(cita: SolicitarCitaPersistenciaDTO);
 
@@ -31,8 +37,4 @@ export interface IRepositorioCita {
   actualizarCitaAgendada(citaid: string, fecha: string, hora: string, duracion: string);
 
   actualizarDatosVideollamadaCita(citaid: string, nombreCanal: string, tokenCita: string);
-
-  obtenerCitaIniciada(citaid: string);
-
-  obtenerTokenF(citaid: string);
 }
