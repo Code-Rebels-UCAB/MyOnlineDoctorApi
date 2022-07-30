@@ -4,6 +4,7 @@ import {
   Get,
   Inject,
   Patch,
+  Put,
   Query,
 } from '@nestjs/common';
 import { BuscarCantidadTodosLosPacientes } from '../../aplicacion/servicios/BuscarCantidadPacientesSistema.service';
@@ -15,6 +16,7 @@ import { RepositorioPaciente } from '../adaptadores/RepositorioPaciente';
 import { PacienteORM } from '../persistencia/Paciente.orm';
 import { ConsultarPacienteRespuestaDTO } from '../../../paciente/aplicacion/dto/queries/ConsultarPaciente.query';
 import { BuscarPacienteTelefono } from '../../aplicacion/servicios/BuscarPacienteTelefono.service';
+import { BloquearPaciente } from '../../aplicacion/servicios/BloquearPaciente.service';
 
 @Controller('api/paciente')
 export class PacienteController {
@@ -31,6 +33,8 @@ export class PacienteController {
     private readonly repositorioPaciente: RepositorioPaciente,
     @Inject(ObtenerInfoPersonalPaciente)
     private readonly ObtenerInfoPersonalPaciente: ObtenerInfoPersonalPaciente,
+    @Inject(BloquearPaciente)
+    private readonly bloquearPaciente: BloquearPaciente,
   ) {}
 
   @Get('buscar/todos')
@@ -54,7 +58,7 @@ export class PacienteController {
 
   @Get('info')
   async getPacienteInfo(@Query('id') id: string) {
-    const paciente =  await this.ObtenerInfoPersonalPaciente.ejecutar(id);
+    const paciente = await this.ObtenerInfoPersonalPaciente.ejecutar(id);
     return paciente;
   }
 
@@ -70,5 +74,9 @@ export class PacienteController {
     return pacientes;
   }
 
-
+  @Put('bloquear')
+  async bloquear(@Query('id') id: string) {
+    const resultado = await this.bloquearPaciente.ejecutar(id);
+    return resultado;
+  }
 }
