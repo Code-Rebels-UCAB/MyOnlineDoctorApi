@@ -12,16 +12,22 @@ import { BuscarDoctorTop } from '../../../doctor/aplicacion/servicios/BuscarDoct
 import { BuscarTodosDoctores } from '../../../doctor/aplicacion/servicios/BuscarTodosDoctores.service';
 import { BuscarDatosPerfil } from '../../aplicacion/servicios/BuscarDatosPerfil.service';
 import { BloquearDoctor } from '../../aplicacion/servicios/BloquearDoctor.service';
+import { BloquearCita } from '../../../cita/aplicacion/servicios/BloquearCita.service';
+import { CitasDoctor } from '../../../cita/aplicacion/servicios/CitasDoctor.service';
+import { CitaORM } from '../../../cita/infraestructura/persistencia/Cita.orm';
+import { RepositorioCita } from '../../../cita/infraestructura/adaptadores/RepositorioCita';
+import { PacienteORM } from '../../../paciente/infraestructura/persistencia/Paciente.orm';
+
+
 
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([DoctorORM ]),
+    TypeOrmModule.forFeature([CitaORM, DoctorORM, PacienteORM]),
     LoggerModule,
-    
   ],
   controllers: [DoctorController],
-  providers: [BuscarDoctorEspecialidad,RepositorioDoctor, LoggerService, BuscarDoctorNombreApellido, BuscarDoctorTop, CalificarDoctor],
+  providers: [BuscarDoctorEspecialidad,RepositorioDoctor,RepositorioCita, LoggerService, BuscarDoctorNombreApellido, BuscarDoctorTop, CalificarDoctor, BloquearCita],
 })
 export class DoctorModule {
   static register(): DynamicModule {
@@ -77,12 +83,13 @@ export class DoctorModule {
           ) => new BuscarDatosPerfil(logger, userRepo),
         },    
         {
-          inject: [LoggerService, RepositorioDoctor],
+          inject: [LoggerService, RepositorioDoctor,RepositorioCita],
           provide: BloquearDoctor,
           useFactory: (
             logger: LoggerService,
             userRepo: RepositorioDoctor,
-          ) => new BloquearDoctor(logger, userRepo),
+            citaRepo: RepositorioCita,
+          ) => new BloquearDoctor(logger, userRepo, new BloquearCita(logger,citaRepo), new CitasDoctor(logger,citaRepo)),
         },       
       ],
     };
