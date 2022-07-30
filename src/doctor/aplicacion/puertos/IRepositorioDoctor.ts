@@ -16,11 +16,12 @@ export interface IRepositorioDoctor {
     
     obtenerDatosDoctor(id: string);
 
+    obtenerDoctorNoti(id_doctor: string);
+
     //Comandos
     bloquearDoctor(id: string);
 
     calificarDoctor(id: string, puntaje: number, cantidad: number);
-
 
 }
   
