@@ -31,13 +31,16 @@ export class BuscarDoctorTop implements IServicioAplicacion<void,ListadoDoctores
                 DoctorMapeador.ConvertirDoctoresEnListado(datos),
             )
 
+            //Ordenar la lista por calificacion
+            let ListadoDoctoresCalificacion: ListadoDoctoresDTO[] = ListadoDoctores.sort((a,b) => b.calificacion - a.calificacion);
+
             let total_doctores = 0
-            if (ListadoDoctores.length > 0) {
-                total_doctores = ListadoDoctores.length
+            if (ListadoDoctoresCalificacion.length > 0) {
+                total_doctores = ListadoDoctoresCalificacion.length
             }
             this.logger.log("Buscar por top doctores: " , "Doctores Encontrados: " + total_doctores);
 
-            return Resultado.Exito<ListadoDoctoresDTO[]>(ListadoDoctores);
+            return Resultado.Exito<ListadoDoctoresDTO[]>(ListadoDoctoresCalificacion);
 
         }
         catch (error) {
