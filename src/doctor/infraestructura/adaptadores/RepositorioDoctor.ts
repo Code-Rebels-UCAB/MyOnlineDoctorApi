@@ -89,4 +89,20 @@ export class RepositorioDoctor implements IRepositorioDoctor {
         const doctores = await this._doctorRepository.find();
         return doctores;
     }
+
+    async obtenerDatosDoctor(id: string){
+        const doctor =  await this._doctorRepository.createQueryBuilder('doctores')
+        .select([
+            'doctores.p_nombre', 
+            'doctores.p_apellido',
+            'doctores.sexo',
+            'doctores.foto',
+            'doctores.calificacion',
+          ])
+        .leftJoinAndSelect('doctores.especialidades', 'especialidades')
+        .where('doctores.id_doctor = :doctorid', { doctorid: id})
+        .getOne();
+        return doctor;
+
+    }
 }

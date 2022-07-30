@@ -4,6 +4,7 @@ import { ILogger } from "../../../commun/aplicacion/puertos/ILogger";
 import { Resultado } from "../../../commun/aplicacion/Resultado";
 import { PerfilDoctorDTO } from "../dtos/PerfilDoctorDTO";
 import { IRepositorioDoctor } from "../puertos/IRepositorioDoctor";
+import { DoctorMapeador } from "../mapeadores/DoctorMapeador";
 
 
 export class BuscarDatosPerfil implements IServicioAplicacion<string, PerfilDoctorDTO>{
@@ -16,7 +17,10 @@ export class BuscarDatosPerfil implements IServicioAplicacion<string, PerfilDoct
     async ejecutar(doctorId: string): Promise<Resultado<PerfilDoctorDTO>> {
 
         try{
-            //return Resultado.Exito<PerfilDoctorDTO>(null);
+            const doctor = await this.repositorioDoctor.obtenerDatosDoctor(doctorId);
+            const perfilDoctor = DoctorMapeador.ConvertirAPerfilDoctorDTO(doctor);
+            this.logger.log("Perfil del Doctor: " + perfilDoctor.nombre, '');
+            return Resultado.Exito<PerfilDoctorDTO>(perfilDoctor);
         }
         catch (error) {
             let errores: IExcepcion = error;
