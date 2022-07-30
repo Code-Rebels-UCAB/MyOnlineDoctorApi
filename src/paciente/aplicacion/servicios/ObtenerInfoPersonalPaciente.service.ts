@@ -22,8 +22,9 @@ export class ObtenerInfoPersonalPaciente implements IServicioAplicacion<string, 
 
         let pacienteInfo: PacienteInfoDTO = PacienteMapeador.ConvertirPersistenciaEnInfoPaciente(pacientePersistencia);
 
+        this.logger.log('Obtener Informacion Personal pacientr','Paciente: ' + data);
         return Resultado.Exito<PacienteInfoDTO>(pacienteInfo);
-
+        
     } 
     catch (error) {
       const errores: IExcepcion = error;

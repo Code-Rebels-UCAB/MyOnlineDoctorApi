@@ -6,8 +6,7 @@ import { PacienteInfoDTO } from "../dto/queries/PacienteInfoDTO";
 import { PacienteMapeador } from "../mappeador/PacienteMapeador";
 import { IRepositorioPaciente } from "../puertos/IRepositorioPaciente";
 
-
-export class BuscarPacienteNombre
+export class BuscarPacienteTelefono
   implements IServicioAplicacion<string, PacienteInfoDTO[]>
 {
   constructor(
@@ -18,14 +17,14 @@ export class BuscarPacienteNombre
   async ejecutar(data: string): Promise<Resultado<PacienteInfoDTO[]>> {
     try {
       const pacientes =
-        await this.repositorioPaciente.obtenerPacienteByNombreorApellido(data);  
+        await this.repositorioPaciente.obtenerPacienteByTelefono(data);  
          
       const PacienteLista: PacienteInfoDTO[] = pacientes.map((datos) =>
         PacienteMapeador.ConvertirPersistenciaEnInfoPaciente(datos),
       );
 
       this.logger.log(
-        'Buscar por Nombre y Apellido: ' + data,
+        'Buscar por Telefono: ' + data,
         'Pacientes Encontrados: ' + PacienteLista.length,
       );  
       return Resultado.Exito<PacienteInfoDTO[]>(PacienteLista);

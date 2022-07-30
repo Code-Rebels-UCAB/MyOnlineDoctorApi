@@ -130,9 +130,8 @@ export class CitaController {
   }
 
   @Put('finalizarcita')
-  async finalizarCitaPut(@Query('citaId') citaId: string){
+  async finalizarCitaPut(@Query('id') citaId: string){
     const citaFinalizar = await this.finalizarCita.ejecutar(citaId);
-    console.log(citaFinalizar)
     return citaFinalizar;
   }
 
