@@ -8,7 +8,7 @@ import { RepositorioPaciente } from '../adaptadores/RepositorioPaciente';
 import { PacienteORM } from '../persistencia/Paciente.orm';
 import { GuardarTokenPaciente } from '../../aplicacion/servicios/GuardarTokenPaciente.service';
 import { ObtenerInfoPersonalPaciente } from '../../../paciente/aplicacion/servicios/ObtenerInfoPersonalPaciente.service';
-import { BuscarPacienteNombre } from 'src/paciente/aplicacion/servicios/BuscarPacienteNombre.service';
+import { BuscarPacienteNombre } from '../../../paciente/aplicacion/servicios/BuscarPacienteNombre.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([PacienteORM]), LoggerModule],

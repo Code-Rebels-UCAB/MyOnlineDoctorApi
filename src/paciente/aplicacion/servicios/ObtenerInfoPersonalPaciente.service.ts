@@ -4,9 +4,9 @@ import { Resultado } from '../../../commun/aplicacion/Resultado';
 import { IExcepcion } from '../../../commun/dominio/excepcciones/IExcepcion';
 import { ConsultarPacienteRespuestaDTO } from '../dto/queries/ConsultarPaciente.query';
 import { PacienteInfoPersistenciaDTO } from '../../../paciente/infraestructura/dto/PacienteInfoPersistenciaDTO';
-import { PacienteMapeador } from '../mappeador/PacienteMappeador';
 import { PacienteInfoDTO } from '../dto/queries/PacienteInfoDTO';
 import { IRepositorioPaciente } from '../puertos/IRepositorioPaciente';
+import { PacienteMapeador } from '../mappeador/PacienteMapeador';
 
 export class ObtenerInfoPersonalPaciente implements IServicioAplicacion<string, PacienteInfoDTO>
 {

@@ -1,8 +1,8 @@
-import { IServicioAplicacion } from "src/commun/aplicacion/IServicioAplicacion";
-import { ILogger } from "src/commun/aplicacion/puertos/ILogger";
-import { Resultado } from "src/commun/aplicacion/Resultado";
-import { IExcepcion } from "src/commun/dominio/excepcciones/IExcepcion";
-import { Paciente } from "src/paciente/dominio/entidades/Paciente";
+import { IServicioAplicacion } from "../../../commun/aplicacion/IServicioAplicacion";
+import { ILogger } from "../../../commun/aplicacion/puertos/ILogger";
+import { Resultado } from "../../../commun/aplicacion/Resultado";
+import { IExcepcion } from "../../../commun/dominio/excepcciones/IExcepcion";
+import { Paciente } from "../../../paciente/dominio/entidades/Paciente";
 import { ConsultarPacienteRespuestaDTO } from "../dto/queries/ConsultarPaciente.query";
 import { PacienteMapeador } from "../mappeador/PacienteMapeador";
 import { IRepositorioPaciente } from "../puertos/IRepositorioPaciente";
