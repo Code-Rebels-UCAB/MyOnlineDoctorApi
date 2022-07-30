@@ -51,4 +51,12 @@ export class RepositorioPaciente implements IRepositorioPaciente {
     return pacientesFiltrados;
   }
 
+  async obtenerPacienteByTelefono(telefono: string): Promise<PacienteORM[]> {
+
+    const pacientesFiltrados =  await this.repositorioPaciente.createQueryBuilder('pacientes')
+                                                         .where("pacientes.telefono like :telefono", { telefono: `%${telefono}%`})
+                                                         .getMany(); 
+    return pacientesFiltrados;
+  }
+
 }

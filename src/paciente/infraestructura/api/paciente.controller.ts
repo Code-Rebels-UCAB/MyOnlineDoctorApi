@@ -1,22 +1,20 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   Inject,
-  ParseIntPipe,
   Patch,
-  Post,
-  Put,
-  Param,
   Query,
 } from '@nestjs/common';
 import { BuscarCantidadTodosLosPacientes } from '../../aplicacion/servicios/BuscarCantidadPacientesSistema.service';
 import { GuardarTokenPaciente } from '../../aplicacion/servicios/GuardarTokenPaciente.service';
 import { BuscarPacienteNombre } from '../../aplicacion/servicios/BuscarPacienteNombre.service';
 import { TokenPacienteDTO } from '../../aplicacion/dto/TokenPacienteDTO';
+import { ObtenerInfoPersonalPaciente } from '../../aplicacion/servicios/ObtenerInfoPersonalPaciente.service';
 import { RepositorioPaciente } from '../adaptadores/RepositorioPaciente';
 import { PacienteORM } from '../persistencia/Paciente.orm';
+import { ConsultarPacienteRespuestaDTO } from '../../../paciente/aplicacion/dto/queries/ConsultarPaciente.query';
+import { BuscarPacienteTelefono } from '../../aplicacion/servicios/BuscarPacienteTelefono.service';
 
 @Controller('api/paciente')
 export class PacienteController {
@@ -27,8 +25,12 @@ export class PacienteController {
     private readonly GuardarToken: GuardarTokenPaciente,
     @Inject(BuscarPacienteNombre)
     private readonly buscarPacienteNombre: BuscarPacienteNombre,
+    @Inject(BuscarPacienteTelefono)
+    private readonly buscarPacienteTelefono: BuscarPacienteTelefono,
     @Inject(RepositorioPaciente)
     private readonly repositorioPaciente: RepositorioPaciente,
+    @Inject(ObtenerInfoPersonalPaciente)
+    private readonly ObtenerInfoPersonalPaciente: ObtenerInfoPersonalPaciente,
   ) {}
 
   @Get('buscar/todos')
@@ -50,9 +52,21 @@ export class PacienteController {
     return paciente;
   }
 
+  @Get('info')
+  async getPacienteInfo(@Query('id') id: string) {
+    const paciente =  await this.ObtenerInfoPersonalPaciente.ejecutar(id);
+    return paciente;
+  }
+
   @Get('filtrar/nombre')
   async getByNombreOrApellido(@Query('nombre') nombre: string) {
     const pacientes = await this.buscarPacienteNombre.ejecutar(nombre);
+    return pacientes;
+  }
+
+  @Get('filtrar/telefono')
+  async getByNumberPhone(@Query('telefono') telefono: string) {
+    const pacientes = await this.buscarPacienteTelefono.ejecutar(telefono);
     return pacientes;
   }
 

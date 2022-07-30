@@ -16,6 +16,8 @@ import { EspecialidadPersistenciaDTO } from "../../infraestructura/dtos/Especial
 import { Especialidad } from "../../dominio/values/Especialidad";
 import { Doctor } from "../../dominio/entidades/Doctor";
 import { ListadoDoctoresDTO } from "../dtos/ListadoDoctoresDTO";
+import { PerfilDoctorPersistenciaDTO } from "../../../doctor/infraestructura/dtos/PerfilDoctorPersistenciaDTO";
+import { PerfilDoctorDTO } from "../dtos/PerfilDoctorDTO";
 
 export class DoctorMapeador{
     public static covertirPersistenciaDominio(datos: DoctorPersistenciaDTO):Doctor{
@@ -64,6 +66,25 @@ export class DoctorMapeador{
         
     }
     
+    public static ConvertirAPerfilDoctorDTO(doctor: PerfilDoctorPersistenciaDTO): PerfilDoctorDTO{
+
+        let especialidades: string[] = [];
+        if (doctor.especialidades.length > 0){
+            doctor.especialidades.forEach( (i) => {
+                especialidades.push(i.nombre)
+            });
+        }
+
+        return {
+            nombre: doctor.p_nombre +" "+ doctor.p_apellido,
+            sexo: doctor.sexo,
+            foto: doctor.foto,
+            calificacion: doctor.calificacion,
+            especialidades: especialidades,
+        }
+
+        
+    }
 
 }
 
