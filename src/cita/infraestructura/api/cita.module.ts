@@ -25,7 +25,7 @@ import { BloquearCita } from '../../aplicacion/servicios/BloquearCita.service';
 import { SuspenderCita } from '../../aplicacion/servicios/SuspenderCita.service';
 import { FinalizarCita } from '../../aplicacion/servicios/FinalizarCita.service';
 import { CitasDiaDoctor } from '../../aplicacion/servicios/CitasDiaDoctor.service';
-import { RepositorioDoctor } from 'src/doctor/infraestructura/adaptadores/RepositorioDoctor';
+import { RepositorioDoctor } from '../../../doctor/infraestructura/adaptadores/RepositorioDoctor';
 
 
 @Module({

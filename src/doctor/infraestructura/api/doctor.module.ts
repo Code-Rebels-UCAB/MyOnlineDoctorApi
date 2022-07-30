@@ -17,6 +17,8 @@ import { CitasDoctor } from '../../../cita/aplicacion/servicios/CitasDoctor.serv
 import { CitaORM } from '../../../cita/infraestructura/persistencia/Cita.orm';
 import { RepositorioCita } from '../../../cita/infraestructura/adaptadores/RepositorioCita';
 import { PacienteORM } from '../../../paciente/infraestructura/persistencia/Paciente.orm';
+import { ManejadorEventos } from '../../../commun/aplicacion/ManejadorEventos';
+import { BloquearCitasDoctor } from '../../../cita/aplicacion/servicios/BloquearCitasDoctor.service';
 
 
 
@@ -37,60 +39,53 @@ export class DoctorModule {
         {
           inject: [LoggerService, RepositorioDoctor],
           provide: BuscarDoctorEspecialidad,
-          useFactory: (
-            logger: LoggerService,
-            userRepo: RepositorioDoctor,
-          ) => new BuscarDoctorEspecialidad(logger, userRepo),
+          useFactory: (logger: LoggerService, userRepo: RepositorioDoctor) =>
+            new BuscarDoctorEspecialidad(logger, userRepo),
         },
         {
           inject: [LoggerService, RepositorioDoctor],
           provide: BuscarDoctorNombreApellido,
-          useFactory: (
-            logger: LoggerService,
-            userRepo: RepositorioDoctor,
-          ) => new BuscarDoctorNombreApellido(logger, userRepo),
+          useFactory: (logger: LoggerService, userRepo: RepositorioDoctor) =>
+            new BuscarDoctorNombreApellido(logger, userRepo),
         },
         {
           inject: [LoggerService, RepositorioDoctor],
           provide: BuscarDoctorTop,
-          useFactory: (
-            logger: LoggerService,
-            userRepo: RepositorioDoctor,
-          ) => new BuscarDoctorTop(logger, userRepo),
+          useFactory: (logger: LoggerService, userRepo: RepositorioDoctor) =>
+            new BuscarDoctorTop(logger, userRepo),
         },
         {
           inject: [LoggerService, RepositorioDoctor],
           provide: CalificarDoctor,
-          useFactory: (
-            logger: LoggerService,
-            userRepo: RepositorioDoctor,
-          ) => new CalificarDoctor(logger, userRepo),
-        },   
+          useFactory: (logger: LoggerService, userRepo: RepositorioDoctor) =>
+            new CalificarDoctor(logger, userRepo),
+        },
         {
           inject: [LoggerService, RepositorioDoctor],
           provide: BuscarTodosDoctores,
-          useFactory: (
-            logger: LoggerService,
-            userRepo: RepositorioDoctor,
-          ) => new BuscarTodosDoctores(logger, userRepo),
-        }, 
+          useFactory: (logger: LoggerService, userRepo: RepositorioDoctor) =>
+            new BuscarTodosDoctores(logger, userRepo),
+        },
         {
           inject: [LoggerService, RepositorioDoctor],
           provide: BuscarDatosPerfil,
-          useFactory: (
-            logger: LoggerService,
-            userRepo: RepositorioDoctor,
-          ) => new BuscarDatosPerfil(logger, userRepo),
-        },    
+          useFactory: (logger: LoggerService, userRepo: RepositorioDoctor) =>
+            new BuscarDatosPerfil(logger, userRepo),
+        },
         {
-          inject: [LoggerService, RepositorioDoctor,RepositorioCita],
+          inject: [LoggerService, RepositorioDoctor, RepositorioCita],
           provide: BloquearDoctor,
           useFactory: (
             logger: LoggerService,
             userRepo: RepositorioDoctor,
             citaRepo: RepositorioCita,
-          ) => new BloquearDoctor(logger, userRepo, new BloquearCita(logger,citaRepo), new CitasDoctor(logger,citaRepo)),
-        },       
+          ) => {
+            var politica = new BloquearCitasDoctor(new BloquearCita(logger,citaRepo), new CitasDoctor(logger,citaRepo));
+            var manejador = new ManejadorEventos<string>();
+            manejador.Add(politica);
+            return new BloquearDoctor(logger, userRepo, manejador);
+          },
+        },
       ],
     };
   }
