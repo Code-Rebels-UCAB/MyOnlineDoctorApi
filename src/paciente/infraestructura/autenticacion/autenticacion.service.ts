@@ -23,7 +23,7 @@ export class ServicioAutenticacion {
                 idPaciente: paciente.id_paciente
             }
             const tokenDeAcceso = await this.jwtServicio.sign(payload);
-            return tokenDeAcceso;      
+            return Resultado.Exito<{tokenDeAcceso}>({tokenDeAcceso});      
         }
 
         throw  new UnauthorizedException();

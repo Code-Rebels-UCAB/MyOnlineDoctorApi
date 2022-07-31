@@ -20,6 +20,7 @@ import { BuscarPacienteTelefono } from '../../aplicacion/servicios/BuscarPacient
 import { PacientePersistenciaDTO } from '../dto/PacientePersistenciaDTO';
 import { RegistrarPaciente } from 'src/paciente/aplicacion/servicios/RegistrarPaciente.service';
 import { JwtPacienteGuard } from '../autenticacion/guards/paciente.guard';
+import { ObtenerPaciente } from '../autenticacion/decoradores/obtener.paciente.decorador';
 
 @Controller('api/paciente')
 export class PacienteController {
@@ -62,8 +63,8 @@ export class PacienteController {
 
   @UseGuards(JwtPacienteGuard)
   @Get('info')
-  async getPacienteInfo(@Query('id') id: string) {
-    const paciente =  await this.ObtenerInfoPersonalPaciente.ejecutar(id);
+  async getPacienteInfo(@ObtenerPaciente() pacienteRequest: PacienteORM) {
+    const paciente =  await this.ObtenerInfoPersonalPaciente.ejecutar(pacienteRequest.id_paciente);
     return paciente;
   }
 
