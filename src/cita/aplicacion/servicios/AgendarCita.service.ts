@@ -6,13 +6,14 @@ import { AgendarCitaDTO } from "../dto/AgendarCitaDTO";
 import { IExcepcion } from "../../../commun/dominio/excepcciones/IExcepcion";
 import { CitaMapeador } from "../mappeador/CitaMapeador";
 import { Cita } from "../../dominio/entidades/Cita";
-
+import { ManejadorEventos } from "../../../commun/aplicacion/ManejadorEventos";
 
 export class AgendarCita implements IServicioAplicacion<AgendarCitaDTO,void>
 {
     public constructor(
         private readonly logger: ILogger,
-        private readonly repositorioCita: IRepositorioCita
+        private readonly repositorioCita: IRepositorioCita,
+        private readonly manejador: ManejadorEventos<any>
     ) {}
 
 
@@ -25,13 +26,17 @@ export class AgendarCita implements IServicioAplicacion<AgendarCitaDTO,void>
             var cita = new Cita(CitaVo.idCita,null,null,null,null,null,CitaVo.fechaCita,CitaVo.horaCita,CitaVo.duracion);
             cita.agendarCita(CitaVo.fechaCita,CitaVo.horaCita, CitaVo.duracion);
 
-            //AQUI SE DEBERIA HACER LO DE LOS EVENTOS
-            //var eventos = cita.obtenerEventos();
-            //cita.limpiarEventos();
+             //AQUI SE DEBERIA HACER LO DE LOS EVENTOS
+             var eventos = cita.obtenerEventos();
+             cita.limpiarEventos();
 
             await this.repositorioCita.actualizarCitaAgendada(datos.idCita,datos.fechaCita,datos.horaCita, datos.duracion);
             this.logger.log('La Cita con Identificador ' + datos.idCita + ' Ha sido Modificada', '');
 
+            this.manejador.AddEvento(...eventos);
+            //SE LE PASA EL MENSAJE AL MANEJADOR DE PUBLICAR EVENTOS
+            this.manejador.Notify(cita.obtenerIdentificador().getCitaID().toString());
+            //this.manejador.Notify(); //SE PUEDE O NO PASAR UN VALOR
 
             return Resultado.Exito<void>(null);
             
