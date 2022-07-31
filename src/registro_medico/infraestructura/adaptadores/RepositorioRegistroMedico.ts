@@ -67,8 +67,11 @@ export class RepositorioRegistroMedico implements IRepositorioRegistroMedico {
         })
         .select(['historia.id_historia'])
         .getOne();
-
-      return HistoriaMedica.id_historia;
+      
+      if (HistoriaMedica) {
+        return HistoriaMedica.id_historia;
+      }
+      return HistoriaMedica;
     }
 
   

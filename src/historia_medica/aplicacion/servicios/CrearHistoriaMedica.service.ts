@@ -2,24 +2,23 @@ import { ILogger } from "../../../commun/aplicacion/puertos/ILogger";
 import { Resultado } from "../../../commun/aplicacion/Resultado";
 import { IExcepcion } from "../../../commun/dominio/excepcciones/IExcepcion";
 import { IServicioAplicacion } from "../../../commun/aplicacion/IServicioAplicacion";
-import { CrearHistoriaMedicaDTO } from "../dtos/CrearHistoriaMedicaDTO";
 import { IRepositorioHistoriaMedica } from "../puertos/IRepositorioHistoriaMedica";
 import { HistoriaMedica } from "../../../historia_medica/dominio/entidades/HistoriaMedica";
 import { PacienteID } from "../../../commun/dominio/values/PacienteID";
 import { Guid } from "guid-typescript";
 
-export class CrearHistoriaMedica implements IServicioAplicacion<CrearHistoriaMedicaDTO,string>{
+export class CrearHistoriaMedica implements IServicioAplicacion<string,string>{
 
     constructor(
         private readonly logger: ILogger,
         private readonly repositorioHistoria: IRepositorioHistoriaMedica,
     ) {}
 
-    async ejecutar(datos: CrearHistoriaMedicaDTO): Promise<Resultado<string>> {
+    async ejecutar(pacienteId: string): Promise<Resultado<string>> {
 
         try{
             //........AGREGADO DE HISTORIA MEDICA................
-            const historiaMedica = HistoriaMedica.crearHistoria(PacienteID.crear(Guid.parse(datos.id_paciente)));     
+            const historiaMedica = HistoriaMedica.crearHistoria(PacienteID.crear(Guid.parse(pacienteId)));     
             
              //........EVENTOS DE DOMINIO................
             const eventos = historiaMedica.obtenerEventos();

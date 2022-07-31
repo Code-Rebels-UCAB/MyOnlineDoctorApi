@@ -31,7 +31,7 @@ export class CrearRegistroMedico implements IServicioAplicacion<RegistroMedicoDT
  
             //SE VERIFICA QUE TENGA EL REGISTRO MEDICO TENGA UN HISTORIA MEDICA CREADA, O SI ES EL PRIMER REGISTRO MEDICO DEL PACIENTE
             if (!historiaMedicaId) {
-                var HistoriaCreada = await this.crearHistoria.ejecutar(await this.repositorioRegistroMedico.ObtenerHistoriaMedicaAsociada(registroMedico.getCitaID().getCitaID().toString()));
+                var HistoriaCreada = await this.crearHistoria.ejecutar(await this.repositorioRegistroMedico.ObtenerPacienteAsociado(registroMedico.getCitaID().getCitaID().toString()));
                 historiaMedicaId = HistoriaCreada.valor;
             }
 
