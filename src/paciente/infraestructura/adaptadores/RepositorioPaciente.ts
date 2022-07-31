@@ -23,40 +23,70 @@ export class RepositorioPaciente implements IRepositorioPaciente {
   }
 
   async guardarTokenPaciente(pacienteid: string, tokenPaciente: string) {
-    await this.repositorioPaciente.createQueryBuilder('pacientes')
-    .update(PacienteORM)
-    .set({tokenF: tokenPaciente})
-    .where('id_paciente = :id', {
-      id: pacienteid,
-    }).execute();
+    await this.repositorioPaciente
+      .createQueryBuilder('pacientes')
+      .update(PacienteORM)
+      .set({ tokenF: tokenPaciente })
+      .where('id_paciente = :id', {
+        id: pacienteid,
+      })
+      .execute();
   }
-  
+
   async obtenerPacienteById(id: string): Promise<PacienteORM> {
-    const paciente:PacienteORM = await this.repositorioPaciente.findOne({
-        where: { id_paciente: id },
+    const paciente: PacienteORM = await this.repositorioPaciente.findOne({
+      where: { id_paciente: id },
     });
     return paciente;
   }
 
-  async obtenerPacienteByNombreorApellido(nombre: string): Promise<PacienteORM[]> {
-    if(nombre !=null || nombre != undefined){
-      nombre = nombre.toLowerCase().replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
-    }else{
+  async obtenerPacienteByNombreorApellido(
+    nombre: string,
+  ): Promise<PacienteORM[]> {
+    if (nombre != null || nombre != undefined) {
+      nombre = nombre
+        .toLowerCase()
+        .replace(/(^\w{1})|(\s+\w{1})/g, (letter) => letter.toUpperCase());
+    } else {
       nombre = '';
     }
 
-    const pacientesFiltrados =  await this.repositorioPaciente.createQueryBuilder('pacientes')
-                                                         .where("(pacientes.p_nombre ||' '|| pacientes.p_apellido) like :nombre", { nombre: `%${nombre}%`})
-                                                         .getMany(); 
+    const pacientesFiltrados = await this.repositorioPaciente
+      .createQueryBuilder('pacientes')
+      .where("(pacientes.p_nombre ||' '|| pacientes.p_apellido) like :nombre", {
+        nombre: `%${nombre}%`,
+      })
+      .getMany();
     return pacientesFiltrados;
   }
 
   async obtenerPacienteByTelefono(telefono: string): Promise<PacienteORM[]> {
-
-    const pacientesFiltrados =  await this.repositorioPaciente.createQueryBuilder('pacientes')
-                                                         .where("pacientes.telefono like :telefono", { telefono: `%${telefono}%`})
-                                                         .getMany(); 
+    const pacientesFiltrados = await this.repositorioPaciente
+      .createQueryBuilder('pacientes')
+      .where('pacientes.telefono like :telefono', { telefono: `%${telefono}%` })
+      .getMany();
     return pacientesFiltrados;
   }
 
+  async bloquearPaciente(id: string) {
+    await this.repositorioPaciente.update(
+      {
+        id_paciente: id,
+      },
+      {
+        status_suscripcion: 'Bloqueado',
+      },
+    );
+  }
+
+  async suspenderPaciente(id: string) {
+    await this.repositorioPaciente.update(
+      {
+        id_paciente: id,
+      },
+      {
+        status_suscripcion: 'Suspendido',
+      },
+    );
+  }
 }

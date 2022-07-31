@@ -10,6 +10,9 @@ import { GuardarTokenPaciente } from '../../aplicacion/servicios/GuardarTokenPac
 import { ObtenerInfoPersonalPaciente } from '../../../paciente/aplicacion/servicios/ObtenerInfoPersonalPaciente.service';
 import { BuscarPacienteNombre } from '../../../paciente/aplicacion/servicios/BuscarPacienteNombre.service';
 import { BuscarPacienteTelefono } from '../../aplicacion/servicios/BuscarPacienteTelefono.service';
+import { BloquearPaciente } from '../../aplicacion/servicios/BloquearPaciente.service';
+import { SuspenderPaciente } from '../../aplicacion/servicios/SuspenderPaciente.service';
+import { ManejadorEventos } from '../../../commun/aplicacion/ManejadorEventos';
 
 @Module({
   imports: [TypeOrmModule.forFeature([PacienteORM]), LoggerModule],
@@ -20,7 +23,9 @@ import { BuscarPacienteTelefono } from '../../aplicacion/servicios/BuscarPacient
     GuardarTokenPaciente,
     RepositorioPaciente,
     LoggerService,
-    ObtenerInfoPersonalPaciente
+    ObtenerInfoPersonalPaciente,
+    BloquearPaciente,
+    SuspenderPaciente,
   ],
 })
 export class PacienteModule {
@@ -57,6 +62,28 @@ export class PacienteModule {
           provide: BuscarPacienteTelefono,
           useFactory: (logger: LoggerService, userRepo: RepositorioPaciente) =>
             new BuscarPacienteTelefono(logger, userRepo),
+        },
+        {
+          inject: [LoggerService, RepositorioPaciente],
+          provide: BloquearPaciente,
+          useFactory: (
+            logger: LoggerService,
+            userRepo: RepositorioPaciente,
+          ) => {
+            const manager = new ManejadorEventos<string>();
+            return new BloquearPaciente(logger, userRepo, manager);
+          },
+        },
+        {
+          inject: [LoggerService, RepositorioPaciente],
+          provide: SuspenderPaciente,
+          useFactory: (
+            logger: LoggerService,
+            userRepo: RepositorioPaciente,
+          ) => {
+            const manager = new ManejadorEventos<string>();
+            return new SuspenderPaciente(logger, userRepo, manager);
+          },
         },
       ],
     };
