@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { HistoriaMedicaORM } from '../../../historia_medica/infraestructura/persistencia/HistoriaMedica.orm';
+import { ConsultarPacienteRespuestaDTO } from '../../../paciente/aplicacion/dto/queries/ConsultarPaciente.query';
 import { Repository } from 'typeorm';
 import { IRepositorioPaciente } from '../../aplicacion/puertos/IRepositorioPaciente';
 import { PacienteORM } from '../persistencia/Paciente.orm';
@@ -59,9 +61,29 @@ export class RepositorioPaciente implements IRepositorioPaciente {
     return pacientesFiltrados;
   }
 
-  async registrarPaciente(paciente) {
-    console.log(paciente)
-    await this.repositorioPaciente.save(paciente);
+  async registrarPaciente(paciente: ConsultarPacienteRespuestaDTO) {
+    const pacienteORM: PacienteORM = {
+      id_paciente: paciente.idPaciente,
+      p_nombre: paciente.primer_nombre,
+      s_nombre: paciente.segundo_nombre,
+      p_apellido: paciente.primer_apellido,
+      s_apellido: paciente.segundo_apellido,
+      fecha_nacimiento: paciente.fechaNacimiento,
+      telefono: paciente.telefono,
+      correo: paciente.email,
+      sexo: paciente.genero,
+      altura: paciente.altura,
+      peso: paciente.peso,
+      contrasena: paciente.password,
+      status_suscripcion: paciente.statusSuscripcion,
+      alergia: paciente.alergia,
+      antecedentes: paciente.antecedentes,
+      operacion: paciente.operaciones,
+      tokenF: '',
+      cita: [],
+      historiaMedica: new HistoriaMedicaORM()
+    };
+    return await this.repositorioPaciente.save(pacienteORM);
   }
 
 }

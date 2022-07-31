@@ -41,7 +41,6 @@ export class RegistrarPaciente implements IServicioAplicacion<PacientePersistenc
             paciente.limpiarEventos();
 
             let pacienteNuevo = PacienteMapeador.covertirDominioPersistencia(paciente);
-            console.log(pacienteNuevo);
 
             await this.repositorioPaciente.registrarPaciente(pacienteNuevo);
 
