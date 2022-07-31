@@ -10,6 +10,7 @@ import { Historia } from "src/registro_medico/dominio/values/Historia";
 import { Plan } from "src/registro_medico/dominio/values/Plan";
 import { Prescripcion } from "src/registro_medico/dominio/values/Prescripcion";
 import { RegistroMedicoRespuestaDTO } from "../../aplicacion/dto/RegistroMedicoRespuestaDTO";
+import { CrearRegistroMedicoDTO } from "../dto/CrearRegistroMedicoDTO";
 
 export class RegistroMedicoMapeador {
 
@@ -26,15 +27,15 @@ export class RegistroMedicoMapeador {
         }
     }
     
-    static convertirPersistenciaEnDominio(entrada: RegistroMedicoRespuestaDTO): RegistroMedico {
+    static convertirPersistenciaEnDominio(entrada: CrearRegistroMedicoDTO): RegistroMedico {
         return RegistroMedico.crearRegistroMedico( 
           Examenes.crear(entrada.examenes),
           Historia.crear(entrada.historia),
           Prescripcion.crear(entrada.prescripcion),
           Plan.crear(entrada.plan),
           Diagnostico.crear(entrada.diagnostico),
-          DoctorID.crear(Guid.parse(entrada.id_doctor)),
-          CitaID.crear(Guid.parse(entrada.id_cita)),
+          DoctorID.crear(Guid.parse(entrada.IdDoctor)),
+          CitaID.crear(Guid.parse(entrada.IdCita)),
         );
     }
 
