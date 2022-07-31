@@ -7,15 +7,17 @@ import { RepositorioRegistroMedico } from '../adaptadores/RepositorioRegistroMed
 import { RegistroMedicoORM } from '../persistencia/RegistroMedico.orm';
 import { RegistroMedicoController } from './registroMedico.controller';
 import { CrearHistoriaMedica } from '../../../historia_medica/aplicacion/servicios/CrearHistoriaMedica.service';
-import { RepositorioHistoriaMedica } from 'src/historia_medica/infraestructura/adaptadores/RepositorioHistoriaMedica';
+import { RepositorioHistoriaMedica } from '../../../historia_medica/infraestructura/adaptadores/RepositorioHistoriaMedica';
 import { HistoriaMedicaORM } from '../../../historia_medica/infraestructura/persistencia/HistoriaMedica.orm';
+import { PacienteORM } from '../../../paciente/infraestructura/persistencia/Paciente.orm';
+
 
 
 export class RegistroMedicoModule {
   static register(): DynamicModule {
     return {
       module: RegistroMedicoModule,
-      imports: [TypeOrmModule.forFeature([RegistroMedicoORM, HistoriaMedicaORM]), LoggerModule],
+      imports: [TypeOrmModule.forFeature([RegistroMedicoORM, HistoriaMedicaORM, PacienteORM]), LoggerModule],
       controllers: [RegistroMedicoController],
       providers: [
         LoggerService,
