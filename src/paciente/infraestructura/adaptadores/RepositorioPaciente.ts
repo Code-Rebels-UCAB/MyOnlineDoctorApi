@@ -5,6 +5,7 @@ import { ConsultarPacienteRespuestaDTO } from '../../../paciente/aplicacion/dto/
 import { Repository } from 'typeorm';
 import { IRepositorioPaciente } from '../../aplicacion/puertos/IRepositorioPaciente';
 import { PacienteORM } from '../persistencia/Paciente.orm';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class RepositorioPaciente implements IRepositorioPaciente {
@@ -61,7 +62,17 @@ export class RepositorioPaciente implements IRepositorioPaciente {
     return pacientesFiltrados;
   }
 
+  async buscarDatosIniciarSesionPaciente(pacienteCorreo:string) {
+    const datosIniciarSesion = await this.repositorioPaciente.createQueryBuilder('pacientes')
+    .where("pacientes.correo = :pacienteCorreo", {pacienteCorreo: `${pacienteCorreo}`})
+    .getOne();
+    return datosIniciarSesion;
+  }
+
   async registrarPaciente(paciente: ConsultarPacienteRespuestaDTO) {
+    const salt = await bcrypt.genSalt();
+    const passwordHasheado = await bcrypt.hash(paciente.password, salt);
+
     const pacienteORM: PacienteORM = {
       id_paciente: paciente.idPaciente,
       p_nombre: paciente.primer_nombre,
@@ -74,7 +85,7 @@ export class RepositorioPaciente implements IRepositorioPaciente {
       sexo: paciente.genero,
       altura: paciente.altura,
       peso: paciente.peso,
-      contrasena: paciente.password,
+      contrasena: passwordHasheado,
       status_suscripcion: paciente.statusSuscripcion,
       alergia: paciente.alergia,
       antecedentes: paciente.antecedentes,

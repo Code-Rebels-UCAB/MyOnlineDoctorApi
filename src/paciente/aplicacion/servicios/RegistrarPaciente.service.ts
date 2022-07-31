@@ -54,7 +54,6 @@ export class RegistrarPaciente implements IServicioAplicacion<PacientePersistenc
         } catch(error) {
             const errores: IExcepcion = error;
             this.logger.error('Error inesperado: ', errores.mensaje);
-            console.log(error)
             return Resultado.Falla(error);
         }
     }

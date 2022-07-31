@@ -12,6 +12,7 @@ import { BuscarPacienteNombre } from '../../../paciente/aplicacion/servicios/Bus
 import { BuscarPacienteTelefono } from '../../aplicacion/servicios/BuscarPacienteTelefono.service';
 import { RegistrarPaciente } from 'src/paciente/aplicacion/servicios/RegistrarPaciente.service';
 import { ManejadorEventos } from 'src/commun/aplicacion/ManejadorEventos';
+import { AutenticacionModule } from '../autenticacion/Autenticacion.module';
 
 
 @Module({

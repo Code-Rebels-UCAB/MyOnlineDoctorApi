@@ -6,6 +6,7 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { BuscarCantidadTodosLosPacientes } from '../../aplicacion/servicios/BuscarCantidadPacientesSistema.service';
 import { GuardarTokenPaciente } from '../../aplicacion/servicios/GuardarTokenPaciente.service';
@@ -18,6 +19,7 @@ import { ConsultarPacienteRespuestaDTO } from '../../../paciente/aplicacion/dto/
 import { BuscarPacienteTelefono } from '../../aplicacion/servicios/BuscarPacienteTelefono.service';
 import { PacientePersistenciaDTO } from '../dto/PacientePersistenciaDTO';
 import { RegistrarPaciente } from 'src/paciente/aplicacion/servicios/RegistrarPaciente.service';
+import { JwtPacienteGuard } from '../autenticacion/guards/paciente.guard';
 
 @Controller('api/paciente')
 export class PacienteController {
@@ -57,6 +59,8 @@ export class PacienteController {
     return paciente;
   }
 
+
+  @UseGuards(JwtPacienteGuard)
   @Get('info')
   async getPacienteInfo(@Query('id') id: string) {
     const paciente =  await this.ObtenerInfoPersonalPaciente.ejecutar(id);
