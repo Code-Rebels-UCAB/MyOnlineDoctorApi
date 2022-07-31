@@ -11,9 +11,11 @@ import { DatabaseModule } from './commun/infraestructura/database/database.modul
 import { DoctorModule } from './doctor/infraestructura/api/doctor.module';
 import { DoctorORM } from './doctor/infraestructura/persistencia/Doctor.orm';
 import { EspecialidadORM } from './doctor/infraestructura/persistencia/Especialidad.orm';
+import { HistoriaMedicaModule } from './historia_medica/infraestructura/api/historiaMedica.module';
 import { HistoriaMedicaORM } from './historia_medica/infraestructura/persistencia/HistoriaMedica.orm';
 import { PacienteModule } from './paciente/infraestructura/api/paciente.module';
 import { PacienteORM } from './paciente/infraestructura/persistencia/Paciente.orm';
+import { RegistroMedicoModule } from './registro_medico/infraestructura/api/registroMedico.module';
 import { RegistroMedicoORM } from './registro_medico/infraestructura/persistencia/RegistroMedico.orm';
 
 @Module({
@@ -31,6 +33,8 @@ import { RegistroMedicoORM } from './registro_medico/infraestructura/persistenci
     DoctorModule.register(),
     CitaModule.register(),
     PacienteModule.register(),
+    HistoriaMedicaModule.register(),
+    RegistroMedicoModule.register(),
   ],
   controllers: [AppController],
   providers: [AppService],
