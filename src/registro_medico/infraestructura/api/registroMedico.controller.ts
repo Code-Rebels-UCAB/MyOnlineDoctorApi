@@ -1,5 +1,5 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common';
-import { CrearRegistroMedicoDTO } from '../../../registro_medico/aplicacion/dto/CrearRegistroMedicoDTO';
+import { RegistroMedicoDTO } from '../../aplicacion/dto/RegistroMedicoDTO';
 import { CrearRegistroMedico } from '../../../registro_medico/aplicacion/servicios/CrearRegistroMedico.service';
 
 
@@ -12,7 +12,7 @@ export class RegistroMedicoController {
   ) {}
 
   @Post('crear')
-  async postCrearRegistro(@Body() datos: CrearRegistroMedicoDTO) {
+  async postCrearRegistro(@Body() datos: RegistroMedicoDTO) {
     const RegistroMedico = await this.crearRegistroMedico.ejecutar(datos);
     return RegistroMedico;
   }

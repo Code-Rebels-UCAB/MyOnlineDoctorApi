@@ -1,9 +1,9 @@
-import { CrearRegistroMedicoDTO } from "../dto/CrearRegistroMedicoDTO";
+import { RegistroMedicoDTO } from "../dto/RegistroMedicoDTO";
 
 export interface IRepositorioRegistroMedico {
 
-  CrearRegistro(datos: CrearRegistroMedicoDTO);
-
-  ObtenerHistoriaMedicaAsociada(pacienteId: string);
+  CrearRegistro(datos: RegistroMedicoDTO);
+  ObtenerPacienteAsociado(CitaId: string)
+  ObtenerHistoriaMedicaAsociada(citaId: string);
 
 }

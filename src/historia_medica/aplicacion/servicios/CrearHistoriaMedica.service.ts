@@ -27,6 +27,8 @@ export class CrearHistoriaMedica implements IServicioAplicacion<CrearHistoriaMed
 
             //........DELEGAR EN EL REPOSITORIO LA PERSISTENCIA................
             const historiaCreada = await this.repositorioHistoria.crearHistoriaMedica(historiaMedica.obtenerIdentificador().getHistoriaMedicaID().toString(), historiaMedica.getPacienteID().getPacienteID().toString());
+
+            this.logger.log("Ha sido creada la Historia Medica ID:" +  historiaMedica.obtenerIdentificador().getHistoriaMedicaID().toString(), '');
             return Resultado.Exito<string>(historiaMedica.obtenerIdentificador().getHistoriaMedicaID().toString());
         }
         catch (error) {

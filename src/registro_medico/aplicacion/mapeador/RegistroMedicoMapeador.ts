@@ -1,16 +1,15 @@
 
 import { Guid } from "guid-typescript";
-import { CitaID } from "src/commun/dominio/values/CitaID";
-import { DoctorID } from "src/commun/dominio/values/DoctorID";
-import { RegistroMedicoID } from "src/commun/dominio/values/RegistroMedicoID";
-import { RegistroMedico } from "src/registro_medico/dominio/entidades/RegistroMedico";
-import { Diagnostico } from "src/registro_medico/dominio/values/Diagnostico";
-import { Examenes } from "src/registro_medico/dominio/values/Examenes";
-import { Historia } from "src/registro_medico/dominio/values/Historia";
-import { Plan } from "src/registro_medico/dominio/values/Plan";
-import { Prescripcion } from "src/registro_medico/dominio/values/Prescripcion";
+import { CitaID } from "../../../commun/dominio/values/CitaID";
+import { DoctorID } from "../../../commun/dominio/values/DoctorID";
+import { RegistroMedico } from "../../../registro_medico/dominio/entidades/RegistroMedico";
+import { Diagnostico } from "../../../registro_medico/dominio/values/Diagnostico";
+import { Examenes } from "../../../registro_medico/dominio/values/Examenes";
+import { Historia } from "../../../registro_medico/dominio/values/Historia";
+import { Plan } from "../../../registro_medico/dominio/values/Plan";
+import { Prescripcion } from "../../../registro_medico/dominio/values/Prescripcion";
 import { RegistroMedicoRespuestaDTO } from "../../aplicacion/dto/RegistroMedicoRespuestaDTO";
-import { CrearRegistroMedicoDTO } from "../dto/CrearRegistroMedicoDTO";
+import { RegistroMedicoDTO } from "../dto/RegistroMedicoDTO";
 
 export class RegistroMedicoMapeador {
 
@@ -27,7 +26,7 @@ export class RegistroMedicoMapeador {
         }
     }
     
-    static convertirPersistenciaEnDominio(entrada: CrearRegistroMedicoDTO): RegistroMedico {
+    static convertirPersistenciaEnDominio(entrada: RegistroMedicoDTO): RegistroMedico {
         return RegistroMedico.crearRegistroMedico( 
           Examenes.crear(entrada.examenes),
           Historia.crear(entrada.historia),
