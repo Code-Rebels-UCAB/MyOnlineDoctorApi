@@ -59,4 +59,9 @@ export class RepositorioPaciente implements IRepositorioPaciente {
     return pacientesFiltrados;
   }
 
+  async registrarPaciente(paciente) {
+    console.log(paciente)
+    await this.repositorioPaciente.save(paciente);
+  }
+
 }

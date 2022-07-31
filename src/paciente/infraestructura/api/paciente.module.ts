@@ -10,6 +10,9 @@ import { GuardarTokenPaciente } from '../../aplicacion/servicios/GuardarTokenPac
 import { ObtenerInfoPersonalPaciente } from '../../../paciente/aplicacion/servicios/ObtenerInfoPersonalPaciente.service';
 import { BuscarPacienteNombre } from '../../../paciente/aplicacion/servicios/BuscarPacienteNombre.service';
 import { BuscarPacienteTelefono } from '../../aplicacion/servicios/BuscarPacienteTelefono.service';
+import { RegistrarPaciente } from 'src/paciente/aplicacion/servicios/RegistrarPaciente.service';
+import { ManejadorEventos } from 'src/commun/aplicacion/ManejadorEventos';
+
 
 @Module({
   imports: [TypeOrmModule.forFeature([PacienteORM]), LoggerModule],
@@ -20,7 +23,9 @@ import { BuscarPacienteTelefono } from '../../aplicacion/servicios/BuscarPacient
     GuardarTokenPaciente,
     RepositorioPaciente,
     LoggerService,
-    ObtenerInfoPersonalPaciente
+    ObtenerInfoPersonalPaciente,
+    RegistrarPaciente,
+    ManejadorEventos
   ],
 })
 export class PacienteModule {
@@ -58,6 +63,12 @@ export class PacienteModule {
           useFactory: (logger: LoggerService, userRepo: RepositorioPaciente) =>
             new BuscarPacienteTelefono(logger, userRepo),
         },
+        {
+          inject: [LoggerService, RepositorioPaciente, ManejadorEventos],
+          provide: RegistrarPaciente,
+          useFactory: (logger: LoggerService, userRepo: RepositorioPaciente, manejador : ManejadorEventos<any>) =>
+            new RegistrarPaciente(logger, userRepo, manejador),
+        }
       ],
     };
   }

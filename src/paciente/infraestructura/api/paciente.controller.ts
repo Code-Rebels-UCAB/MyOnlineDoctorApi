@@ -4,6 +4,7 @@ import {
   Get,
   Inject,
   Patch,
+  Post,
   Query,
 } from '@nestjs/common';
 import { BuscarCantidadTodosLosPacientes } from '../../aplicacion/servicios/BuscarCantidadPacientesSistema.service';
@@ -15,6 +16,8 @@ import { RepositorioPaciente } from '../adaptadores/RepositorioPaciente';
 import { PacienteORM } from '../persistencia/Paciente.orm';
 import { ConsultarPacienteRespuestaDTO } from '../../../paciente/aplicacion/dto/queries/ConsultarPaciente.query';
 import { BuscarPacienteTelefono } from '../../aplicacion/servicios/BuscarPacienteTelefono.service';
+import { PacientePersistenciaDTO } from '../dto/PacientePersistenciaDTO';
+import { RegistrarPaciente } from 'src/paciente/aplicacion/servicios/RegistrarPaciente.service';
 
 @Controller('api/paciente')
 export class PacienteController {
@@ -31,6 +34,8 @@ export class PacienteController {
     private readonly repositorioPaciente: RepositorioPaciente,
     @Inject(ObtenerInfoPersonalPaciente)
     private readonly ObtenerInfoPersonalPaciente: ObtenerInfoPersonalPaciente,
+    @Inject(RegistrarPaciente)
+    private readonly resgistrarPaciente: RegistrarPaciente
   ) {}
 
   @Get('buscar/todos')
@@ -68,6 +73,11 @@ export class PacienteController {
   async getByNumberPhone(@Query('telefono') telefono: string) {
     const pacientes = await this.buscarPacienteTelefono.ejecutar(telefono);
     return pacientes;
+  }
+
+  @Post('/registrarse')
+  async postRegistarPaciente(@Body() datos: PacientePersistenciaDTO){
+    return await this.resgistrarPaciente.ejecutar(datos);
   }
 
 
