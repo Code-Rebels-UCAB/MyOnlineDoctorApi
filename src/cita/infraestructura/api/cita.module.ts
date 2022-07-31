@@ -160,27 +160,27 @@ export class CitaModule {
           inject: [RepositorioCita, RepositorioDoctor, LoggerService],
           provide: NotificarPacienteFirebase,
           useFactory: (
-            logger: LoggerService,
             userRepo: RepositorioCita,
             userRepo2: RepositorioDoctor,
+            logger: LoggerService,
           ) => {manejador.Add(new NotificarPacienteFirebase(userRepo,userRepo2,logger))},
         },
         {
           inject: [RepositorioCita, RepositorioDoctor, LoggerService],
           provide: NotificarCitaAgendadaFirebase,
           useFactory: (
-            logger: LoggerService,
             userRepo: RepositorioCita,
             userRepo2: RepositorioDoctor,
+            logger: LoggerService,
           ) => {manejador.Add(new NotificarCitaAgendadaFirebase(userRepo,userRepo2,logger))},
         },
         {
           inject: [RepositorioCita, RepositorioDoctor, LoggerService],
           provide: NotificarCitaSuspendidaFirebase,
           useFactory: (
-            logger: LoggerService,
             userRepo: RepositorioCita,
             userRepo2: RepositorioDoctor,
+            logger: LoggerService,
           ) => {manejador.Add(new NotificarCitaSuspendidaFirebase(userRepo,userRepo2,logger))},
         },
       ],

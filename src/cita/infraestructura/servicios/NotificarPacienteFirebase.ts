@@ -63,7 +63,7 @@ export class NotificarPacienteFirebase implements IPolitica<string,void>{
           }
         };
         Promise.all([await admin.messaging().sendToDevice(tokenf, payload)]);
-        this.logger.log('Notificación de la cita agendada enviada','');
+        this.logger.log('Notificación de la cita iniciada enviada','');
 
 
       return null;  

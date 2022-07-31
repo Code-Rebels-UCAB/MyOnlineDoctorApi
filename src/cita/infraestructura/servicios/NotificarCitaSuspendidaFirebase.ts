@@ -26,7 +26,7 @@ export class NotificarCitaSuspendidaFirebase implements IPolitica<string,void>{
 
     Update(context: EventoDominio, data: string): void {
         if (context.Nombre == 'CitaSuspendida') {
-            this.ejecutar(data)
+            this.ejecutar(data);
         }
     }
 
@@ -40,7 +40,7 @@ export class NotificarCitaSuspendidaFirebase implements IPolitica<string,void>{
       admin.app(); // if already initialized, use that one
      }
 
-        const citaT: any = await this.repositorioCita.obtenerCitaById(data);
+        const citaT: any = await this.repositorioCita.obtenerCitaById(data); 
         const doctorID: string = await this.repositorioCita.obtenerDoctorCita(data)
         const doctorT : any = await this.repositorioDoctor.obtenerDoctorNoti(doctorID);
         const tokenf: string = await this.repositorioCita.obtenerTokenF(data);
@@ -62,7 +62,7 @@ export class NotificarCitaSuspendidaFirebase implements IPolitica<string,void>{
           }
         };
         Promise.all([await admin.messaging().sendToDevice(tokenf, payload)]);
-        this.logger.log('Notificación de la cita agendada enviada','');
+        this.logger.log('Notificación de la cita suspendida enviada','');
 
 
       return null;  
