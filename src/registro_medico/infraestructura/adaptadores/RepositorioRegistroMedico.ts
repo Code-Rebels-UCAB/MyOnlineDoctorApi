@@ -7,6 +7,7 @@ import { RegistroMedicoORM } from '../persistencia/RegistroMedico.orm';
 import { HistoriaMedicaORM } from '../../../historia_medica/infraestructura/persistencia/HistoriaMedica.orm';
 import { CitaORM } from '../../../cita/infraestructura/persistencia/Cita.orm';
 import { DoctorORM } from '../../../doctor/infraestructura/persistencia/Doctor.orm';
+import { RegistroMedicoRespuestaDTO } from '../../aplicacion/dto/RegistroMedicoRespuestaDTO';
 
 
 
@@ -91,6 +92,19 @@ export class RepositorioRegistroMedico implements IRepositorioRegistroMedico {
         return Cita.paciente.id_paciente;
     }
 
-  
+    async ObtenerRegistroMedicobyID(RegistroMedicoId: string) {
+      const RegistroMedico = await this.registroMedicoRepository.findOne({
+        relations: {doctor: true},
+        where: { id_registro: RegistroMedicoId }
+      })
+      return RegistroMedico;
+    }
+
+    async actualizarRegistroMedico(datos: RegistroMedicoRespuestaDTO){
+      await this.registroMedicoRepository.createQueryBuilder()
+      .update(RegistroMedicoORM)
+      .set({examenes: datos.examenes, historia: datos.historia, prescripcion: datos.prescripcion, plan: datos.plan, diagonistico: datos.diagnostico})
+      .where('id_registro = :id', {id: datos.id_registro}).execute();
+    }
     
 }

@@ -1,5 +1,6 @@
 
 import { Guid } from "guid-typescript";
+import { RegistroMedicoID } from "../../../commun/dominio/values/RegistroMedicoID";
 import { CitaID } from "../../../commun/dominio/values/CitaID";
 import { DoctorID } from "../../../commun/dominio/values/DoctorID";
 import { RegistroMedico } from "../../../registro_medico/dominio/entidades/RegistroMedico";
@@ -15,14 +16,14 @@ export class RegistroMedicoMapeador {
 
     static convertirDominioEnPersistencia(entrada: RegistroMedico): RegistroMedicoRespuestaDTO {
         return {
-            id_registro: entrada.obtenerIdentificador().toString(),
-            id_cita: entrada.getCitaID().toString(),
-            examenes: entrada.getExamenes().toString(),
-            historia: entrada.getHistoria().toString(),
-            prescripcion: entrada.getPrescripccion().toString(),
-            plan: entrada.getPlan().toString(),
-            diagnostico: entrada.getDiagnostico().toString(),
-            id_doctor: entrada.getDoctorID().toString(),
+            id_registro: entrada.obtenerIdentificador().getRegistroMedicoID().toString(),
+            id_cita: entrada.getCitaID().getCitaID().toString(),
+            examenes: entrada.getExamenes().getExamenes().toString(),
+            historia: entrada.getHistoria().getHistoria().toString(),
+            prescripcion: entrada.getPrescripccion().getPrescripcion().toString(),
+            plan: entrada.getPlan().getPlan().toString(),
+            diagnostico: entrada.getDiagnostico().getDiagnostico().toString(),
+            id_doctor: entrada.getDoctorID().getDoctorID().toString(),
         }
     }
     
@@ -38,6 +39,17 @@ export class RegistroMedicoMapeador {
         );
     }
 
-    
+    static actualizarEnDominio(entrada:RegistroMedicoDTO ): RegistroMedico {
+        return new RegistroMedico(
+            RegistroMedicoID.crear(Guid.parse(entrada.IdRegistroMedico)),
+            DoctorID.crear(Guid.parse(entrada.IdDoctor)),
+            CitaID.crear(Guid.parse(entrada.IdCita)),
+            Examenes.crear(entrada.examenes),
+            Historia.crear(entrada.historia),
+            Prescripcion.crear(entrada.prescripcion),
+            Plan.crear(entrada.plan),
+            Diagnostico.crear(entrada.diagnostico)
+        );
+    }    
 }
 
