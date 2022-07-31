@@ -17,7 +17,7 @@ const serviceAccountVar = {
 };
 
 
-export class NotificarPacienteFirebase implements IPolitica<string,void>{
+export class NotificarCitaSuspendidaFirebase implements IPolitica<string,void>{
     public constructor(
         private readonly repositorioCita: IRepositorioCita,
         private readonly repositorioDoctor: IRepositorioDoctor,
@@ -25,7 +25,7 @@ export class NotificarPacienteFirebase implements IPolitica<string,void>{
     ) {}
 
     Update(context: EventoDominio, data: string): void {
-        if (context.Nombre == 'CitaIniciada') {
+        if (context.Nombre == 'CitaSuspendida') {
             this.ejecutar(data)
         }
     }
@@ -40,9 +40,8 @@ export class NotificarPacienteFirebase implements IPolitica<string,void>{
       admin.app(); // if already initialized, use that one
      }
 
-        const citaT: CitaPersistenciaIniciadaDTO = await this.repositorioCita.obtenerCitaIniciada(data);
+        const citaT: any = await this.repositorioCita.obtenerCitaById(data);
         const doctorID: string = await this.repositorioCita.obtenerDoctorCita(data)
-        console.log(doctorID);
         const doctorT : any = await this.repositorioDoctor.obtenerDoctorNoti(doctorID);
         const tokenf: string = await this.repositorioCita.obtenerTokenF(data);
         const gender = doctorT.sexo;
@@ -54,12 +53,12 @@ export class NotificarPacienteFirebase implements IPolitica<string,void>{
         }
         const payload = {
           notification: {
-            title: 'Llamada Entrante',
-            body: `${gender2} ${doctorT.p_nombre} ${doctorT.p_apellido} esta llamando para la cita pendiente`,
+            title: 'Cita Suspendida',
+            body: `${gender2} ${doctorT.p_apellido} te suspendio la cita del ${citaT.fechacita} a las ${citaT.horacita}`,
             image: 'https://pbs.twimg.com/media/FY3c_ZXWQAArjd1?format=png&name=small'
           },
           data:{ 
-            info: `Title:llamada entrante, Canal:${citaT.channelA}, Token:${citaT.tokenA},  Sexo:${doctorT.sexo},  Nombre:${doctorT.p_nombre}, Apellido:${doctorT.p_apellido}, idDoctor:${doctorID},${doctorT.foto}`,
+            info: `Title:doctor suspende cita, test`,
           }
         };
         Promise.all([await admin.messaging().sendToDevice(tokenf, payload)]);

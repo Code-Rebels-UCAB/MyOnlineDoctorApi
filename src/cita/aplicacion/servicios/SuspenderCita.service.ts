@@ -6,7 +6,7 @@ import { IExcepcion } from "../../../commun/dominio/excepcciones/IExcepcion";
 import { CitaMapeador } from "../mappeador/CitaMapeador";
 import { Cita } from "../../../cita/dominio/entidades/Cita";
 import { CitaDataDTO } from "../dto/CitaDataDTO";
-
+import { ManejadorEventos } from "../../../commun/aplicacion/ManejadorEventos";
 
 
 
@@ -15,6 +15,7 @@ export class SuspenderCita implements IServicioAplicacion<string,CitaDataDTO>
     public constructor(
         private readonly logger: ILogger,
         private readonly repositorioCita: IRepositorioCita,
+        private readonly manejador: ManejadorEventos<any>
     ) {}
 
 
@@ -42,20 +43,25 @@ export class SuspenderCita implements IServicioAplicacion<string,CitaDataDTO>
                 CitaVO.fechaCita,
                 CitaVO.horaCita,
                 CitaVO.duracion,
-              );
+              ); 
 
-            //Generamos el Evento de Dominio
             cita.suspenderCita();
-            //AQUI SE DEBERIA HACER LO DE LOS EVENTOS
-            //var eventos = cita.obtenerEventos();
-            //cita.limpiarEventos();
             
+            var eventos = cita.obtenerEventos();
+            cita.limpiarEventos();
+
             //guardamos en persistencia
             let  citaActualizada = await this.repositorioCita.actualizarStatusCita(cita.obtenerIdentificador().getCitaID().toString(), cita.getStatus().statusCita.toString());
             this.logger.log('La Cita con Identificador ' + datos + ' fue suspendida', '');
             
             //Mapeo respuesta de Infrastructura a Aplicacion
             var CitaSuspendida = CitaMapeador.covertirInfraestructuraAplicacion(citaActualizada);
+
+            this.manejador.AddEvento(...eventos);
+      
+            this.manejador.Notify(cita.obtenerIdentificador().getCitaID().toString());
+     
+            
             return Resultado.Exito<CitaDataDTO>(CitaSuspendida);
         }
         catch (error) {
