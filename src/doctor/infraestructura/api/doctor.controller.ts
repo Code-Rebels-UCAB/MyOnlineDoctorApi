@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Inject, Param, Put, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Param,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { BuscarDoctorNombreApellido } from '../../aplicacion/servicios/BuscarDoctorNombreApellido.service';
 import { CalificarDoctor } from '../../aplicacion/servicios/CalificarDoctor.service';
 import { BuscarDoctorEspecialidad } from '../../aplicacion/servicios/BuscarDoctorEspecialidad.service';
@@ -7,8 +16,9 @@ import { BuscarDoctorTop } from '../../../doctor/aplicacion/servicios/BuscarDoct
 import { BuscarTodosDoctores } from '../../../doctor/aplicacion/servicios/BuscarTodosDoctores.service';
 import { AutenticarDoctorDTO } from '../../aplicacion/dtos/AutenticarDoctorDTO';
 import { AutenticarDoctor } from '../../aplicacion/servicios/AutenticarDoctor.service';
-import { BuscarDatosPerfil } from "../../aplicacion/servicios/BuscarDatosPerfil.service";
+import { BuscarDatosPerfil } from '../../aplicacion/servicios/BuscarDatosPerfil.service';
 import { BloquearDoctor } from '../../aplicacion/servicios/BloquearDoctor.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('api/doctor')
 export class DoctorController {
@@ -66,7 +76,8 @@ export class DoctorController {
     const response = await this.autenticarDoctor.ejecutar(data);
     return response;
   }
-  
+
+  @UseGuards(AuthGuard('jwt'))
   @Get('perfil/:doctorid')
   async getDatosPerfil(@Param('doctorid') doctorId: string) {
     const doctor = await this.buscarDatosPerfil.ejecutar(doctorId);
@@ -77,5 +88,4 @@ export class DoctorController {
   async updateBloquear(@Param('doctorid') doctorId: string) {
     return await this.bloquearDoctor.ejecutar(doctorId);
   }
-
 }
