@@ -26,6 +26,7 @@ import { SuspenderCita } from '../../aplicacion/servicios/SuspenderCita.service'
 import { FinalizarCita } from '../../aplicacion/servicios/FinalizarCita.service';
 import { CitasDiaDoctor } from '../../aplicacion/servicios/CitasDiaDoctor.service';
 import { RepositorioDoctor } from '../../../doctor/infraestructura/adaptadores/RepositorioDoctor';
+import {NotificarCitaAgendadaFirebase} from '../servicios/NotificarCitaAgendadaFirebase';
 
 
 @Module({
@@ -81,12 +82,12 @@ export class CitaModule {
             new CantidadCitasDiaDoctor(logger, userRepo),
         },
         {
-          inject: [LoggerService, RepositorioCita],
+          inject: [LoggerService, RepositorioCita, ManejadorEventos],
           provide: AgendarCita,
           useFactory: (
             logger: LoggerService,
             userRepo: RepositorioCita
-          ) => new AgendarCita(logger, userRepo),
+          ) => new AgendarCita(logger, userRepo, manejador),
         },
         {
           inject: [LoggerService, RepositorioCita],
@@ -162,6 +163,14 @@ export class CitaModule {
             userRepo: RepositorioCita,
             userRepo2: RepositorioDoctor,
           ) => {manejador.Add(new NotificarPacienteFirebase(userRepo,userRepo2))},
+        },
+        {
+          inject: [RepositorioCita, RepositorioDoctor],
+          provide: NotificarCitaAgendadaFirebase,
+          useFactory: (
+            userRepo: RepositorioCita,
+            userRepo2: RepositorioDoctor,
+          ) => {manejador.Add(new NotificarCitaAgendadaFirebase(userRepo,userRepo2))},
         },
       ],
     }

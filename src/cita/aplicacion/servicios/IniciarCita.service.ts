@@ -73,7 +73,7 @@ export class IniciarCita implements IServicioAplicacion<string,IniciarCitaDTO>
                     tokenTemp: videollamadaCita.valor.tokenTemp
                 }
             };
-         
+          
              this.manejador.AddEvento(...eventos);
              //SE LE PASA EL MENSAJE AL MANEJADOR DE PUBLICAR EVENTOS
              this.manejador.Notify(cita.obtenerIdentificador().getCitaID().toString());
