@@ -27,7 +27,7 @@ import { FinalizarCita } from '../../aplicacion/servicios/FinalizarCita.service'
 import { CitasDiaDoctor } from '../../aplicacion/servicios/CitasDiaDoctor.service';
 import { RepositorioDoctor } from '../../../doctor/infraestructura/adaptadores/RepositorioDoctor';
 import {NotificarCitaAgendadaFirebase} from '../servicios/NotificarCitaAgendadaFirebase';
-
+import {NotificarCitaSuspendidaFirebase} from '../servicios/NotificarCitaSuspendidaFirebase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CitaORM, DoctorORM, PacienteORM]), LoggerModule],
@@ -141,12 +141,12 @@ export class CitaModule {
           ) => new BloquearCita(logger, userRepo),
         },
         {
-          inject: [LoggerService, RepositorioCita],
+          inject: [LoggerService, RepositorioCita, ManejadorEventos],
           provide: SuspenderCita,
           useFactory: (
             logger: LoggerService,
             userRepo: RepositorioCita,
-          ) => new SuspenderCita(logger, userRepo),
+          ) => new SuspenderCita(logger, userRepo, manejador),
         },
         {
           inject: [LoggerService, RepositorioCita],
@@ -157,20 +157,31 @@ export class CitaModule {
           ) => new FinalizarCita(logger, userRepo),
         },
         {
-          inject: [RepositorioCita, RepositorioDoctor],
+          inject: [RepositorioCita, RepositorioDoctor, LoggerService],
           provide: NotificarPacienteFirebase,
           useFactory: (
             userRepo: RepositorioCita,
             userRepo2: RepositorioDoctor,
-          ) => {manejador.Add(new NotificarPacienteFirebase(userRepo,userRepo2))},
+            logger: LoggerService,
+          ) => {manejador.Add(new NotificarPacienteFirebase(userRepo,userRepo2,logger))},
         },
         {
-          inject: [RepositorioCita, RepositorioDoctor],
+          inject: [RepositorioCita, RepositorioDoctor, LoggerService],
           provide: NotificarCitaAgendadaFirebase,
           useFactory: (
             userRepo: RepositorioCita,
             userRepo2: RepositorioDoctor,
-          ) => {manejador.Add(new NotificarCitaAgendadaFirebase(userRepo,userRepo2))},
+            logger: LoggerService,
+          ) => {manejador.Add(new NotificarCitaAgendadaFirebase(userRepo,userRepo2,logger))},
+        },
+        {
+          inject: [RepositorioCita, RepositorioDoctor, LoggerService],
+          provide: NotificarCitaSuspendidaFirebase,
+          useFactory: (
+            userRepo: RepositorioCita,
+            userRepo2: RepositorioDoctor,
+            logger: LoggerService,
+          ) => {manejador.Add(new NotificarCitaSuspendidaFirebase(userRepo,userRepo2,logger))},
         },
       ],
     }
