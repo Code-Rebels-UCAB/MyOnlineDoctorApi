@@ -12,6 +12,7 @@ import { HistoriaMedicaORM } from '../../../historia_medica/infraestructura/pers
 import { PacienteORM } from '../../../paciente/infraestructura/persistencia/Paciente.orm';
 import { CitaORM } from '../../../cita/infraestructura/persistencia/Cita.orm';
 import { DoctorORM } from '../../../doctor/infraestructura/persistencia/Doctor.orm';
+import { EditarRegistroMedico } from '../../aplicacion/servicios/EditarRegistroMedico.service';
 
 
 
@@ -39,6 +40,19 @@ export class RegistroMedicoModule {
           ) => {
             const crearHistoria = new CrearHistoriaMedica(logger,repoHistoria);
             return new CrearRegistroMedico(logger, repoRegistro, crearHistoria);
+          },
+        },
+        {
+          inject: [
+            LoggerService,
+            RepositorioRegistroMedico,
+          ],
+          provide: EditarRegistroMedico,
+          useFactory: (
+            logger: LoggerService,
+            repoRegistro: RepositorioRegistroMedico,
+          ) => {
+            return new EditarRegistroMedico(logger, repoRegistro);
           },
         },
       ],
