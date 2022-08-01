@@ -2,7 +2,7 @@ import { Body, Controller, Get, Inject, Post } from "@nestjs/common";
 import { ServicioAutenticacion } from "./autenticacion.service";
 import { AutenticacionDatosDTO } from "./dto/AutenticacionDatosDTO";
 
-@Controller('/auth')
+@Controller('api/paciente/auth')
 export class AutenticacionController {
 
     constructor(
@@ -10,8 +10,9 @@ export class AutenticacionController {
         private readonly autenticacion: ServicioAutenticacion
     ) {}
 
-    @Post('buscar')
-    async buscarDatos(@Body() datos: AutenticacionDatosDTO) {
+    @Post('iniciarsesion')
+    async iniciarsesion(@Body() datos: AutenticacionDatosDTO) {
         return await this.autenticacion.validarPaciente(datos);
     }
+
 }

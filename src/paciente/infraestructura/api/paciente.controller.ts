@@ -21,6 +21,7 @@ import { PacientePersistenciaDTO } from '../dto/PacientePersistenciaDTO';
 import { RegistrarPaciente } from 'src/paciente/aplicacion/servicios/RegistrarPaciente.service';
 import { JwtPacienteGuard } from '../autenticacion/guards/paciente.guard';
 import { ObtenerPaciente } from '../autenticacion/decoradores/obtener.paciente.decorador';
+import { PacienteAutenticacionDTO } from '../dto/PacienteAutenticacionDTO';
 
 @Controller('api/paciente')
 export class PacienteController {
@@ -60,11 +61,10 @@ export class PacienteController {
     return paciente;
   }
 
-
   @UseGuards(JwtPacienteGuard)
   @Get('info')
-  async getPacienteInfo(@ObtenerPaciente() pacienteRequest: PacienteORM) {
-    const paciente =  await this.ObtenerInfoPersonalPaciente.ejecutar(pacienteRequest.id_paciente);
+  async getPacienteInfo(@ObtenerPaciente() datosPaciente: PacienteAutenticacionDTO) {
+    const paciente =  await this.ObtenerInfoPersonalPaciente.ejecutar(datosPaciente.id_paciente);
     return paciente;
   }
 

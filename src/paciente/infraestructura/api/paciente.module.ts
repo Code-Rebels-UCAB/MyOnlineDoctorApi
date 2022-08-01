@@ -10,9 +10,9 @@ import { GuardarTokenPaciente } from '../../aplicacion/servicios/GuardarTokenPac
 import { ObtenerInfoPersonalPaciente } from '../../../paciente/aplicacion/servicios/ObtenerInfoPersonalPaciente.service';
 import { BuscarPacienteNombre } from '../../../paciente/aplicacion/servicios/BuscarPacienteNombre.service';
 import { BuscarPacienteTelefono } from '../../aplicacion/servicios/BuscarPacienteTelefono.service';
-import { RegistrarPaciente } from 'src/paciente/aplicacion/servicios/RegistrarPaciente.service';
-import { ManejadorEventos } from 'src/commun/aplicacion/ManejadorEventos';
-import { AutenticacionModule } from '../autenticacion/Autenticacion.module';
+import { RegistrarPaciente } from '../../aplicacion/servicios/RegistrarPaciente.service';
+import { ManejadorEventos } from '../../../commun/aplicacion/ManejadorEventos';
+import { EncriptarContrasena } from '../adaptadores/EncriptarContraseña';
 
 
 @Module({
@@ -26,7 +26,8 @@ import { AutenticacionModule } from '../autenticacion/Autenticacion.module';
     LoggerService,
     ObtenerInfoPersonalPaciente,
     RegistrarPaciente,
-    ManejadorEventos
+    ManejadorEventos,
+    EncriptarContrasena
   ],
 })
 export class PacienteModule {
@@ -65,10 +66,10 @@ export class PacienteModule {
             new BuscarPacienteTelefono(logger, userRepo),
         },
         {
-          inject: [LoggerService, RepositorioPaciente, ManejadorEventos],
+          inject: [LoggerService, RepositorioPaciente, ManejadorEventos, EncriptarContrasena],
           provide: RegistrarPaciente,
-          useFactory: (logger: LoggerService, userRepo: RepositorioPaciente, manejador : ManejadorEventos<any>) =>
-            new RegistrarPaciente(logger, userRepo, manejador),
+          useFactory: (logger: LoggerService, userRepo: RepositorioPaciente, manejador : ManejadorEventos<any>, encriptarContrasena: EncriptarContrasena) =>
+            new RegistrarPaciente(logger, userRepo, manejador, encriptarContrasena),
         }
       ],
     };

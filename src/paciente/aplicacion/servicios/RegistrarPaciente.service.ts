@@ -2,19 +2,21 @@ import { IExcepcion } from "../../../commun/dominio/excepcciones/IExcepcion";
 import { IServicioAplicacion } from "../../../commun/aplicacion/IServicioAplicacion";
 import { ILogger } from "../../../commun/aplicacion/puertos/ILogger";
 import { Resultado } from "../../../commun/aplicacion/Resultado";
-import { RepositorioPaciente } from "../../../paciente/infraestructura/adaptadores/RepositorioPaciente";
 import { PacienteMapeador } from "../mappeador/PacienteMapeador";
 import { PacientePersistenciaDTO } from "../../../paciente/infraestructura/dto/PacientePersistenciaDTO";
-import { Paciente } from "src/paciente/dominio/entidades/Paciente";
-import { ManejadorEventos } from "src/commun/aplicacion/ManejadorEventos";
+import { Paciente } from "../../dominio/entidades/Paciente";
+import { ManejadorEventos } from "../../../commun/aplicacion/ManejadorEventos";
+import { IRepositorioPaciente } from "../puertos/IRepositorioPaciente";
+import { IEncriptarContrasena } from "../puertos/IEncriptarContraseña";
 
 
 export class RegistrarPaciente implements IServicioAplicacion<PacientePersistenciaDTO,void> {
 
     constructor(
         private readonly logger: ILogger,
-        private readonly repositorioPaciente: RepositorioPaciente,
-        private readonly manejador: ManejadorEventos<any>
+        private readonly repositorioPaciente: IRepositorioPaciente,
+        private readonly manejador: ManejadorEventos<any>,
+        private readonly encriptarContrasena : IEncriptarContrasena
     ) {}
 
     async ejecutar(data: PacientePersistenciaDTO): Promise<Resultado<void>> {
@@ -42,9 +44,11 @@ export class RegistrarPaciente implements IServicioAplicacion<PacientePersistenc
 
             let pacienteNuevo = PacienteMapeador.covertirDominioPersistencia(paciente);
 
+            this.encriptarContrasena.encriptarContrasena(pacienteNuevo.password).then(res => pacienteNuevo.password = res);
+
             await this.repositorioPaciente.registrarPaciente(pacienteNuevo);
 
-            this.logger.log('Se registro un nuevo paciente de id' + pacienteNuevo.idPaciente, '');
+            this.logger.log('Se registro un nuevo paciente con identificador ' + pacienteNuevo.idPaciente, '');
 
             this.manejador.AddEvento(...evento);
             this.manejador.Notify();

@@ -1,21 +1,22 @@
-import { DynamicModule, Module } from "@nestjs/common";
-import { JwtModule, JwtService } from "@nestjs/jwt";
+import { Module } from "@nestjs/common";
+import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { ConfigModule } from "src/commun/infraestructura/config/config.module";
-import { ConfigService } from "src/commun/infraestructura/config/config.service";
+import { ConfigModule } from "../../../commun/infraestructura/config/config.module";
+import { ConfigService } from "../../../commun/infraestructura/config/config.service";
+import { IEncriptarContrasena } from "../../../paciente/aplicacion/puertos/IEncriptarContraseña";
+import { IRepositorioPaciente } from "../../../paciente/aplicacion/puertos/IRepositorioPaciente";
+import { EncriptarContrasena } from "../adaptadores/EncriptarContraseña";
 import { RepositorioPaciente } from "../adaptadores/RepositorioPaciente";
-import { PacienteModule } from "../api/paciente.module";
 import { PacienteORM } from "../persistencia/Paciente.orm";
 import { AutenticacionController } from "./autenticacion.controller";
 import { ServicioAutenticacion } from "./autenticacion.service";
 import { PacienteEstrategia } from "./estrategias/paciente.estrategia";
 
 
-
-
 @Module({
     imports: [
+        ConfigModule,
         PassportModule,
         TypeOrmModule.forFeature([PacienteORM]), 
         PassportModule.register({ defaultStrategy: 'jwt' }),
@@ -31,7 +32,17 @@ import { PacienteEstrategia } from "./estrategias/paciente.estrategia";
           }),
     ],
     controllers: [AutenticacionController],
-    providers: [RepositorioPaciente, ServicioAutenticacion, PacienteEstrategia],
+    providers: [
+      {
+        provide: IRepositorioPaciente,
+        useClass: RepositorioPaciente,
+      }, 
+      ServicioAutenticacion, 
+      PacienteEstrategia,
+      {
+      provide: IEncriptarContrasena,
+      useClass: EncriptarContrasena,
+      }],
     exports: [
         PacienteEstrategia,
         PassportModule,

@@ -5,7 +5,7 @@ import { ConsultarPacienteRespuestaDTO } from '../../../paciente/aplicacion/dto/
 import { Repository } from 'typeorm';
 import { IRepositorioPaciente } from '../../aplicacion/puertos/IRepositorioPaciente';
 import { PacienteORM } from '../persistencia/Paciente.orm';
-import * as bcrypt from 'bcrypt';
+
 
 @Injectable()
 export class RepositorioPaciente implements IRepositorioPaciente {
@@ -70,10 +70,8 @@ export class RepositorioPaciente implements IRepositorioPaciente {
   }
 
   async registrarPaciente(paciente: ConsultarPacienteRespuestaDTO) {
-    const salt = await bcrypt.genSalt();
-    const passwordHasheado = await bcrypt.hash(paciente.password, salt);
 
-    const pacienteORM: PacienteORM = {
+    return await this.repositorioPaciente.insert({
       id_paciente: paciente.idPaciente,
       p_nombre: paciente.primer_nombre,
       s_nombre: paciente.segundo_nombre,
@@ -85,16 +83,15 @@ export class RepositorioPaciente implements IRepositorioPaciente {
       sexo: paciente.genero,
       altura: paciente.altura,
       peso: paciente.peso,
-      contrasena: passwordHasheado,
+      contrasena: paciente.password,
       status_suscripcion: paciente.statusSuscripcion,
       alergia: paciente.alergia,
       antecedentes: paciente.antecedentes,
       operacion: paciente.operaciones,
-      tokenF: '',
+      tokenF: null,
       cita: [],
       historiaMedica: new HistoriaMedicaORM()
-    };
-    return await this.repositorioPaciente.save(pacienteORM);
+    });
   }
 
 }
