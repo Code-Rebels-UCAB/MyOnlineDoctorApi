@@ -10,9 +10,11 @@ import { GuardarTokenPaciente } from '../../aplicacion/servicios/GuardarTokenPac
 import { ObtenerInfoPersonalPaciente } from '../../../paciente/aplicacion/servicios/ObtenerInfoPersonalPaciente.service';
 import { BuscarPacienteNombre } from '../../../paciente/aplicacion/servicios/BuscarPacienteNombre.service';
 import { BuscarPacienteTelefono } from '../../aplicacion/servicios/BuscarPacienteTelefono.service';
+import { RegistrarPaciente } from '../../aplicacion/servicios/RegistrarPaciente.service';
+import { ManejadorEventos } from '../../../commun/aplicacion/ManejadorEventos';
+import { EncriptarContrasena } from '../adaptadores/EncriptarContraseña';
 import { BloquearPaciente } from '../../aplicacion/servicios/BloquearPaciente.service';
 import { SuspenderPaciente } from '../../aplicacion/servicios/SuspenderPaciente.service';
-import { ManejadorEventos } from '../../../commun/aplicacion/ManejadorEventos';
 
 @Module({
   imports: [TypeOrmModule.forFeature([PacienteORM]), LoggerModule],
@@ -24,6 +26,9 @@ import { ManejadorEventos } from '../../../commun/aplicacion/ManejadorEventos';
     RepositorioPaciente,
     LoggerService,
     ObtenerInfoPersonalPaciente,
+    RegistrarPaciente,
+    ManejadorEventos,
+    EncriptarContrasena,
     BloquearPaciente,
     SuspenderPaciente,
   ],
@@ -62,6 +67,14 @@ export class PacienteModule {
           provide: BuscarPacienteTelefono,
           useFactory: (logger: LoggerService, userRepo: RepositorioPaciente) =>
             new BuscarPacienteTelefono(logger, userRepo),
+        },
+        {
+          inject: [LoggerService, RepositorioPaciente, EncriptarContrasena],
+          provide: RegistrarPaciente,
+          useFactory: (logger: LoggerService, userRepo: RepositorioPaciente, encriptarContrasena: EncriptarContrasena
+            ) => {
+              let manejador = new ManejadorEventos<any>();
+              return new RegistrarPaciente(logger, userRepo, encriptarContrasena,manejador)},
         },
         {
           inject: [LoggerService, RepositorioPaciente],

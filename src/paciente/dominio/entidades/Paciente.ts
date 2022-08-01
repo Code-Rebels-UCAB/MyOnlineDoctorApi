@@ -20,7 +20,7 @@ import { PacienteBloqueado } from '../eventos/PacienteBloqueado';
 
 export class Paciente extends Agregado<PacienteID>{
   
-  private constructor(
+  constructor(
     private readonly id: PacienteID,
     private genero: GeneroPaciente,
     private altura: Altura,
@@ -36,6 +36,7 @@ export class Paciente extends Agregado<PacienteID>{
     private nombre: NombrePaciente,
   ) {
     super();
+
   }
 
 
