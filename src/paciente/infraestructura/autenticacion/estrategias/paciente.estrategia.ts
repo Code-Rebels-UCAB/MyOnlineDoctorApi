@@ -5,6 +5,7 @@ import { ExtractJwt, Strategy } from "passport-jwt";
 import { ConfigService } from "../../../../commun/infraestructura/config/config.service";
 import { IRepositorioPaciente } from "../../../../paciente/aplicacion/puertos/IRepositorioPaciente";
 import { PacienteAutenticacionDTO } from "../../dto/PacienteAutenticacionDTO";
+import { PacienteORM } from "../../persistencia/Paciente.orm";
 import { JwtToken } from "../dto/jwt.token";
 
 @Injectable()
@@ -20,30 +21,31 @@ export class PacienteEstrategia extends PassportStrategy(Strategy, 'jwt-paciente
         });
       }
 
-    async validate(payload: JwtToken){
+      async validate(payload: JwtToken){
         const { idPaciente } = payload;
-        const paciente = await this.repositorioPaciente.obtenerPacienteById(idPaciente);
+        const paciente: PacienteORM = await this.repositorioPaciente.obtenerPacienteById(idPaciente);
         if(!paciente){
             throw new UnauthorizedException();
         }
+        console.log(paciente);
 
         const pacienteAutenticadoDTO: PacienteAutenticacionDTO = {
-          id_paciente: paciente.idPaciente,
-          p_nombre: paciente.primer_nombre,
-          s_nombre: paciente.segundo_nombre,
-          p_apellido: paciente.primer_apellido,
-          s_apellido: paciente.segundo_apellido,
-          fecha_nacimiento: paciente.fechaNacimiento,
+          id_paciente: paciente.id_paciente,
+          p_nombre: paciente.p_nombre,
+          s_nombre: paciente.s_nombre,
+          p_apellido: paciente.p_apellido,
+          s_apellido: paciente.s_apellido,
+          fecha_nacimiento: paciente.fecha_nacimiento.toString(),
           telefono: paciente.telefono,
-          correo: paciente.email,
-          sexo: paciente.genero,
-          altura: paciente.altura,
-          peso: paciente.peso,
-          contrasena: paciente.password,
-          status_suscripcion: paciente.statusSuscripcion,
+          correo: paciente.correo,
+          sexo: paciente.sexo,
+          altura: paciente.altura.toString(),
+          peso: paciente.peso.toString(),
+          contrasena: paciente.contrasena,
+          status_suscripcion: paciente.status_suscripcion,
           alergia: paciente.alergia,
           antecedentes: paciente.antecedentes,
-          operacion: paciente.operaciones,
+          operacion: paciente.operacion,
           token_Firebase: paciente.tokenF
         };
 

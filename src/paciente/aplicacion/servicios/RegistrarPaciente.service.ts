@@ -45,7 +45,7 @@ export class RegistrarPaciente implements IServicioAplicacion<PacientePersistenc
 
             let pacienteNuevo = PacienteMapeador.covertirDominioPersistencia(paciente);
 
-            this.encriptarContrasena.encriptarContrasena(pacienteNuevo.password).then(res => pacienteNuevo.password = res);
+            pacienteNuevo.password = await this.encriptarContrasena.encriptarContrasena(pacienteNuevo.password);
 
             await this.repositorioPaciente.registrarPaciente(pacienteNuevo);
 
