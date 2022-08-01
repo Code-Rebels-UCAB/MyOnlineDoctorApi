@@ -69,11 +69,14 @@ export class PacienteModule {
             new BuscarPacienteTelefono(logger, userRepo),
         },
         {
-          inject: [LoggerService, RepositorioPaciente, ManejadorEventos, EncriptarContrasena],
+          inject: [LoggerService, RepositorioPaciente, EncriptarContrasena],
           provide: RegistrarPaciente,
-          useFactory: (logger: LoggerService, userRepo: RepositorioPaciente, manejador : ManejadorEventos<any>, encriptarContrasena: EncriptarContrasena) =>
-            new RegistrarPaciente(logger, userRepo, manejador, encriptarContrasena),
-        }
+          useFactory: (logger: LoggerService, userRepo: RepositorioPaciente, encriptarContrasena: EncriptarContrasena
+            ) => {
+              let manejador = new ManejadorEventos<any>();
+              return new RegistrarPaciente(logger, userRepo, encriptarContrasena,manejador)},
+        },
+        {
           inject: [LoggerService, RepositorioPaciente],
           provide: BloquearPaciente,
           useFactory: (

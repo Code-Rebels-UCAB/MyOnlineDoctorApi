@@ -8,6 +8,7 @@ import { Paciente } from "../../dominio/entidades/Paciente";
 import { ManejadorEventos } from "../../../commun/aplicacion/ManejadorEventos";
 import { IRepositorioPaciente } from "../puertos/IRepositorioPaciente";
 import { IEncriptarContrasena } from "../puertos/IEncriptarContraseña";
+import { Injectable } from "@nestjs/common";
 
 
 export class RegistrarPaciente implements IServicioAplicacion<PacientePersistenciaDTO,void> {
@@ -15,8 +16,8 @@ export class RegistrarPaciente implements IServicioAplicacion<PacientePersistenc
     constructor(
         private readonly logger: ILogger,
         private readonly repositorioPaciente: IRepositorioPaciente,
+        private readonly encriptarContrasena : IEncriptarContrasena,
         private readonly manejador: ManejadorEventos<any>,
-        private readonly encriptarContrasena : IEncriptarContrasena
     ) {}
 
     async ejecutar(data: PacientePersistenciaDTO): Promise<Resultado<void>> {
