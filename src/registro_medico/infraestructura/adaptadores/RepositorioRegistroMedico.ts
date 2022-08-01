@@ -107,4 +107,18 @@ export class RepositorioRegistroMedico implements IRepositorioRegistroMedico {
       .where('id_registro = :id', {id: datos.id_registro}).execute();
     }
     
+    async ObtenerCitaAsociada(RegistroId: string){
+      
+      const RegistroC = await this.registroMedicoRepository.createQueryBuilder('registro')
+      .leftJoinAndSelect('registro.cita', 'citas')
+      .where('registro.id_registro = :id', {
+        id: RegistroId,
+      })
+      .select([
+        'registro.id_registro',
+        'citas.id_cita'])
+      .getOne();
+      return RegistroC.cita.id_cita;
+    }
 }
+

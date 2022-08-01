@@ -4,8 +4,9 @@ import { RegistroMedicoRespuestaDTO } from "../dto/RegistroMedicoRespuestaDTO";
 export interface IRepositorioRegistroMedico {
 
   CrearRegistro(datos: RegistroMedicoDTO);
-  ObtenerPacienteAsociado(CitaId: string)
+  ObtenerPacienteAsociado(CitaId: string);
+  ObtenerCitaAsociada(RegistroId: string);
   ObtenerHistoriaMedicaAsociada(citaId: string);
   ObtenerRegistroMedicobyID(RegistroMedicoId: string);
-  actualizarRegistroMedico(datos: RegistroMedicoRespuestaDTO)
+  actualizarRegistroMedico(datos: RegistroMedicoRespuestaDTO);
 }
