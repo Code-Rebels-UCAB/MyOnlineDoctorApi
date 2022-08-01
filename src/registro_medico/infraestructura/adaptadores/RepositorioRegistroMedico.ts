@@ -112,7 +112,31 @@ export class RepositorioRegistroMedico implements IRepositorioRegistroMedico {
                                         .createQueryBuilder('historia').where('historia.id_paciente = :id', {
                                           id: paciente,
                                         }).select(['historia.id_historia']).getOne();
-                                        
+
+      //Obtenemos todos los registros medicos por el id de la historia medica
+      const RegistrosMedicos = await this.registroMedicoRepository.createQueryBuilder('registro')
+                                          .innerJoin("registro.doctor", "doctor")
+                                          .innerJoin("registro.cita", "cita")
+                                          .select([
+                                            'registro.id_registro',
+                                            'registro.examenes',
+                                            'registro.historia',
+                                            'registro.prescripcion',
+                                            'registro.plan',
+                                            'registro.diagonistico',
+                                            'registro.motivo',
+                                            'registro.fechaCita',
+                                            'doctor.id_doctor',
+                                            'doctor.nombre',
+                                            'doctor.apellido',
+                                            'doctor.genero',
+                                            'cita.id_cita',
+                                            'cita.modalidad'
+                                          ])                                          
+                                          .where('registro.historiaMedica = :id', {id : HistoriaMedica.id_historia})
+                                          .getMany();
+      return RegistrosMedicos;
+
     }
 
 }
