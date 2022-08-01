@@ -8,7 +8,6 @@ import { Paciente } from "../../dominio/entidades/Paciente";
 import { ManejadorEventos } from "../../../commun/aplicacion/ManejadorEventos";
 import { IRepositorioPaciente } from "../puertos/IRepositorioPaciente";
 import { IEncriptarContrasena } from "../puertos/IEncriptarContraseña";
-import { Injectable } from "@nestjs/common";
 
 
 export class RegistrarPaciente implements IServicioAplicacion<PacientePersistenciaDTO,void> {

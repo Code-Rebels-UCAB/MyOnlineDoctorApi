@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { LoggerService } from "src/commun/infraestructura/logger/logger.service";
+import { LoggerService } from "../../../commun/infraestructura/logger/logger.service";
 import { ConfigModule } from "../../../commun/infraestructura/config/config.module";
 import { ConfigService } from "../../../commun/infraestructura/config/config.service";
 import { IEncriptarContrasena } from "../../../paciente/aplicacion/puertos/IEncriptarContraseña";
@@ -13,7 +13,7 @@ import { PacienteORM } from "../persistencia/Paciente.orm";
 import { AutenticacionController } from "./autenticacion.controller";
 import { ServicioAutenticacion } from "./autenticacion.service";
 import { PacienteEstrategia } from "./estrategias/paciente.estrategia";
-import { ILogger } from "src/commun/aplicacion/puertos/ILogger";
+import { ILogger } from "../../../commun/aplicacion/puertos/ILogger";
 
 
 @Module({
