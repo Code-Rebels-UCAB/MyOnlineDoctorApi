@@ -17,6 +17,7 @@ import { ManejadorEventos } from '../../../commun/aplicacion/ManejadorEventos';
 import { RepositorioDoctor } from '../../../doctor/infraestructura/adaptadores/RepositorioDoctor';
 import { RepositorioCita } from '../../../cita/infraestructura/adaptadores/RepositorioCita';
 import { NotificarRegistroMedicoCreado } from '../servicios/NotificarRegistroCreado';
+import { ObtenerRegistrosPaciente } from '../../../registro_medico/aplicacion/servicios/ObtenerRegistrosPaciente.service';
 
 
 
@@ -81,6 +82,19 @@ export class RegistroMedicoModule {
             repoCita: RepositorioCita,
             logger: LoggerService,
           ) => {manejador.Add(new NotificarRegistroMedicoCreado(repoRegistro,repoDoctor,repoCita,logger))},
+        }
+        {
+          inject: [
+            LoggerService,
+            RepositorioRegistroMedico,
+          ],
+          provide: ObtenerRegistrosPaciente,
+          useFactory: (
+            logger: LoggerService,
+            repoRegistro: RepositorioRegistroMedico,
+          ) => {
+            return new ObtenerRegistrosPaciente(logger, repoRegistro);
+          },
         },
       ],
     };
