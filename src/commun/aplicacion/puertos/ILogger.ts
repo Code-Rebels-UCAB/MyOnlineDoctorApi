@@ -6,3 +6,5 @@ export interface ILogger {
     warn(context: string, message: string): void;
     verbose(context: string, message: string): void;
 }
+
+export const ILogger = Symbol("ILogger");
