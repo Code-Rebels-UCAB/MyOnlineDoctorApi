@@ -8,4 +8,6 @@ export interface IRepositorioRegistroMedico {
   ObtenerHistoriaMedicaAsociada(citaId: string);
   ObtenerRegistroMedicobyID(RegistroMedicoId: string);
   actualizarRegistroMedico(datos: RegistroMedicoRespuestaDTO)
+  ObtenerRegistrosMedicosByPaciente(paciente: string);
+
 }

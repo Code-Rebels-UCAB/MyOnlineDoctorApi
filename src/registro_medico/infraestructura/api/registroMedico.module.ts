@@ -13,6 +13,7 @@ import { PacienteORM } from '../../../paciente/infraestructura/persistencia/Paci
 import { CitaORM } from '../../../cita/infraestructura/persistencia/Cita.orm';
 import { DoctorORM } from '../../../doctor/infraestructura/persistencia/Doctor.orm';
 import { EditarRegistroMedico } from '../../aplicacion/servicios/EditarRegistroMedico.service';
+import { ObtenerRegistrosPaciente } from '../../../registro_medico/aplicacion/servicios/ObtenerRegistrosPaciente.service';
 
 
 
@@ -53,6 +54,19 @@ export class RegistroMedicoModule {
             repoRegistro: RepositorioRegistroMedico,
           ) => {
             return new EditarRegistroMedico(logger, repoRegistro);
+          },
+        },
+        {
+          inject: [
+            LoggerService,
+            RepositorioRegistroMedico,
+          ],
+          provide: ObtenerRegistrosPaciente,
+          useFactory: (
+            logger: LoggerService,
+            repoRegistro: RepositorioRegistroMedico,
+          ) => {
+            return new ObtenerRegistrosPaciente(logger, repoRegistro);
           },
         },
       ],

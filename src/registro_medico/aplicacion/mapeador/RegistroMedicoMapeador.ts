@@ -11,6 +11,8 @@ import { Plan } from "../../../registro_medico/dominio/values/Plan";
 import { Prescripcion } from "../../../registro_medico/dominio/values/Prescripcion";
 import { RegistroMedicoRespuestaDTO } from "../../aplicacion/dto/RegistroMedicoRespuestaDTO";
 import { RegistroMedicoDTO } from "../dto/RegistroMedicoDTO";
+import { DetalleRegistroMedicoPersistenciaDTO } from "../../../registro_medico/infraestructura/dto/DetalleRegistroMedicoPersistenciaDTO";
+import { ListadoRegistrosMedicoDTO } from "../dto/ListadoRegistrosMedicosDTO";
 
 export class RegistroMedicoMapeador {
 
@@ -50,6 +52,26 @@ export class RegistroMedicoMapeador {
             Plan.crear(entrada.plan),
             Diagnostico.crear(entrada.diagnostico)
         );
-    }    
+    }
+
+    static convertirPersistenciaEnListadoRegistrosDTO(entrada: DetalleRegistroMedicoPersistenciaDTO ): ListadoRegistrosMedicoDTO{ 
+        return {
+            id_registro: entrada.id_registro,
+            examenes: entrada.examenes,
+            historia: entrada.historia,
+            prescripcion: entrada.prescripcion,
+            plan: entrada.plan,
+            diagnostico: entrada.diagonistico,
+            motivo: entrada.motivo,
+            fechaCita: entrada.fechaCita,
+            modalidad: entrada.cita.modalidad,
+            id_doctor: entrada.doctor.id_doctor,
+            nombreDoctor: entrada.doctor.p_nombre + " " + entrada.doctor.p_apellido,
+            sexoDoctor: entrada.doctor.sexo,
+            id_cita: entrada.cita.id_cita,
+            id_paciente: entrada.historiaMedica.paciente.id_paciente,
+            id_historia: entrada.historiaMedica.id_historia,
+        }
+    }
 }
 
