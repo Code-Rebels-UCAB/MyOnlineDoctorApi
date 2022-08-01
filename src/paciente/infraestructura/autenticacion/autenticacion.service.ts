@@ -5,6 +5,7 @@ import { AutenticacionDatosDTO } from "./dto/AutenticacionDatosDTO";
 import { JwtToken } from "./dto/jwt.token";
 import { IEncriptarContrasena } from "../../../paciente/aplicacion/puertos/IEncriptarContraseña";
 import { IRepositorioPaciente } from "../../../paciente/aplicacion/puertos/IRepositorioPaciente";
+import { ILogger } from "src/commun/aplicacion/puertos/ILogger";
 
 @Injectable()
 export class ServicioAutenticacion {
@@ -14,6 +15,8 @@ export class ServicioAutenticacion {
         private readonly repositorioPaciente: IRepositorioPaciente,
         @Inject(IEncriptarContrasena) 
         private readonly contrasenaEncriptada: IEncriptarContrasena,
+        @Inject(ILogger)
+        private readonly logger: ILogger
     ){}
 
     async validarPaciente(datos : AutenticacionDatosDTO) {
@@ -24,8 +27,12 @@ export class ServicioAutenticacion {
                 idPaciente: paciente.id_paciente
             }
             const tokenDeAcceso = await this.jwtServicio.sign(payload);
+
+            this.logger.log('El paciente con Identificador ' + paciente.id_paciente + ' ha sido autenticado y a iniciado sesion', 'Token: ' + tokenDeAcceso);
+
             return Resultado.Exito<{tokenDeAcceso}>({tokenDeAcceso});      
         }
+
 
         throw new UnauthorizedException();
     }

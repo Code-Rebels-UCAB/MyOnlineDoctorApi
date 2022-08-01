@@ -27,7 +27,6 @@ export class PacienteEstrategia extends PassportStrategy(Strategy, 'jwt-paciente
         if(!paciente){
             throw new UnauthorizedException();
         }
-        console.log(paciente);
 
         const pacienteAutenticadoDTO: PacienteAutenticacionDTO = {
           id_paciente: paciente.id_paciente,

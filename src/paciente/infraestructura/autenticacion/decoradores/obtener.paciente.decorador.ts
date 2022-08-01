@@ -5,7 +5,6 @@ import { PacienteORM } from '../../persistencia/Paciente.orm';
 export const ObtenerPaciente = createParamDecorator(
   (_data, ctx: ExecutionContext): PacienteAutenticacionDTO => {
     const req = ctx.switchToHttp().getRequest();
-    console.log(req)
     return req.user;
   },
 );
