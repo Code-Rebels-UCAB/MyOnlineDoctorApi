@@ -19,7 +19,7 @@ import { PacienteORM } from '../persistencia/Paciente.orm';
 import { ConsultarPacienteRespuestaDTO } from '../../../paciente/aplicacion/dto/queries/ConsultarPaciente.query';
 import { BuscarPacienteTelefono } from '../../aplicacion/servicios/BuscarPacienteTelefono.service';
 import { PacientePersistenciaDTO } from '../dto/PacientePersistenciaDTO';
-import { RegistrarPaciente } from 'src/paciente/aplicacion/servicios/RegistrarPaciente.service';
+import { RegistrarPaciente } from '../../../paciente/aplicacion/servicios/RegistrarPaciente.service';
 import { JwtPacienteGuard } from '../autenticacion/guards/paciente.guard';
 import { ObtenerPaciente } from '../autenticacion/decoradores/obtener.paciente.decorador';
 import { PacienteAutenticacionDTO } from '../dto/PacienteAutenticacionDTO';

@@ -1,17 +1,19 @@
 export interface ListadoRegistrosMedicoDTO {
-    IdRegistroMedico?: string;
-    IdCita?: string;
-    IdDoctor?: string;
-    examenes?: string;
-    historia?: string;
-    prescripcion?: string;
-    plan?: string;
+    id_registro: string,
+    examenes: string,
+    historia: string,
+    prescripcion: string,
+    plan: string,
     diagnostico?: string;
-    IdHistoriaMedica?:string;
+    motivo: string,
+    fechaCita: string,
     modalidad?: string;
-    motivo?: string;
-    fechaCita?: string;
+    id_doctor: string,
     nombreDoctor?: string;
+    sexoDoctor: string,
+    id_cita: string,
+    id_paciente: string,
+    id_historia: string,
 }
   
   
