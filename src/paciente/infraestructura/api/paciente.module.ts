@@ -13,7 +13,8 @@ import { BuscarPacienteTelefono } from '../../aplicacion/servicios/BuscarPacient
 import { RegistrarPaciente } from '../../aplicacion/servicios/RegistrarPaciente.service';
 import { ManejadorEventos } from '../../../commun/aplicacion/ManejadorEventos';
 import { EncriptarContrasena } from '../adaptadores/EncriptarContraseña';
-
+import { BloquearPaciente } from '../../aplicacion/servicios/BloquearPaciente.service';
+import { SuspenderPaciente } from '../../aplicacion/servicios/SuspenderPaciente.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([PacienteORM]), LoggerModule],
@@ -27,7 +28,9 @@ import { EncriptarContrasena } from '../adaptadores/EncriptarContraseña';
     ObtenerInfoPersonalPaciente,
     RegistrarPaciente,
     ManejadorEventos,
-    EncriptarContrasena
+    EncriptarContrasena,
+    BloquearPaciente,
+    SuspenderPaciente,
   ],
 })
 export class PacienteModule {
@@ -71,6 +74,27 @@ export class PacienteModule {
           useFactory: (logger: LoggerService, userRepo: RepositorioPaciente, manejador : ManejadorEventos<any>, encriptarContrasena: EncriptarContrasena) =>
             new RegistrarPaciente(logger, userRepo, manejador, encriptarContrasena),
         }
+          inject: [LoggerService, RepositorioPaciente],
+          provide: BloquearPaciente,
+          useFactory: (
+            logger: LoggerService,
+            userRepo: RepositorioPaciente,
+          ) => {
+            const manager = new ManejadorEventos<string>();
+            return new BloquearPaciente(logger, userRepo, manager);
+          },
+        },
+        {
+          inject: [LoggerService, RepositorioPaciente],
+          provide: SuspenderPaciente,
+          useFactory: (
+            logger: LoggerService,
+            userRepo: RepositorioPaciente,
+          ) => {
+            const manager = new ManejadorEventos<string>();
+            return new SuspenderPaciente(logger, userRepo, manager);
+          },
+        },
       ],
     };
   }

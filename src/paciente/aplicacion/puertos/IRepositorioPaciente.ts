@@ -11,6 +11,10 @@ export interface IRepositorioPaciente {
   buscarDatosIniciarSesionPaciente(correoPaciente: string);
   obtenerPacienteByNombreorApellido(nombre: string);
   obtenerPacienteByTelefono(telefono: string);
+
+  //COMANDOS
+  bloquearPaciente(id: string);
+  suspenderPaciente(id: string);
 }
 
 export const IRepositorioPaciente = Symbol("IRepositorioPaciente");

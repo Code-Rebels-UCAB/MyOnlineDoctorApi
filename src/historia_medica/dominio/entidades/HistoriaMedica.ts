@@ -4,6 +4,7 @@ import { RegistroMedicoID } from "../../../commun/dominio/values/RegistroMedicoI
 import { Agregado } from "../../../commun/dominio/entidades/Agregado";
 import { HistoriaMedicaCreada } from "../eventos/HistoriaMedicaCreada";
 import { HistoriaMedicaModificada } from "../eventos/HistoriaMedicaModificada";
+
 export class HistoriaMedica extends Agregado<HistoriaMedicaID>{
     
     private constructor(

@@ -5,6 +5,7 @@ import {
   Inject,
   Patch,
   Post,
+  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -22,6 +23,8 @@ import { RegistrarPaciente } from 'src/paciente/aplicacion/servicios/RegistrarPa
 import { JwtPacienteGuard } from '../autenticacion/guards/paciente.guard';
 import { ObtenerPaciente } from '../autenticacion/decoradores/obtener.paciente.decorador';
 import { PacienteAutenticacionDTO } from '../dto/PacienteAutenticacionDTO';
+import { BloquearPaciente } from '../../aplicacion/servicios/BloquearPaciente.service';
+import { SuspenderPaciente } from '../../aplicacion/servicios/SuspenderPaciente.service';
 
 @Controller('api/paciente')
 export class PacienteController {
@@ -39,7 +42,11 @@ export class PacienteController {
     @Inject(ObtenerInfoPersonalPaciente)
     private readonly ObtenerInfoPersonalPaciente: ObtenerInfoPersonalPaciente,
     @Inject(RegistrarPaciente)
-    private readonly resgistrarPaciente: RegistrarPaciente
+    private readonly resgistrarPaciente: RegistrarPaciente,
+    @Inject(BloquearPaciente)
+    private readonly bloquearPaciente: BloquearPaciente,
+    @Inject(SuspenderPaciente)
+    private readonly suspenderPaciente: SuspenderPaciente,
   ) {}
 
   @Get('buscar/todos')
@@ -85,5 +92,15 @@ export class PacienteController {
     return await this.resgistrarPaciente.ejecutar(datos);
   }
 
+  @Put('bloquear')
+  async bloquear(@Query('id') id: string) {
+    const resultado = await this.bloquearPaciente.ejecutar(id);
+    return resultado;
+  }
 
+  @Put('suspender')
+  async suspender(@Query('id') id: string) {
+    const resultado = await this.suspenderPaciente.ejecutar(id);
+    return resultado;
+  }
 }

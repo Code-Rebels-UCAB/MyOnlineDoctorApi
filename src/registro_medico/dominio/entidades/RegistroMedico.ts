@@ -11,7 +11,7 @@ import { RegistroMedicoCreado } from '../eventos/RegistroMedicoCreado';
 import { RegistroMedicoModificado } from '../eventos/RegistroMedicoModificado';
 
 export class RegistroMedico extends Agregado<RegistroMedicoID> {
-  private constructor(
+  constructor(
     private readonly id: RegistroMedicoID,
     private id_doctor: DoctorID,
     private id_cita: CitaID,
