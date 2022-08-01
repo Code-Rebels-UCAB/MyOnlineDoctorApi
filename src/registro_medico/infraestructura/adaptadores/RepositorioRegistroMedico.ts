@@ -107,4 +107,12 @@ export class RepositorioRegistroMedico implements IRepositorioRegistroMedico {
       .where('id_registro = :id', {id: datos.id_registro}).execute();
     }
     
+    async ObtenerRegistrosMedicosByPaciente(paciente: string) {
+      const HistoriaMedica = await this.historiaMedicaRepository
+                                        .createQueryBuilder('historia').where('historia.id_paciente = :id', {
+                                          id: paciente,
+                                        }).select(['historia.id_historia']).getOne();
+                                        
+    }
+
 }
