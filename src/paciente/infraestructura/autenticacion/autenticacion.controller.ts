@@ -12,6 +12,7 @@ export class AutenticacionController {
 
     @Post('iniciarsesion')
     async iniciarsesion(@Body() datos: AutenticacionDatosDTO) {
+        console.log(datos);
         return await this.autenticacion.validarPaciente(datos);
     }
 
