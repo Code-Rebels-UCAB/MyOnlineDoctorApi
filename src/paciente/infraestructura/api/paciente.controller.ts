@@ -25,6 +25,7 @@ import { ObtenerPaciente } from '../autenticacion/decoradores/obtener.paciente.d
 import { PacienteAutenticacionDTO } from '../dto/PacienteAutenticacionDTO';
 import { BloquearPaciente } from '../../aplicacion/servicios/BloquearPaciente.service';
 import { SuspenderPaciente } from '../../aplicacion/servicios/SuspenderPaciente.service';
+import { JWTDoctorGuard } from '../../../doctor/infraestructura/autenticacion/guards/JWTDoctor.guard';
 
 @Controller('api/paciente')
 export class PacienteController {
@@ -49,6 +50,7 @@ export class PacienteController {
     private readonly suspenderPaciente: SuspenderPaciente,
   ) {}
 
+  //@UseGuards(JWTDoctorGuard)
   @Get('buscar/todos')
   async getCantidadPacientes(@Query('contexto') contexto?: string) {
     const cantidad = await this.buscarCantidad.ejecutar(contexto);
@@ -71,7 +73,7 @@ export class PacienteController {
   //@UseGuards(JwtPacienteGuard)
   @Get('info')
   async getPacienteInfo(@Query('id') id: string) {
-    const paciente =  await this.ObtenerInfoPersonalPaciente.ejecutar(id);
+    const paciente = await this.ObtenerInfoPersonalPaciente.ejecutar(id);
     return paciente;
   }
 
@@ -88,16 +90,18 @@ export class PacienteController {
   }
 
   @Post('/registrarse')
-  async postRegistarPaciente(@Body() datos: PacientePersistenciaDTO){
+  async postRegistarPaciente(@Body() datos: PacientePersistenciaDTO) {
     return await this.resgistrarPaciente.ejecutar(datos);
   }
 
+  //@UseGuards(JWTDoctorGuard)
   @Put('bloquear')
   async bloquear(@Query('id') id: string) {
     const resultado = await this.bloquearPaciente.ejecutar(id);
     return resultado;
   }
 
+  //@UseGuards(JWTDoctorGuard)
   @Put('suspender')
   async suspender(@Query('id') id: string) {
     const resultado = await this.suspenderPaciente.ejecutar(id);
