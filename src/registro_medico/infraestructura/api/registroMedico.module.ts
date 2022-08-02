@@ -1,4 +1,4 @@
-import { DynamicModule} from '@nestjs/common';
+import { DynamicModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CrearRegistroMedico } from '../../aplicacion/servicios/CrearRegistroMedico.service';
 import { LoggerModule } from '../../../commun/infraestructura/logger/logger.module';
@@ -18,18 +18,26 @@ import { RepositorioDoctor } from '../../../doctor/infraestructura/adaptadores/R
 import { RepositorioCita } from '../../../cita/infraestructura/adaptadores/RepositorioCita';
 import { NotificarRegistroMedicoCreado } from '../servicios/NotificarRegistroCreado';
 import { ObtenerRegistrosPaciente } from '../../../registro_medico/aplicacion/servicios/ObtenerRegistrosPaciente.service';
-
-
+import { JwtService } from '@nestjs/jwt';
 
 export class RegistroMedicoModule {
   static register(): DynamicModule {
-    //AQUI VA LA DECLARACION DEL PROVIDER "MANEJADOR DE EVENTOS" Y 
+    //AQUI VA LA DECLARACION DEL PROVIDER "MANEJADOR DE EVENTOS" Y
     //SE AGREGAN LOS OBSERVADORES QUE DEBEN ESTAR ATENTOS A CAMBIOS EN LOS ESTADOS DEL AGREGADO DE CITA (POLITICAS)
     var manejador = new ManejadorEventos();
-    
+
     return {
       module: RegistroMedicoModule,
-      imports: [TypeOrmModule.forFeature([RegistroMedicoORM, HistoriaMedicaORM, PacienteORM, CitaORM, DoctorORM]), LoggerModule],
+      imports: [
+        TypeOrmModule.forFeature([
+          RegistroMedicoORM,
+          HistoriaMedicaORM,
+          PacienteORM,
+          CitaORM,
+          DoctorORM,
+        ]),
+        LoggerModule,
+      ],
       controllers: [RegistroMedicoController],
       providers: [
         LoggerService,
@@ -38,6 +46,7 @@ export class RegistroMedicoModule {
         ManejadorEventos,
         RepositorioDoctor,
         RepositorioCita,
+        JwtService,
         {
           inject: [
             LoggerService,
@@ -51,15 +60,17 @@ export class RegistroMedicoModule {
             repoRegistro: RepositorioRegistroMedico,
             repoHistoria: RepositorioHistoriaMedica,
           ) => {
-            const crearHistoria = new CrearHistoriaMedica(logger,repoHistoria);
-            return new CrearRegistroMedico(logger, repoRegistro, crearHistoria,manejador);
+            const crearHistoria = new CrearHistoriaMedica(logger, repoHistoria);
+            return new CrearRegistroMedico(
+              logger,
+              repoRegistro,
+              crearHistoria,
+              manejador,
+            );
           },
         },
         {
-          inject: [
-            LoggerService,
-            RepositorioRegistroMedico,
-          ],
+          inject: [LoggerService, RepositorioRegistroMedico],
           provide: EditarRegistroMedico,
           useFactory: (
             logger: LoggerService,
@@ -81,13 +92,19 @@ export class RegistroMedicoModule {
             repoDoctor: RepositorioDoctor,
             repoCita: RepositorioCita,
             logger: LoggerService,
-          ) => {manejador.Add(new NotificarRegistroMedicoCreado(repoRegistro,repoDoctor,repoCita,logger))},
-        }
+          ) => {
+            manejador.Add(
+              new NotificarRegistroMedicoCreado(
+                repoRegistro,
+                repoDoctor,
+                repoCita,
+                logger,
+              ),
+            );
+          },
+        },
         {
-          inject: [
-            LoggerService,
-            RepositorioRegistroMedico,
-          ],
+          inject: [LoggerService, RepositorioRegistroMedico],
           provide: ObtenerRegistrosPaciente,
           useFactory: (
             logger: LoggerService,
@@ -100,4 +117,3 @@ export class RegistroMedicoModule {
     };
   }
 }
-
