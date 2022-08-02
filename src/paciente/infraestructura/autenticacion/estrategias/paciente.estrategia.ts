@@ -18,6 +18,7 @@ export class PacienteEstrategia extends PassportStrategy(Strategy, 'jwt-paciente
         super({
           secretOrKey: configService.get('SECRET'),
           jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+          ignoreExpiration: true
         });
       }
 
