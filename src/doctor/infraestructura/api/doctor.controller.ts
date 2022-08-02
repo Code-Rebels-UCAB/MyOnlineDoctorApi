@@ -18,7 +18,7 @@ import { AutenticarDoctorDTO } from '../../aplicacion/dtos/AutenticarDoctorDTO';
 import { AutenticarDoctor } from '../../aplicacion/servicios/AutenticarDoctor.service';
 import { BuscarDatosPerfil } from '../../aplicacion/servicios/BuscarDatosPerfil.service';
 import { BloquearDoctor } from '../../aplicacion/servicios/BloquearDoctor.service';
-import { AuthGuard } from '@nestjs/passport';
+import { JWTDoctorGuard } from '../autenticacion/guards/JWTDoctor.guard';
 
 @Controller('api/doctor')
 export class DoctorController {
@@ -77,7 +77,7 @@ export class DoctorController {
     return response;
   }
 
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(JWTDoctorGuard)
   @Get('perfil/:doctorid')
   async getDatosPerfil(@Param('doctorid') doctorId: string) {
     const doctor = await this.buscarDatosPerfil.ejecutar(doctorId);

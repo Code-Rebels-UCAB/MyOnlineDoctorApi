@@ -21,16 +21,16 @@ import { PacienteORM } from '../../../paciente/infraestructura/persistencia/Paci
 import { ManejadorEventos } from '../../../commun/aplicacion/ManejadorEventos';
 import { BloquearCitasDoctor } from '../../../cita/aplicacion/servicios/BloquearCitasDoctor.service';
 import { JwtModule, JwtService } from '@nestjs/jwt';
-import { JWTStrategy } from '../servicios/JWTStrategy.service';
+import { JWTDoctorStrategy } from '../autenticacion/estrategias/JWTStrategy.service';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([CitaORM, DoctorORM, PacienteORM]),
     LoggerModule,
     JwtModule.register({
-      secret: 'secretKey',
-      secretOrPrivateKey: 'secretKey',
-      signOptions: { expiresIn: '3600s' },
+      secret: 'CODEREBELS',
+      secretOrPrivateKey: 'CODEREBELS',
+      signOptions: { expiresIn: 3600 },
     }),
   ],
   controllers: [DoctorController],
@@ -44,7 +44,7 @@ import { JWTStrategy } from '../servicios/JWTStrategy.service';
     CalificarDoctor,
     BloquearCita,
     AutenticarDoctor,
-    JWTStrategy,
+    JWTDoctorStrategy,
   ],
 })
 export class DoctorModule {
