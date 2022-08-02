@@ -99,12 +99,14 @@ export class CitaController {
     return cita;
   }
   
+  //@UseGuards(JWTDoctorGuard)
   @Post('solicitarcita')
   async solicitarCitaPost(@Body() datos: SolicitarCitaDTO){
     let citasolicitada = await this.solicitarCita.ejecutar(datos);
     return citasolicitada;
   }
 
+  //@UseGuards(JWTDoctorGuard)
   @Put('aceptarcita')
   async aceptarCitaPut(@Query('citaId') citaId: string){
     let citaAceptada = await this.aceptarCita.ejecutar(citaId);
