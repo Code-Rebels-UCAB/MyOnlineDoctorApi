@@ -78,6 +78,7 @@ export class CitaController {
     return citas;
   }
 
+  //@UseGuards(JWTDoctorGuard)
   @Put('putagendarcita/:citaid')
   async postAgendar(
     @Body() datos: AgendarCitaDTO,
@@ -115,18 +116,21 @@ export class CitaController {
     return cita;
   }
 
+  //@UseGuards(JWTDoctorGuard)
   @Post('solicitarcita')
   async solicitarCitaPost(@Body() datos: SolicitarCitaDTO) {
     let citasolicitada = await this.solicitarCita.ejecutar(datos);
     return citasolicitada;
   }
 
+  //@UseGuards(JWTDoctorGuard)
   @Put('aceptarcita')
   async aceptarCitaPut(@Query('citaId') citaId: string) {
     let citaAceptada = await this.aceptarCita.ejecutar(citaId);
     return citaAceptada;
   }
 
+  //@UseGuards(JWTDoctorGuard)
   @Put('cancelarcita')
   async cancelarCitaPut(@Query('citaId') citaId: string) {
     const CitaCancelada = await this.cancelarCita.ejecutar(citaId);

@@ -59,6 +59,7 @@ export class DoctorController {
     return doctores;
   }
 
+  //@UseGuards(JwtPacienteGuard)
   @Put('calificar')
   async updateCalificar(@Body() calificacion: CalificarDoctorDTO) {
     const doctor = await this.calificarDoctor.ejecutar(calificacion);
@@ -77,13 +78,14 @@ export class DoctorController {
     return response;
   }
 
-  //@UseGuards(JWTDoctorGuard)
+
   @Get('perfil/:doctorid')
   async getDatosPerfil(@Param('doctorid') doctorId: string) {
     const doctor = await this.buscarDatosPerfil.ejecutar(doctorId);
     return doctor;
   }
 
+   //@UseGuards(JWTDoctorGuard)
   @Put('bloquear/:doctorid')
   async updateBloquear(@Param('doctorid') doctorId: string) {
     return await this.bloquearDoctor.ejecutar(doctorId);

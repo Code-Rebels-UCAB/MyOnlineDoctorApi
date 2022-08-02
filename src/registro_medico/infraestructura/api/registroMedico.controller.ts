@@ -17,12 +17,14 @@ export class RegistroMedicoController {
     private readonly obtenerRegistrosPaciente: ObtenerRegistrosPaciente,
   ) {}
   
-
+ //@UseGuards(JWTDoctorGuard)
   @Post('crear')
   async postCrearRegistro(@Body() datos: RegistroMedicoDTO) {
     const RegistroMedico = await this.crearRegistroMedico.ejecutar(datos);
     return RegistroMedico;
   }
+
+  //@UseGuards(JWTDoctorGuard)
 
   @Put('actualizar')
   async postActualizarRegistro(@Body() datos: RegistroMedicoDTO) {
