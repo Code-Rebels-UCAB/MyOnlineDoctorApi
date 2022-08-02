@@ -67,6 +67,7 @@ export class CitaController {
     return citas;
   }
 
+   //@UseGuards(JWTDoctorGuard)
   @Put('putagendarcita/:citaid')
   async postAgendar(@Body() datos: AgendarCitaDTO, @Param('citaid') citaid: string) {
     datos.idCita = citaid;
