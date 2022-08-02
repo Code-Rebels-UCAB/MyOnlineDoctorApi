@@ -4,11 +4,12 @@ import { EventoDominio } from "../../../commun/dominio/eventos/Evento";
 import * as admin from "firebase-admin";
 import { ServiceAccount } from "firebase-admin";
 import * as serviceAccount from "../../../serviceAccount.json";
-import { IRepositorioCita } from '../../aplicacion/puertos/IRepositorioCita';
-import { CitaPersistenciaIniciadaDTO } from "../dto/CitaPersistenciaIniciadaDTO";
+//import { CitaPersistenciaIniciadaDTO } from "../dto/CitaPersistenciaIniciadaDTO";
 import { DoctorPersistenciaIniciadaDTO } from "../../../doctor/infraestructura/dtos/DoctorPersistenciaIniciadaDTO"
 import { IRepositorioDoctor } from "src/doctor/aplicacion/puertos/IRepositorioDoctor";
 import { ILogger } from "../../../commun/aplicacion/puertos/ILogger";
+import { IRepositorioRegistroMedico } from "src/registro_medico/aplicacion/puertos/IRepositorioRegistroMedico";
+import { IRepositorioCita } from "src/cita/aplicacion/puertos/IRepositorioCita";
 
 const serviceAccountVar = {
   projectId: serviceAccount.project_id,
@@ -17,16 +18,17 @@ const serviceAccountVar = {
 };
 
 
-export class NotificarPacienteFirebase implements IPolitica<string,void>{
+export class NotificarRegistroMedicoCreado implements IPolitica<string,void>{
     public constructor(
-        private readonly repositorioCita: IRepositorioCita,
+        private readonly repositorioRegistro: IRepositorioRegistroMedico,
         private readonly repositorioDoctor: IRepositorioDoctor,
+        private readonly repositorioCita: IRepositorioCita,
         private readonly logger: ILogger,
     ) {}
 
     Update(context: EventoDominio, data: string): void {
-        if (context.Nombre == 'CitaIniciada') {
-            this.ejecutar(data)
+        if (context.Nombre == 'RegistroMedicoCreado') {
+            this.ejecutar(data);
         }
     }
 
@@ -40,11 +42,10 @@ export class NotificarPacienteFirebase implements IPolitica<string,void>{
       admin.app(); // if already initialized, use that one
      }
 
-        const citaT: CitaPersistenciaIniciadaDTO = await this.repositorioCita.obtenerCitaIniciada(data);
-        const doctorID: string = await this.repositorioCita.obtenerDoctorCita(data)
-        console.log(doctorID);
+        const citaT: string = await this.repositorioRegistro.ObtenerCitaAsociada(data); 
+        const doctorID: string = await this.repositorioCita.obtenerDoctorCita(citaT)
         const doctorT : any = await this.repositorioDoctor.obtenerDoctorNoti(doctorID);
-        const tokenf: string = await this.repositorioCita.obtenerTokenF(data);
+        const tokenf: string = await this.repositorioCita.obtenerTokenF(citaT);
         const gender = doctorT.sexo;
         if(gender == 'M'){
           var gender2 = 'El Dr'
@@ -54,16 +55,16 @@ export class NotificarPacienteFirebase implements IPolitica<string,void>{
         }
         const payload = {
           notification: {
-            title: 'Llamada Entrante',
-            body: `${gender2} ${doctorT.p_nombre} ${doctorT.p_apellido} esta llamando para la cita pendiente`,
+            title: 'Registro medico creado',
+            body: `${gender2} ${doctorT.p_apellido} te creo un nuevo registro medico`,
             image: 'https://pbs.twimg.com/media/FY3c_ZXWQAArjd1?format=png&name=small'
           },
           data:{ 
-            info: `Title:llamada entrante, Canal:${citaT.channelA}, Token:${citaT.tokenA},  Sexo:${doctorT.sexo},  Nombre:${doctorT.p_nombre}, Apellido:${doctorT.p_apellido}, idDoctor:${doctorID},${doctorT.foto}`,
+            info: `Title:doctor registra historia medica, test`,
           }
         };
         Promise.all([await admin.messaging().sendToDevice(tokenf, payload)]);
-        this.logger.log('Notificación de la cita iniciada enviada','');
+        this.logger.log('Notificación del registro creado','');
 
 
       return null;  

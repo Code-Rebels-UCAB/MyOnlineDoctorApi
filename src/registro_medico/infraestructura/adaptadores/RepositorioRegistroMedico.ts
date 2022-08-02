@@ -107,4 +107,59 @@ export class RepositorioRegistroMedico implements IRepositorioRegistroMedico {
       .where('id_registro = :id', {id: datos.id_registro}).execute();
     }
     
+    async ObtenerCitaAsociada(RegistroId: string){
+      
+      const RegistroC = await this.registroMedicoRepository.createQueryBuilder('registro')
+      .leftJoinAndSelect('registro.cita', 'citas')
+      .where('registro.id_registro = :id', {
+        id: RegistroId,
+      })
+      .select([
+        'registro.id_registro',
+        'citas.id_cita'])
+      .getOne();
+      return RegistroC.cita.id_cita;
+    }
+
+    
+    async ObtenerRegistrosMedicosByPaciente(paciente: string) {
+      const HistoriaMedica = await this.historiaMedicaRepository
+                                        .createQueryBuilder('historia').where('historia.id_paciente = :id', {
+                                          id: paciente,
+                                        }).select(['historia.id_historia']).getOne();
+
+      //Obtenemos todos los registros medicos por el id de la historia medica
+      let RegistrosMedicos = await this.registroMedicoRepository.createQueryBuilder('registro')
+                                          .innerJoin("registro.doctor", "doctor")
+                                          .innerJoin("registro.cita", "cita")
+                                          .innerJoin("registro.historiaMedica", "historia")
+                                          .leftJoin("historia.paciente", "paciente")
+                                          .select([
+                                            'registro.id_registro',
+                                            'registro.examenes',
+                                            'registro.historia',
+                                            'registro.prescripcion',
+                                            'registro.plan',
+                                            'registro.diagonistico',
+                                            'registro.motivo',
+                                            'registro.fechaCita',
+                                            'doctor.id_doctor',
+                                            'doctor.p_nombre',
+                                            'doctor.p_apellido',
+                                            'doctor.sexo',
+                                            'cita.id_cita',
+                                            'cita.modalidad',                                            
+                                            'historia.id_historia',
+                                            'paciente.id_paciente',
+                                          ])                                          
+                                          .where('registro.historiaMedica = :id', {id : HistoriaMedica.id_historia})
+                                          .getMany();
+
+       
+
+      return RegistrosMedicos;
+
+    }
+
 }
+

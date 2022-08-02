@@ -14,6 +14,7 @@ import { EspecialidadORM } from './doctor/infraestructura/persistencia/Especiali
 import { HistoriaMedicaModule } from './historia_medica/infraestructura/api/historiaMedica.module';
 import { HistoriaMedicaORM } from './historia_medica/infraestructura/persistencia/HistoriaMedica.orm';
 import { PacienteModule } from './paciente/infraestructura/api/paciente.module';
+import { AutenticacionModule } from './paciente/infraestructura/autenticacion/autenticacion.module';
 import { PacienteORM } from './paciente/infraestructura/persistencia/Paciente.orm';
 import { RegistroMedicoModule } from './registro_medico/infraestructura/api/registroMedico.module';
 import { RegistroMedicoORM } from './registro_medico/infraestructura/persistencia/RegistroMedico.orm';
@@ -35,6 +36,7 @@ import { RegistroMedicoORM } from './registro_medico/infraestructura/persistenci
     PacienteModule.register(),
     HistoriaMedicaModule.register(),
     RegistroMedicoModule.register(),
+    AutenticacionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

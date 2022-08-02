@@ -8,6 +8,7 @@ import { IRepositorioCita } from '../../aplicacion/puertos/IRepositorioCita';
 import { CitaPersistenciaIniciadaDTO } from "../dto/CitaPersistenciaIniciadaDTO";
 import { DoctorPersistenciaIniciadaDTO } from "../../../doctor/infraestructura/dtos/DoctorPersistenciaIniciadaDTO"
 import { IRepositorioDoctor } from "src/doctor/aplicacion/puertos/IRepositorioDoctor";
+import { ILogger } from "../../../commun/aplicacion/puertos/ILogger";
 
 const serviceAccountVar = {
   projectId: serviceAccount.project_id,
@@ -20,6 +21,7 @@ export class NotificarCitaAgendadaFirebase implements IPolitica<string,void>{
     public constructor(
         private readonly repositorioCita: IRepositorioCita,
         private readonly repositorioDoctor: IRepositorioDoctor,
+        private readonly logger: ILogger,
     ) {}
 
     Update(context: EventoDominio, data: string): void {
@@ -29,7 +31,6 @@ export class NotificarCitaAgendadaFirebase implements IPolitica<string,void>{
     }
 
     async ejecutar(data: string): Promise<Resultado<void>> {
-      console.log(serviceAccount);
 
       if (!admin.apps.length) {
         admin.initializeApp({
@@ -61,8 +62,7 @@ export class NotificarCitaAgendadaFirebase implements IPolitica<string,void>{
           }
         };
         Promise.all([await admin.messaging().sendToDevice(tokenf, payload)]);
-        console.log('Notificación enviada');
-
+        this.logger.log('Notificación de la cita agendada enviada','');
 
       return null;  
 

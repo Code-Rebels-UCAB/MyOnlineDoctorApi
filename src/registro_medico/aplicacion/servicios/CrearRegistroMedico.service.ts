@@ -6,6 +6,7 @@ import { IRepositorioRegistroMedico} from "../puertos/IRepositorioRegistroMedico
 import { CrearHistoriaMedica } from "../../../historia_medica/aplicacion/servicios/CrearHistoriaMedica.service";
 import { RegistroMedicoDTO } from "../dto/RegistroMedicoDTO";
 import { RegistroMedicoMapeador } from "../mapeador/RegistroMedicoMapeador";
+import { ManejadorEventos } from "src/commun/aplicacion/ManejadorEventos";
 
 
 export class CrearRegistroMedico implements IServicioAplicacion<RegistroMedicoDTO, void>{
@@ -13,15 +14,16 @@ export class CrearRegistroMedico implements IServicioAplicacion<RegistroMedicoDT
     constructor(
         private readonly logger: ILogger,
         private readonly repositorioRegistroMedico: IRepositorioRegistroMedico,
-        private readonly crearHistoria: CrearHistoriaMedica
+        private readonly crearHistoria: CrearHistoriaMedica,
+        private readonly manejador: ManejadorEventos<string>
         ) { }
-
+ 
     async ejecutar(datos: RegistroMedicoDTO): Promise<Resultado<void>> {
         try {
 
             //........AGREGADO DE REGISTRO MEDICO................
             var registroMedico = RegistroMedicoMapeador.convertirPersistenciaEnDominio(datos);
-
+            
             //........EVENTOS DE DOMINIO................
             const eventos = registroMedico.obtenerEventos();
             registroMedico.limpiarEventos();
@@ -36,7 +38,7 @@ export class CrearRegistroMedico implements IServicioAplicacion<RegistroMedicoDT
             }
 
             //........DELEGAR EN EL REPOSITORIO LA PERSISTENCIA DEL REGISTRO................
-            const registroCreado = this.repositorioRegistroMedico.CrearRegistro({
+            const registroCreado = await this.repositorioRegistroMedico.CrearRegistro({
                 IdRegistroMedico: registroMedico.obtenerIdentificador().getRegistroMedicoID().toString(),
                 IdCita: registroMedico.getCitaID().getCitaID().toString(),
                 IdDoctor: registroMedico.getDoctorID().getDoctorID().toString(),
@@ -47,6 +49,11 @@ export class CrearRegistroMedico implements IServicioAplicacion<RegistroMedicoDT
                 diagnostico: registroMedico.getDiagnostico().getDiagnostico(),
                 IdHistoriaMedica: historiaMedicaId
             });
+
+            this.manejador.AddEvento(...eventos);
+            //SE LE PASA EL MENSAJE AL MANEJADOR DE PUBLICAR EVENTOS
+            this.manejador.Notify(registroMedico.obtenerIdentificador().getRegistroMedicoID().toString()); 
+            //this.manejador.Notify(); //SE PUEDE O NO PASAR UN VALOR
 
             this.logger.log("Ha sido creado el Registro Medico ID:" + registroMedico.obtenerIdentificador().getRegistroMedicoID().toString() , '');
             return Resultado.Exito<void>(registroCreado);
