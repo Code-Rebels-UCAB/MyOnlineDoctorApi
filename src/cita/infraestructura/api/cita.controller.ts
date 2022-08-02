@@ -113,6 +113,7 @@ export class CitaController {
     return citaAceptada;
   }
 
+  //@UseGuards(JWTDoctorGuard)
   @Put('cancelarcita')
   async cancelarCitaPut(@Query('citaId') citaId: string){
     const CitaCancelada = await this.cancelarCita.ejecutar(citaId);

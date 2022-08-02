@@ -24,6 +24,8 @@ export class RegistroMedicoController {
     return RegistroMedico;
   }
 
+  //@UseGuards(JWTDoctorGuard)
+
   @Put('actualizar')
   async postActualizarRegistro(@Body() datos: RegistroMedicoDTO) {
     const RegistroMedico = await this.editarRegistroMedico.ejecutar(datos);
