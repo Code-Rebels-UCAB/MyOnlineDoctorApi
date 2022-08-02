@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Inject, Param, Put, Query, Post} from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Param,
+  Put,
+  Query,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { AgendarCita } from '../../aplicacion/servicios/AgendarCita.service';
 import { BuscarCitasPaciente } from '../../aplicacion/servicios/BuscarCitasPaciente.service';
 import { CitasDoctor } from '../../aplicacion/servicios/CitasDoctor.service';
@@ -15,6 +25,7 @@ import { BloquearCita } from '../../aplicacion/servicios/BloquearCita.service';
 import { SuspenderCita } from '../../aplicacion/servicios/SuspenderCita.service';
 import { FinalizarCita } from '../../aplicacion/servicios/FinalizarCita.service';
 import { CitasDiaDoctor } from '../../aplicacion/servicios/CitasDiaDoctor.service';
+import { JWTDoctorGuard } from '../../../doctor/infraestructura/autenticacion/guards/JWTDoctor.guard';
 
 @Controller('api/cita')
 export class CitaController {
@@ -46,7 +57,7 @@ export class CitaController {
     @Inject(FinalizarCita)
     private readonly finalizarCita: FinalizarCita,
     @Inject(CitasDiaDoctor)
-    private readonly citasalDia: CitasDiaDoctor
+    private readonly citasalDia: CitasDiaDoctor,
   ) {}
 
   @Get('getsolicitudesdoctor/:doctorid')
@@ -68,12 +79,16 @@ export class CitaController {
   }
 
   @Put('putagendarcita/:citaid')
-  async postAgendar(@Body() datos: AgendarCitaDTO, @Param('citaid') citaid: string) {
+  async postAgendar(
+    @Body() datos: AgendarCitaDTO,
+    @Param('citaid') citaid: string,
+  ) {
     datos.idCita = citaid;
     const citas = await this.agendarCita.ejecutar(datos);
-    return citas
+    return citas;
   }
 
+  //@UseGuards(JWTDoctorGuard)
   @Get('cantidadPacientes/doctor')
   async getPacientesDoctor(@Query('doctorId') doctorId: string) {
     const pacientes = await this.cantidadPacientesDoctor.ejecutar(doctorId);
@@ -87,6 +102,7 @@ export class CitaController {
     return citas;
   }
 
+  //@UseGuards(JWTDoctorGuard)
   @Get('dia/doctor')
   async getCantCitasDelDiaDoctor(@Query('doctorId') doctorId: string) {
     const Cantcitas = await this.cantidadCitasDia.ejecutar(doctorId);
@@ -98,42 +114,40 @@ export class CitaController {
     const cita = await this.iniciarCita.ejecutar(citaid);
     return cita;
   }
-  
+
   @Post('solicitarcita')
-  async solicitarCitaPost(@Body() datos: SolicitarCitaDTO){
+  async solicitarCitaPost(@Body() datos: SolicitarCitaDTO) {
     let citasolicitada = await this.solicitarCita.ejecutar(datos);
     return citasolicitada;
   }
 
   @Put('aceptarcita')
-  async aceptarCitaPut(@Query('citaId') citaId: string){
+  async aceptarCitaPut(@Query('citaId') citaId: string) {
     let citaAceptada = await this.aceptarCita.ejecutar(citaId);
     return citaAceptada;
   }
 
   @Put('cancelarcita')
-  async cancelarCitaPut(@Query('citaId') citaId: string){
+  async cancelarCitaPut(@Query('citaId') citaId: string) {
     const CitaCancelada = await this.cancelarCita.ejecutar(citaId);
     return CitaCancelada;
   }
 
   @Put('bloquearcita')
-  async bloquearCitaPut(@Query('citaId') citaId: string){
+  async bloquearCitaPut(@Query('citaId') citaId: string) {
     const CitaBloquear = await this.bloquearCita.ejecutar(citaId);
     return CitaBloquear;
   }
 
   @Put('suspendercita')
-  async suspenderCitaPut(@Query('citaId') citaId: string){
+  async suspenderCitaPut(@Query('citaId') citaId: string) {
     const CitaSuspender = await this.suspenderCita.ejecutar(citaId);
     return CitaSuspender;
   }
 
   @Put('finalizarcita')
-  async finalizarCitaPut(@Query('id') citaId: string){
+  async finalizarCitaPut(@Query('id') citaId: string) {
     const citaFinalizar = await this.finalizarCita.ejecutar(citaId);
     return citaFinalizar;
   }
-
 }
-
