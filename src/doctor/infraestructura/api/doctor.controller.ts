@@ -59,6 +59,7 @@ export class DoctorController {
     return doctores;
   }
 
+  //@UseGuards(JwtPacienteGuard)
   @Put('calificar')
   async updateCalificar(@Body() calificacion: CalificarDoctorDTO) {
     const doctor = await this.calificarDoctor.ejecutar(calificacion);
