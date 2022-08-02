@@ -19,12 +19,13 @@ import { PacienteORM } from '../persistencia/Paciente.orm';
 import { ConsultarPacienteRespuestaDTO } from '../../../paciente/aplicacion/dto/queries/ConsultarPaciente.query';
 import { BuscarPacienteTelefono } from '../../aplicacion/servicios/BuscarPacienteTelefono.service';
 import { PacientePersistenciaDTO } from '../dto/PacientePersistenciaDTO';
-import { RegistrarPaciente } from 'src/paciente/aplicacion/servicios/RegistrarPaciente.service';
+import { RegistrarPaciente } from '../../aplicacion/servicios/RegistrarPaciente.service';
 import { JwtPacienteGuard } from '../autenticacion/guards/paciente.guard';
 import { ObtenerPaciente } from '../autenticacion/decoradores/obtener.paciente.decorador';
 import { PacienteAutenticacionDTO } from '../dto/PacienteAutenticacionDTO';
 import { BloquearPaciente } from '../../aplicacion/servicios/BloquearPaciente.service';
 import { SuspenderPaciente } from '../../aplicacion/servicios/SuspenderPaciente.service';
+import { JWTDoctorGuard } from '../../../doctor/infraestructura/autenticacion/guards/JWTDoctor.guard';
 
 @Controller('api/paciente')
 export class PacienteController {
@@ -49,6 +50,7 @@ export class PacienteController {
     private readonly suspenderPaciente: SuspenderPaciente,
   ) {}
 
+  //@UseGuards(JWTDoctorGuard)
   @Get('buscar/todos')
   async getCantidadPacientes(@Query('contexto') contexto?: string) {
     const cantidad = await this.buscarCantidad.ejecutar(contexto);
@@ -71,7 +73,7 @@ export class PacienteController {
   //@UseGuards(JwtPacienteGuard)
   @Get('info')
   async getPacienteInfo(@Query('id') id: string) {
-    const paciente =  await this.ObtenerInfoPersonalPaciente.ejecutar(id);
+    const paciente = await this.ObtenerInfoPersonalPaciente.ejecutar(id);
     return paciente;
   }
 
@@ -88,16 +90,18 @@ export class PacienteController {
   }
 
   @Post('/registrarse')
-  async postRegistarPaciente(@Body() datos: PacientePersistenciaDTO){
+  async postRegistarPaciente(@Body() datos: PacientePersistenciaDTO) {
     return await this.resgistrarPaciente.ejecutar(datos);
   }
 
+  //@UseGuards(JWTDoctorGuard)
   @Put('bloquear')
   async bloquear(@Query('id') id: string) {
     const resultado = await this.bloquearPaciente.ejecutar(id);
     return resultado;
   }
 
+  //@UseGuards(JWTDoctorGuard)
   @Put('suspender')
   async suspender(@Query('id') id: string) {
     const resultado = await this.suspenderPaciente.ejecutar(id);
