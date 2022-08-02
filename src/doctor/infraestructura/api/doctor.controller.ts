@@ -77,7 +77,7 @@ export class DoctorController {
     return response;
   }
 
-  @UseGuards(JWTDoctorGuard)
+  //@UseGuards(JWTDoctorGuard)
   @Get('perfil/:doctorid')
   async getDatosPerfil(@Param('doctorid') doctorId: string) {
     const doctor = await this.buscarDatosPerfil.ejecutar(doctorId);
