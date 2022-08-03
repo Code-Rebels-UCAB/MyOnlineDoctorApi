@@ -13,6 +13,11 @@ export class RepositorioPaciente implements IRepositorioPaciente {
     @InjectRepository(PacienteORM)
     private readonly repositorioPaciente: Repository<PacienteORM>,
   ) {}
+  
+  async obtenerTodosPacientes() {
+    const pacientes = await this.repositorioPaciente.find();
+    return pacientes;
+  }
 
   async obtenerCantidadTotalPacientes() {
     const pacientes = await this.repositorioPaciente

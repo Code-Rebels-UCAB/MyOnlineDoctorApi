@@ -11,6 +11,7 @@ export interface IRepositorioPaciente {
   buscarDatosIniciarSesionPaciente(correoPaciente: string);
   obtenerPacienteByNombreorApellido(nombre: string);
   obtenerPacienteByTelefono(telefono: string);
+  obtenerTodosPacientes();
 
   //COMANDOS
   bloquearPaciente(id: string);
