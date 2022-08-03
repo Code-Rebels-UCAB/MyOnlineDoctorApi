@@ -1,4 +1,4 @@
-import { DynamicModule,Module } from '@nestjs/common';
+import { DynamicModule, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BuscarDoctorNombreApellido } from '../../aplicacion/servicios/BuscarDoctorNombreApellido.service';
 import { CalificarDoctor } from '../../aplicacion/servicios/CalificarDoctor.service';
@@ -20,14 +20,33 @@ import { RepositorioCita } from '../../../cita/infraestructura/adaptadores/Repos
 import { PacienteORM } from '../../../paciente/infraestructura/persistencia/Paciente.orm';
 import { ManejadorEventos } from '../../../commun/aplicacion/ManejadorEventos';
 import { BloquearCitasDoctor } from '../../../cita/aplicacion/servicios/BloquearCitasDoctor.service';
+import { JwtModule, JwtService } from '@nestjs/jwt';
+import { JWTDoctorStrategy } from '../autenticacion/estrategias/JWTStrategy.service';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([CitaORM, DoctorORM, PacienteORM]),
     LoggerModule,
+    JwtModule.register({
+      secret: 'CODEREBELS',
+      secretOrPrivateKey: 'CODEREBELS',
+      signOptions: { expiresIn: 3600 },
+    }),
   ],
   controllers: [DoctorController],
-  providers: [BuscarDoctorEspecialidad,RepositorioDoctor,RepositorioCita, LoggerService, BuscarDoctorNombreApellido, BuscarDoctorTop, CalificarDoctor, BloquearCita,AutenticarDoctor],
+  providers: [
+    BuscarDoctorEspecialidad,
+    RepositorioDoctor,
+    RepositorioCita,
+    LoggerService,
+    BuscarDoctorNombreApellido,
+    BuscarDoctorTop,
+    CalificarDoctor,
+    BloquearCita,
+    AutenticarDoctor,
+    JWTDoctorStrategy,
+    JwtService,
+  ],
 })
 export class DoctorModule {
   static register(): DynamicModule {
@@ -84,7 +103,10 @@ export class DoctorModule {
             userRepo: RepositorioDoctor,
             citaRepo: RepositorioCita,
           ) => {
-            var politica = new BloquearCitasDoctor(new BloquearCita(logger,citaRepo), new CitasDoctor(logger,citaRepo));
+            var politica = new BloquearCitasDoctor(
+              new BloquearCita(logger, citaRepo),
+              new CitasDoctor(logger, citaRepo),
+            );
             var manejador = new ManejadorEventos<string>();
             manejador.Add(politica);
             return new BloquearDoctor(logger, userRepo, manejador);

@@ -10,20 +10,35 @@ import { GuardarTokenPaciente } from '../../aplicacion/servicios/GuardarTokenPac
 import { ObtenerInfoPersonalPaciente } from '../../../paciente/aplicacion/servicios/ObtenerInfoPersonalPaciente.service';
 import { BuscarPacienteNombre } from '../../../paciente/aplicacion/servicios/BuscarPacienteNombre.service';
 import { BuscarPacienteTelefono } from '../../aplicacion/servicios/BuscarPacienteTelefono.service';
+import { RegistrarPaciente } from '../../aplicacion/servicios/RegistrarPaciente.service';
+import { ManejadorEventos } from '../../../commun/aplicacion/ManejadorEventos';
+import { EncriptarContrasena } from '../adaptadores/EncriptarContraseña';
 import { BloquearPaciente } from '../../aplicacion/servicios/BloquearPaciente.service';
 import { SuspenderPaciente } from '../../aplicacion/servicios/SuspenderPaciente.service';
-import { ManejadorEventos } from '../../../commun/aplicacion/ManejadorEventos';
+import { BloquearCita } from '../../../cita/aplicacion/servicios/BloquearCita.service';
+import { RepositorioCita } from '../../../cita/infraestructura/adaptadores/RepositorioCita';
+import { BuscarCitasPaciente } from '../../../cita/aplicacion/servicios/BuscarCitasPaciente.service';
+import { BloquearCitasPaciente } from '../../../cita/aplicacion/servicios/BloquearCitasPaciente.service';
+import { CitaORM } from 'src/cita/infraestructura/persistencia/Cita.orm';
+import { DoctorORM } from 'src/doctor/infraestructura/persistencia/Doctor.orm';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([PacienteORM]), LoggerModule],
+  imports: [
+    TypeOrmModule.forFeature([PacienteORM, CitaORM, DoctorORM]),
+    LoggerModule,
+  ],
   controllers: [PacienteController],
   providers: [
     BuscarCantidadTodosLosPacientes,
     BuscarPacienteNombre,
     GuardarTokenPaciente,
     RepositorioPaciente,
+    RepositorioCita,
     LoggerService,
     ObtenerInfoPersonalPaciente,
+    RegistrarPaciente,
+    ManejadorEventos,
+    EncriptarContrasena,
     BloquearPaciente,
     SuspenderPaciente,
   ],
@@ -64,24 +79,53 @@ export class PacienteModule {
             new BuscarPacienteTelefono(logger, userRepo),
         },
         {
-          inject: [LoggerService, RepositorioPaciente],
+          inject: [LoggerService, RepositorioPaciente, EncriptarContrasena],
+          provide: RegistrarPaciente,
+          useFactory: (
+            logger: LoggerService,
+            userRepo: RepositorioPaciente,
+            encriptarContrasena: EncriptarContrasena,
+          ) => {
+            let manejador = new ManejadorEventos<any>();
+            return new RegistrarPaciente(
+              logger,
+              userRepo,
+              encriptarContrasena,
+              manejador,
+            );
+          },
+        },
+        {
+          inject: [LoggerService, RepositorioPaciente, RepositorioCita],
           provide: BloquearPaciente,
           useFactory: (
             logger: LoggerService,
             userRepo: RepositorioPaciente,
+            citaRepo: RepositorioCita,
           ) => {
+            const politica = new BloquearCitasPaciente(
+              new BloquearCita(logger, citaRepo),
+              new BuscarCitasPaciente(logger, citaRepo),
+            );
             const manager = new ManejadorEventos<string>();
+            manager.Add(politica);
             return new BloquearPaciente(logger, userRepo, manager);
           },
         },
         {
-          inject: [LoggerService, RepositorioPaciente],
+          inject: [LoggerService, RepositorioPaciente, RepositorioCita],
           provide: SuspenderPaciente,
           useFactory: (
             logger: LoggerService,
             userRepo: RepositorioPaciente,
+            citaRepo: RepositorioCita,
           ) => {
+            const politica = new BloquearCitasPaciente(
+              new BloquearCita(logger, citaRepo),
+              new BuscarCitasPaciente(logger, citaRepo),
+            );
             const manager = new ManejadorEventos<string>();
+            manager.Add(politica);
             return new SuspenderPaciente(logger, userRepo, manager);
           },
         },

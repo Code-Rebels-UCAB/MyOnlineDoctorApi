@@ -7,7 +7,7 @@ import { LoggerModule } from '../../../commun/infraestructura/logger/logger.modu
 import { LoggerService } from '../../../commun/infraestructura/logger/logger.service';
 import { RepositorioCita } from '../adaptadores/RepositorioCita';
 import { CitaORM } from '../persistencia/Cita.orm';
-import { CitaController} from './cita.controller';
+import { CitaController } from './cita.controller';
 import { AgendarCita } from '../../aplicacion/servicios/AgendarCita.service';
 import { BuscarCitasPaciente } from '../../aplicacion/servicios/BuscarCitasPaciente.service';
 import { CantidadCitasDiaDoctor } from '../../aplicacion/servicios/CantidadCitasDiaDoctor.service';
@@ -26,20 +26,41 @@ import { SuspenderCita } from '../../aplicacion/servicios/SuspenderCita.service'
 import { FinalizarCita } from '../../aplicacion/servicios/FinalizarCita.service';
 import { CitasDiaDoctor } from '../../aplicacion/servicios/CitasDiaDoctor.service';
 import { RepositorioDoctor } from '../../../doctor/infraestructura/adaptadores/RepositorioDoctor';
-
+import { NotificarCitaAgendadaFirebase } from '../servicios/NotificarCitaAgendadaFirebase';
+import { JwtService } from '@nestjs/jwt';
+import {NotificarCitaSuspendidaFirebase} from '../servicios/NotificarCitaSuspendidaFirebase';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([CitaORM, DoctorORM, PacienteORM]), LoggerModule],
+  imports: [
+    TypeOrmModule.forFeature([CitaORM, DoctorORM, PacienteORM]),
+    LoggerModule,
+  ],
   controllers: [CitaController],
-  providers: [CitasSolicitadasDoctor, CitasDoctor, AgendarCita, RepositorioCita, LoggerService, SolicitarCita, AceptarCita, CancelarCita, ManejadorEventos ,VideollamadaCita, GenerarTokenCita, IniciarCita, BloquearCita, SuspenderCita, FinalizarCita, RepositorioDoctor],
+  providers: [
+    CitasSolicitadasDoctor,
+    CitasDoctor,
+    AgendarCita,
+    RepositorioCita,
+    LoggerService,
+    SolicitarCita,
+    AceptarCita,
+    CancelarCita,
+    ManejadorEventos,
+    VideollamadaCita,
+    GenerarTokenCita,
+    IniciarCita,
+    BloquearCita,
+    SuspenderCita,
+    FinalizarCita,
+    RepositorioDoctor,
+    JwtService,
+  ],
 })
 export class CitaModule {
   static register(): DynamicModule {
-    //AQUI VA LA DECLARACION DEL PROVIDER "MANEJADOR DE EVENTOS" Y 
+    //AQUI VA LA DECLARACION DEL PROVIDER "MANEJADOR DE EVENTOS" Y
     //SE AGREGAN LOS OBSERVADORES QUE DEBEN ESTAR ATENTOS A CAMBIOS EN LOS ESTADOS DEL AGREGADO DE CITA (POLITICAS)
     var manejador = new ManejadorEventos();
-    
-    
 
     return {
       module: CitaModule,
@@ -81,92 +102,108 @@ export class CitaModule {
             new CantidadCitasDiaDoctor(logger, userRepo),
         },
         {
-          inject: [LoggerService, RepositorioCita],
+          inject: [LoggerService, RepositorioCita, ManejadorEventos],
           provide: AgendarCita,
-          useFactory: (
-            logger: LoggerService,
-            userRepo: RepositorioCita
-          ) => new AgendarCita(logger, userRepo),
+          useFactory: (logger: LoggerService, userRepo: RepositorioCita) =>
+            new AgendarCita(logger, userRepo, manejador),
         },
         {
           inject: [LoggerService, RepositorioCita],
           provide: SolicitarCita,
-          useFactory: (
-            logger: LoggerService,
-            userRepo: RepositorioCita,
-          ) => new SolicitarCita(logger, userRepo),
+          useFactory: (logger: LoggerService, userRepo: RepositorioCita) =>
+            new SolicitarCita(logger, userRepo),
         },
         {
           inject: [LoggerService, RepositorioCita],
           provide: AceptarCita,
-          useFactory: (
-            logger: LoggerService,
-            userRepo: RepositorioCita,
-          ) => new AceptarCita(logger, userRepo),
+          useFactory: (logger: LoggerService, userRepo: RepositorioCita) =>
+            new AceptarCita(logger, userRepo),
         },
         {
           inject: [LoggerService, RepositorioCita],
           provide: CancelarCita,
-          useFactory: (
-            logger: LoggerService,
-            userRepo: RepositorioCita,
-          ) => new CancelarCita(logger, userRepo),
+          useFactory: (logger: LoggerService, userRepo: RepositorioCita) =>
+            new CancelarCita(logger, userRepo),
         },
         {
           inject: [LoggerService, VideollamadaCita, RepositorioCita],
           provide: GenerarTokenCita,
           useFactory: (
             logger: LoggerService,
-            videollamadaCita: VideollamadaCita, 
+            videollamadaCita: VideollamadaCita,
             userRepo: RepositorioCita,
-          ) => new GenerarTokenCita(logger,videollamadaCita,userRepo),
+          ) => new GenerarTokenCita(logger, videollamadaCita, userRepo),
         },
         {
-          inject: [LoggerService, RepositorioCita, GenerarTokenCita, VideollamadaCita, ManejadorEventos],
+          inject: [
+            LoggerService,
+            RepositorioCita,
+            GenerarTokenCita,
+            VideollamadaCita,
+            ManejadorEventos,
+          ],
           provide: IniciarCita,
           useFactory: (
             logger: LoggerService,
             userRepo: RepositorioCita,
             tokenCita: GenerarTokenCita,
-            videollamadaCita: VideollamadaCita
-          ) => new IniciarCita(logger,userRepo, new GenerarTokenCita(logger,videollamadaCita,userRepo), manejador),
+            videollamadaCita: VideollamadaCita,
+          ) =>
+            new IniciarCita(
+              logger,
+              userRepo,
+              new GenerarTokenCita(logger, videollamadaCita, userRepo),
+              manejador,
+            ),
         },
         {
           inject: [LoggerService, RepositorioCita],
           provide: BloquearCita,
-          useFactory: (
-            logger: LoggerService,
-            userRepo: RepositorioCita,
-          ) => new BloquearCita(logger, userRepo),
+          useFactory: (logger: LoggerService, userRepo: RepositorioCita) =>
+            new BloquearCita(logger, userRepo),
         },
         {
-          inject: [LoggerService, RepositorioCita],
+          inject: [LoggerService, RepositorioCita, ManejadorEventos],
           provide: SuspenderCita,
           useFactory: (
             logger: LoggerService,
             userRepo: RepositorioCita,
-          ) => new SuspenderCita(logger, userRepo),
+          ) => new SuspenderCita(logger, userRepo, manejador),
         },
         {
           inject: [LoggerService, RepositorioCita],
           provide: FinalizarCita,
-          useFactory: (
-            logger: LoggerService,
-            userRepo: RepositorioCita,
-          ) => new FinalizarCita(logger, userRepo),
+          useFactory: (logger: LoggerService, userRepo: RepositorioCita) =>
+            new FinalizarCita(logger, userRepo),
         },
         {
-          inject: [RepositorioCita, RepositorioDoctor],
+          inject: [RepositorioCita, RepositorioDoctor, LoggerService],
           provide: NotificarPacienteFirebase,
           useFactory: (
             userRepo: RepositorioCita,
             userRepo2: RepositorioDoctor,
-          ) => {manejador.Add(new NotificarPacienteFirebase(userRepo,userRepo2))},
+            logger: LoggerService,
+          ) => {manejador.Add(new NotificarPacienteFirebase(userRepo,userRepo2,logger))},
+        },
+        {
+          inject: [RepositorioCita, RepositorioDoctor, LoggerService],
+          provide: NotificarCitaAgendadaFirebase,
+          useFactory: (
+            userRepo: RepositorioCita,
+            userRepo2: RepositorioDoctor,
+            logger: LoggerService,
+          ) => {manejador.Add(new NotificarCitaAgendadaFirebase(userRepo,userRepo2,logger))},
+        },
+        {
+          inject: [RepositorioCita, RepositorioDoctor, LoggerService],
+          provide: NotificarCitaSuspendidaFirebase,
+          useFactory: (
+            userRepo: RepositorioCita,
+            userRepo2: RepositorioDoctor,
+            logger: LoggerService,
+          ) => {manejador.Add(new NotificarCitaSuspendidaFirebase(userRepo,userRepo2,logger))},
         },
       ],
-    }
+    };
   }
 }
-
-
-;

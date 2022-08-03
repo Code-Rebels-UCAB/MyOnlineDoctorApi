@@ -4,8 +4,10 @@ import {
   Get,
   Inject,
   Patch,
+  Post,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { BuscarCantidadTodosLosPacientes } from '../../aplicacion/servicios/BuscarCantidadPacientesSistema.service';
 import { GuardarTokenPaciente } from '../../aplicacion/servicios/GuardarTokenPaciente.service';
@@ -16,8 +18,14 @@ import { RepositorioPaciente } from '../adaptadores/RepositorioPaciente';
 import { PacienteORM } from '../persistencia/Paciente.orm';
 import { ConsultarPacienteRespuestaDTO } from '../../../paciente/aplicacion/dto/queries/ConsultarPaciente.query';
 import { BuscarPacienteTelefono } from '../../aplicacion/servicios/BuscarPacienteTelefono.service';
+import { PacientePersistenciaDTO } from '../dto/PacientePersistenciaDTO';
+import { RegistrarPaciente } from '../../aplicacion/servicios/RegistrarPaciente.service';
+import { JwtPacienteGuard } from '../autenticacion/guards/paciente.guard';
+import { ObtenerPaciente } from '../autenticacion/decoradores/obtener.paciente.decorador';
+import { PacienteAutenticacionDTO } from '../dto/PacienteAutenticacionDTO';
 import { BloquearPaciente } from '../../aplicacion/servicios/BloquearPaciente.service';
 import { SuspenderPaciente } from '../../aplicacion/servicios/SuspenderPaciente.service';
+import { JWTDoctorGuard } from '../../../doctor/infraestructura/autenticacion/guards/JWTDoctor.guard';
 
 @Controller('api/paciente')
 export class PacienteController {
@@ -34,12 +42,15 @@ export class PacienteController {
     private readonly repositorioPaciente: RepositorioPaciente,
     @Inject(ObtenerInfoPersonalPaciente)
     private readonly ObtenerInfoPersonalPaciente: ObtenerInfoPersonalPaciente,
+    @Inject(RegistrarPaciente)
+    private readonly resgistrarPaciente: RegistrarPaciente,
     @Inject(BloquearPaciente)
     private readonly bloquearPaciente: BloquearPaciente,
     @Inject(SuspenderPaciente)
     private readonly suspenderPaciente: SuspenderPaciente,
   ) {}
 
+  //@UseGuards(JWTDoctorGuard)
   @Get('buscar/todos')
   async getCantidadPacientes(@Query('contexto') contexto?: string) {
     const cantidad = await this.buscarCantidad.ejecutar(contexto);
@@ -59,6 +70,7 @@ export class PacienteController {
     return paciente;
   }
 
+  //@UseGuards(JwtPacienteGuard)
   @Get('info')
   async getPacienteInfo(@Query('id') id: string) {
     const paciente = await this.ObtenerInfoPersonalPaciente.ejecutar(id);
@@ -77,12 +89,19 @@ export class PacienteController {
     return pacientes;
   }
 
+  @Post('/registrarse')
+  async postRegistarPaciente(@Body() datos: PacientePersistenciaDTO) {
+    return await this.resgistrarPaciente.ejecutar(datos);
+  }
+
+  //@UseGuards(JWTDoctorGuard)
   @Put('bloquear')
   async bloquear(@Query('id') id: string) {
     const resultado = await this.bloquearPaciente.ejecutar(id);
     return resultado;
   }
 
+  //@UseGuards(JWTDoctorGuard)
   @Put('suspender')
   async suspender(@Query('id') id: string) {
     const resultado = await this.suspenderPaciente.ejecutar(id);
