@@ -21,6 +21,7 @@ import { BuscarCitasPaciente } from '../../../cita/aplicacion/servicios/BuscarCi
 import { BloquearCitasPaciente } from '../../../cita/aplicacion/servicios/BloquearCitasPaciente.service';
 import { CitaORM } from '../../../cita/infraestructura/persistencia/Cita.orm';
 import { DoctorORM } from '../../../doctor/infraestructura/persistencia/Doctor.orm';
+import { BuscarTodosPaciente } from '../../aplicacion/servicios/BuscarTodosPacientes.service';
 
 @Module({
   imports: [
@@ -128,6 +129,12 @@ export class PacienteModule {
             manager.Add(politica);
             return new SuspenderPaciente(logger, userRepo, manager);
           },
+        },
+        {
+          inject: [LoggerService, RepositorioPaciente],
+          provide: BuscarTodosPaciente,
+          useFactory: (logger: LoggerService, userRepo: RepositorioPaciente) =>
+            new BuscarTodosPaciente(logger, userRepo),
         },
       ],
     };
