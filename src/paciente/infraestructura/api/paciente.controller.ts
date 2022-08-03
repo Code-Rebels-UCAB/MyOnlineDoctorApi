@@ -26,6 +26,7 @@ import { PacienteAutenticacionDTO } from '../dto/PacienteAutenticacionDTO';
 import { BloquearPaciente } from '../../aplicacion/servicios/BloquearPaciente.service';
 import { SuspenderPaciente } from '../../aplicacion/servicios/SuspenderPaciente.service';
 import { JWTDoctorGuard } from '../../../doctor/infraestructura/autenticacion/guards/JWTDoctor.guard';
+import { BuscarTodosPaciente } from '../../aplicacion/servicios/BuscarTodosPacientes.service';
 
 @Controller('api/paciente')
 export class PacienteController {
@@ -48,6 +49,8 @@ export class PacienteController {
     private readonly bloquearPaciente: BloquearPaciente,
     @Inject(SuspenderPaciente)
     private readonly suspenderPaciente: SuspenderPaciente,
+    @Inject(BuscarTodosPaciente)
+    private readonly buscarTodosPaciente: BuscarTodosPaciente,
   ) {}
 
   
@@ -108,5 +111,12 @@ export class PacienteController {
   async suspender(@Query('id') id: string) {
     const resultado = await this.suspenderPaciente.ejecutar(id);
     return resultado;
+  }
+
+  //@UseGuards(JWTDoctorGuard)
+  @Get('todos')
+  async getAllPacientes() {
+    const pacientes = await this.buscarTodosPaciente.ejecutar();
+    return pacientes;
   }
 }
