@@ -11,5 +11,19 @@ describe('Unitario - CU Cantidad Pacientes del Sistema, Cantidad de Citas del Di
   beforeAll(() => {
     mockLoggerService = LoggerMockFactory.Crear();
     mockRepositorioPaciente = PacienteRepoMockFactory.Crear();
+    // mockRepositorioCita = CitaRepoMockFactory.Crear();
+    casoUso = new BuscarCantidadTodosLosPacientes(
+      mockLoggerService,
+      mockRepositorioPaciente,
+    );
+  });
+
+  it('Debe devolver Cantidad de Pacientes Registrados en el Sistema', () => {
+    const resultado = casoUso.ejecutar();
+
+    return resultado.then((result) => {
+      expect(result.esExitoso).toBeTruthy();
+      expect(result.valor).toBe(3);
+    });
   });
 });
