@@ -1,4 +1,9 @@
+import { Inject } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import { InjectRepository } from "@nestjs/typeorm";
 import { IRepositorioDoctor } from "src/doctor/aplicacion/puertos/IRepositorioDoctor";
+import { Repository } from "typeorm";
+import { DoctorORM } from "../../persistencia/Doctor.orm";
 
 
 const doctor = {
@@ -6,6 +11,14 @@ const doctor = {
 }
 
 export class RepositorioDoctor implements IRepositorioDoctor{
+
+    constructor(
+        @InjectRepository(DoctorORM)
+        private readonly _doctorRepository: Repository<DoctorORM>,
+        @Inject(JwtService)
+        private readonly jwt: JwtService,
+    ) {}
+
     obtenerDoctorByEspecialidad(especialidad: string) {
         throw new Error("Method not implemented.");
     }
@@ -16,7 +29,7 @@ export class RepositorioDoctor implements IRepositorioDoctor{
         throw new Error("Method not implemented.");
     }
     obtenerDoctorById(id: string) {
-        throw new Error("Method not implemented.");
+       return "AAA"
     }
     obtenerTodosDoctores() {
         throw new Error("Method not implemented.");

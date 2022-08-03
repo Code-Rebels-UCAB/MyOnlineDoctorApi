@@ -2,6 +2,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '../config/config.module';
 import { ConfigService } from '../config/config.service';
 import { ConnectionOptions } from 'tls';
+import { DataSource } from 'typeorm';
 
 export const databaseProviders = [
   TypeOrmModule.forRootAsync({
@@ -24,3 +25,14 @@ export const databaseProviders = [
     },
   }),
 ];
+
+const config = new ConfigService();
+
+export const Data = new DataSource({
+  type: 'postgres',
+  host: config.get('POSTGRES_HOST'),
+  port: parseInt(<string>config.get('POSTGRES_PORT')),
+  username: config.get('POSTGRES_USER'),
+  password: config.get('POSTGRES_PASSWORD'),
+  database: config.get('POSTGRES_DATABASE'),
+})
