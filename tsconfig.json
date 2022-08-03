@@ -19,9 +19,8 @@
     "noFallthroughCasesInSwitch": false,
     "resolveJsonModule": true,
     "paths": {
-      "interfaceVO": ["src/commun/dominio/values/IValueObject"],
+      "interfaceVO": ["src/commun/dominio/values/IValueObject"]
     }
-
   },
-  "include": ["src", "src/test"]
+  "include": ["src", "src/test", "test"]
 }
