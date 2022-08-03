@@ -6,4 +6,5 @@ export interface ListadoDoctoresDTO{
     especialidades: string[],
     foto: string,
     calificacion?: number,
+    status: string
 }

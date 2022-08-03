@@ -60,7 +60,8 @@ export class DoctorMapeador{
             correo: doctor.getCorreoDoctor().getCorreoDoctor(),
             especialidades: especialidadesString,
             foto: doctor.getfotoDoctor().getFoto(),
-            calificacion: doctor.getCalificacion().calcularCalificacion()
+            calificacion: doctor.getCalificacion().calcularCalificacion(),
+            status: doctor.getStatusDoctor().getStatus()
         }
 
         
