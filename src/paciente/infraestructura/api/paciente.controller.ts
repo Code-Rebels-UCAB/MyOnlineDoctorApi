@@ -72,10 +72,10 @@ export class PacienteController {
     return paciente;
   }
 
-  @UseGuards(JwtPacienteGuard)
+  // @UseGuards(JwtPacienteGuard)
   @Get('info')
-  async getPacienteInfo(@ObtenerPaciente() datos: PacienteAutenticacionDTO) {
-    const paciente = await this.ObtenerInfoPersonalPaciente.ejecutar(datos.id_paciente);
+  async getPacienteInfo(@Query('id') id: string) {
+    const paciente = await this.ObtenerInfoPersonalPaciente.ejecutar(id);
     return paciente;
   }
 
