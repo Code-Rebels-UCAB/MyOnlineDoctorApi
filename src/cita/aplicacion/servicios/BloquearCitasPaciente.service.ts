@@ -1,6 +1,6 @@
-import { IPolitica } from 'src/commun/aplicacion/puertos/IPolitica';
-import { Resultado } from 'src/commun/aplicacion/Resultado';
-import { EventoDominio } from 'src/commun/dominio/eventos/Evento';
+import { IPolitica } from '../../../commun/aplicacion/puertos/IPolitica';
+import { Resultado } from "../../../commun/aplicacion/Resultado";
+import { EventoDominio } from '../../../commun/dominio/eventos/Evento';
 import { BloquearCita } from './BloquearCita.service';
 import { BuscarCitasPaciente } from './BuscarCitasPaciente.service';
 import { Logger } from '@nestjs/common';
