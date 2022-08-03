@@ -19,6 +19,8 @@ import { AutenticarDoctor } from '../../aplicacion/servicios/AutenticarDoctor.se
 import { BuscarDatosPerfil } from '../../aplicacion/servicios/BuscarDatosPerfil.service';
 import { BloquearDoctor } from '../../aplicacion/servicios/BloquearDoctor.service';
 import { JWTDoctorGuard } from '../autenticacion/guards/JWTDoctor.guard';
+import { ObtenerDoctor } from '../autenticacion/decoradores/ObtenerDoctor.decorator';
+import { DoctorAutenticacionDTO } from '../autenticacion/dtos/DoctorAutenticacionDTO';
 
 @Controller('api/doctor')
 export class DoctorController {
@@ -78,10 +80,10 @@ export class DoctorController {
     return response;
   }
 
-
-  @Get('perfil/:doctorid')
-  async getDatosPerfil(@Param('doctorid') doctorId: string) {
-    const doctor = await this.buscarDatosPerfil.ejecutar(doctorId);
+  @UseGuards(JWTDoctorGuard)
+  @Get('perfil')
+  async getDatosPerfil(@ObtenerDoctor() doctorObtenido: DoctorAutenticacionDTO) {
+    const doctor = await this.buscarDatosPerfil.ejecutar(doctorObtenido.id_doctor);
     return doctor;
   }
 
