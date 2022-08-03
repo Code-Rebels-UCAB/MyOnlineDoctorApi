@@ -4,9 +4,10 @@ import { RegistroMedicoDTO } from "../dto/RegistroMedicoDTO";
 import { ILogger } from "../../../commun/aplicacion/puertos/ILogger";
 import { Resultado } from "../../../commun/aplicacion/Resultado";
 import { IRepositorioRegistroMedico } from "../puertos/IRepositorioRegistroMedico";
-import { RegistroMedicoORM } from "src/registro_medico/infraestructura/persistencia/RegistroMedico.orm";
+import { RegistroMedicoORM } from "../../infraestructura/persistencia/RegistroMedico.orm";
 import { RegistroMedicoMapeador } from "../mapeador/RegistroMedicoMapeador";
 import { RegistroMedicoRespuestaDTO } from "../dto/RegistroMedicoRespuestaDTO";
+import { NoRegistroDoctor } from "../../../doctor/dominio/excepciones/NoRegistroDoctor";
 
 export class EditarRegistroMedico implements IServicioAplicacion<RegistroMedicoDTO, RegistroMedicoRespuestaDTO>{
     
@@ -20,7 +21,7 @@ export class EditarRegistroMedico implements IServicioAplicacion<RegistroMedicoD
         try {
             const registroPersistencia: RegistroMedicoORM =  await this.repositorioRegistroMedico.ObtenerRegistroMedicobyID(data.IdRegistroMedico);
             if (registroPersistencia.doctor.id_doctor != data.IdDoctor) {
-                throw new Error("El doctor no corresponde al registro medico por lo tanto no lo puede editar");
+                throw new NoRegistroDoctor("El doctor no corresponde al registro medico por lo tanto no lo puede editar");
             }
 
             const registroMedicoDominio = RegistroMedicoMapeador.actualizarEnDominio(data);
