@@ -19,8 +19,8 @@ import { BloquearCita } from '../../../cita/aplicacion/servicios/BloquearCita.se
 import { RepositorioCita } from '../../../cita/infraestructura/adaptadores/RepositorioCita';
 import { BuscarCitasPaciente } from '../../../cita/aplicacion/servicios/BuscarCitasPaciente.service';
 import { BloquearCitasPaciente } from '../../../cita/aplicacion/servicios/BloquearCitasPaciente.service';
-import { CitaORM } from 'src/cita/infraestructura/persistencia/Cita.orm';
-import { DoctorORM } from 'src/doctor/infraestructura/persistencia/Doctor.orm';
+import { CitaORM } from '../../../cita/infraestructura/persistencia/Cita.orm';
+import { DoctorORM } from '../../../doctor/infraestructura/persistencia/Doctor.orm';
 
 @Module({
   imports: [
