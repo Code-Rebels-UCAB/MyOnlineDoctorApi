@@ -45,6 +45,7 @@ import { JWTDoctorStrategy } from '../autenticacion/estrategias/JWTStrategy.serv
     BloquearCita,
     AutenticarDoctor,
     JWTDoctorStrategy,
+    JwtService,
   ],
 })
 export class DoctorModule {
@@ -111,7 +112,6 @@ export class DoctorModule {
             return new BloquearDoctor(logger, userRepo, manejador);
           },
         },
-        JwtService,
       ],
     };
   }
