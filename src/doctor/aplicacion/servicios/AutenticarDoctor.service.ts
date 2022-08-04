@@ -15,6 +15,7 @@ export class AutenticarDoctor
 
   async ejecutar(data: AutenticarDoctorDTO): Promise<Resultado<string>> {
     try {
+      this.logger.log(data.correo, 'aaaa');
       const response = await this.repositorioDoctor.autenticarDoctor(
         data.correo,
         data.password,
