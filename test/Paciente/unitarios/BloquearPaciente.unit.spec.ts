@@ -21,7 +21,7 @@ describe('Unitario - CU Bloquear Paciente', () => {
   });
 
   it('Debe cambiar status del Paciente a Bloqueado', () => {
-    const resultado = casoUso.ejecutar('ed649257-8091-4b77-827a-8532b5c4c826');
+    const resultado = casoUso.ejecutar('56ba95ea-accc-458d-962f-b88edab62ba8');
 
     return resultado.then((result) => {
       expect(result.esExitoso).toBeTruthy();

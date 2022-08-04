@@ -8,6 +8,7 @@ const Paciente = [
     s_nombre: 'Jose',
     p_apellido: 'Gavidia',
     s_apellido: 'Rodriguez',
+    fecha_nacimiento: '1979-05-09',
     sexo: 'M',
     altura: '229',
     peso: '89',
@@ -17,7 +18,6 @@ const Paciente = [
     status_suscripcion: 'Activo',
     alergia: null,
     correo: 'FrancoGav@example.net',
-    fecha_nacimiento: '1979-05-09',
   },
   {
     id_paciente: '1b1c1ea7-441e-4efd-afd2-7c4cb1d5da03',
@@ -25,6 +25,7 @@ const Paciente = [
     s_nombre: 'Maria',
     p_apellido: 'Ortiz',
     s_apellido: 'Rodriguez',
+    fecha_nacimiento: '1917-04-25',
     sexo: 'F',
     altura: '194',
     peso: '15',
@@ -34,7 +35,6 @@ const Paciente = [
     status_suscripcion: 'Atrasado',
     alergia: 'Algodon',
     correo: 'AlinesOrtiz24@example.net',
-    fecha_nacimiento: '1917-04-25',
   },
   {
     id_paciente: '56ba95ea-accc-458d-962f-b88edab62ba8',
@@ -42,6 +42,7 @@ const Paciente = [
     s_nombre: 'Carles',
     p_apellido: 'Landaeta',
     s_apellido: 'Longaniza',
+    fecha_nacimiento: '1936-02-19',
     sexo: 'M',
     altura: '182',
     peso: '124',
@@ -51,7 +52,6 @@ const Paciente = [
     status_suscripcion: 'Activo',
     alergia: null,
     correo: 'CarlosLand_aeta50@example.net',
-    fecha_nacimiento: '1936-02-19',
   },
 ];
 
@@ -70,9 +70,10 @@ export class RepositorioPaciente implements IRepositorioPaciente {
     throw new Error('Method not implemented.');
   }
   obtenerPacienteById(id: string) {
-    const datos = Paciente.filter((paciente) => paciente.id_paciente == id);
+    // const datos = Paciente.filter((paciente) => paciente.id_paciente == id);
 
-    return datos[0];
+    // return datos[0];
+    return true;
   }
   buscarDatosIniciarSesionPaciente(correoPaciente: string) {
     throw new Error('Method not implemented.');
@@ -84,9 +85,7 @@ export class RepositorioPaciente implements IRepositorioPaciente {
     throw new Error('Method not implemented.');
   }
   bloquearPaciente(id: string) {
-    Paciente.forEach((paciente) => {
-      if (paciente.id_paciente == id) return true;
-    });
+    return true;
   }
   suspenderPaciente(id: string) {
     throw new Error('Method not implemented.');
