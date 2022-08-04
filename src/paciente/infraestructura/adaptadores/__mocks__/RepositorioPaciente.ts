@@ -84,7 +84,9 @@ export class RepositorioPaciente implements IRepositorioPaciente {
     throw new Error('Method not implemented.');
   }
   bloquearPaciente(id: string) {
-    throw new Error('Method not implemented.');
+    Paciente.forEach((paciente) => {
+      if (paciente.id_paciente == id) return true;
+    });
   }
   suspenderPaciente(id: string) {
     throw new Error('Method not implemented.');
