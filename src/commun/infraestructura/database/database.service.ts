@@ -12,16 +12,19 @@ export const databaseProviders = [
       return {
         type: 'postgres',
         host: config.get('POSTGRES_HOST'),
-        port: parseInt(<string>config.get('POSTGRES_PORT')),
+        port: Number(config.get('POSTGRES_PORT')),
         username: config.get('POSTGRES_USER'),
         password: config.get('POSTGRES_PASSWORD'),
         database: config.get('POSTGRES_DATABASE'),
+        ssl:
+          process.env.NODE_ENV === 'production'
+            ? { rejectUnauthorized: false }
+            : false,
         autoLoadEntities: true,
         synchronize: true,
         retryDelay: 3000,
-        retryAttempts: 10
+        retryAttempts: 10,
       } as ConnectionOptions;
-            
     },
   }),
 ];
@@ -35,4 +38,4 @@ export const Data = new DataSource({
   username: config.get('POSTGRES_USER'),
   password: config.get('POSTGRES_PASSWORD'),
   database: config.get('POSTGRES_DATABASE'),
-})
+});

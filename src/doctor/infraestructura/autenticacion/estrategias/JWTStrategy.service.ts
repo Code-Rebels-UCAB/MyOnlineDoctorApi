@@ -11,6 +11,7 @@ export class JWTDoctorStrategy extends PassportStrategy(
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: 'CODEREBELS',
+      ignoreExpiration: true,
     });
   }
 

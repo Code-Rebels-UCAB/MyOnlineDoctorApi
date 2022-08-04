@@ -1,37 +1,45 @@
-import { InjectRepository } from "@nestjs/typeorm";
-import { IRepositorioCita } from "../../../aplicacion/puertos/IRepositorioCita";
-import { Repository } from "typeorm";
-import { DoctorORM } from "../../../../doctor/infraestructura/persistencia/Doctor.orm";
-import { PacienteORM } from "../../../../paciente/infraestructura/persistencia/Paciente.orm";
-import { CitaORM } from "../../persistencia/Cita.orm";
-import { SolicitarCitaPersistenciaDTO } from "../../persistencia/SolicitarCitaPersistenciaDTO";
-import { Cita } from "src/cita/dominio/entidades/Cita";
-
+import { InjectRepository } from '@nestjs/typeorm';
+import { IRepositorioCita } from '../../../aplicacion/puertos/IRepositorioCita';
+import { Repository } from 'typeorm';
+import { DoctorORM } from '../../../../doctor/infraestructura/persistencia/Doctor.orm';
+import { PacienteORM } from '../../../../paciente/infraestructura/persistencia/Paciente.orm';
+import { CitaORM } from '../../persistencia/Cita.orm';
+import { SolicitarCitaPersistenciaDTO } from '../../persistencia/SolicitarCitaPersistenciaDTO';
 
 const Citas = [
-    {
-      id_cita: 'a42253d2-69bd-4136-8ee4-62ce9f84ea31',
-      statuscita: 'Solicitada',
-      modalidad: 'Virtual',
-      motivo:'Dolor de Cabello',
-      fechacita: null,
-      horacita: null,
-      duracion: null,
-      doctor:'0462d106-df70-4f8d-b322-0c736f4069e7',
-      paciente: 'ed649257-8091-4b77-827a-8532b5c4c826',
-
-    },
-]
+  {
+    id_cita: 'a42253d2-69bd-4136-8ee4-62ce9f84ea31',
+    statuscita: 'Solicitada',
+    modalidad: 'Virtual',
+    motivo: 'Dolor de Cabello',
+    fechacita: null,
+    horacita: null,
+    duracion: null,
+    doctor: '0462d106-df70-4f8d-b322-0c736f4069e7',
+    paciente: 'ed649257-8091-4b77-827a-8532b5c4c826',
+  },
+  {
+    id_cita: '0d8d0a1e-742b-476e-93f9-aaab325fc1c6',
+    statuscita: 'Agendada',
+    modalidad: 'Virtual',
+    motivo: 'Dolor de Cabello',
+    fechacita: new Date().toISOString().split('T')[0],
+    horacita: null,
+    duracion: null,
+    doctor: '0c8aa290-d11c-4d47-8e38-6606a03f434a',
+    paciente: 'ed649257-8091-4b77-827a-8532b5c4c826',
+  },
+];
 
 export class RepositorioCita implements IRepositorioCita {
-    constructor(
-      @InjectRepository(CitaORM)
-      private readonly RepositorioCita: Repository<CitaORM>,
-      @InjectRepository(DoctorORM)
-      private readonly RepositorioDoctor: Repository<DoctorORM>,
-      @InjectRepository(PacienteORM)
-      private readonly RepositorioPaciente: Repository<PacienteORM>,
-    ) {}
+  constructor(
+    @InjectRepository(CitaORM)
+    private readonly RepositorioCita: Repository<CitaORM>,
+    @InjectRepository(DoctorORM)
+    private readonly RepositorioDoctor: Repository<DoctorORM>,
+    @InjectRepository(PacienteORM)
+    private readonly RepositorioPaciente: Repository<PacienteORM>,
+  ) {}
 
     obtenerTodasLasCitas() {
         throw new Error("Method not implemented.");
@@ -58,10 +66,16 @@ export class RepositorioCita implements IRepositorioCita {
         throw new Error("Method not implemented.");
     }
     obtenerCantidadPacientesPorDoctor(doctorId: string) {
-        throw new Error("Method not implemented.");
+      const filtro = Citas.filter((cita) => cita.doctor == doctorId);
+
+      return filtro.length;
     }
     obtenerCantidadCitasDelDiaDoctor(doctorId: string) {
-        throw new Error("Method not implemented.");
+      return Citas.filter(
+        (cita) =>
+          cita.fechacita == new Date().toISOString().split('T')[0] &&
+          doctorId == cita.doctor,
+      ).length;
     }
     obtenerCitaIniciada(citaid: string) {
         throw new Error("Method not implemented.");
@@ -85,7 +99,7 @@ export class RepositorioCita implements IRepositorioCita {
             paciente: cita.idpaciente,
         });
 
-        return Citas[53];
+        return Citas[Citas.length - 1];
     }
 
 
@@ -108,3 +122,4 @@ export class RepositorioCita implements IRepositorioCita {
 
     
 }
+
