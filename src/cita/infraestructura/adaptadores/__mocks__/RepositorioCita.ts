@@ -70,7 +70,9 @@ export class RepositorioCita implements IRepositorioCita {
   }
   obtenerCantidadCitasDelDiaDoctor(doctorId: string) {
     return Citas.filter(
-      (cita) => cita.fechacita == new Date().toISOString().split('T')[0],
+      (cita) =>
+        cita.fechacita == new Date().toISOString().split('T')[0] &&
+        doctorId == cita.doctor,
     ).length;
   }
   obtenerCitaIniciada(citaid: string) {
@@ -99,6 +101,7 @@ export class RepositorioCita implements IRepositorioCita {
         cita.fechacita = fecha;
         cita.horacita = hora;
         cita.duracion = duracion;
+        cita.statuscita = 'Agendada';
       }
     });
   }
