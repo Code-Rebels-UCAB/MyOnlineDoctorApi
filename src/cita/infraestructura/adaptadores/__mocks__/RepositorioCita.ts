@@ -84,6 +84,7 @@ export class RepositorioCita implements IRepositorioCita {
                 cita.fechacita = fecha;
                 cita.horacita = hora;
                 cita.duracion = duracion;
+                cita.statuscita = 'Agendada';
             }
             });
     }
