@@ -42,7 +42,7 @@ export class BloquearPaciente implements IServicioAplicacion<string, void> {
       return Resultado.Exito<void>(pacienteBloqueado);
     } catch (error) {
       const errores: IExcepcion = error;
-      this.logger.error('Error inesperado:', errores.getError().mensaje);
+      this.logger.error('Error inesperado:', errores.mensaje);
 
       return Resultado.Falla(error);
     }

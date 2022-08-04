@@ -41,4 +41,9 @@ export class RegistroMedicoController {
     return await this.obtenerRegistrosPaciente.ejecutar(datos.id_paciente);;
   }
 
+  @Get('getByPacienteWeb')
+  async getByPacienteWeb(@Query('id') id: string) {
+    return await this.obtenerRegistrosPaciente.ejecutar(id);;
+  }
+
 }

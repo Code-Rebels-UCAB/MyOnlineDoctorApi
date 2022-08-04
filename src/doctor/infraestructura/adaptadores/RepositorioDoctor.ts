@@ -144,6 +144,7 @@ export class RepositorioDoctor implements IRepositorioDoctor {
       .select(['doctores.id_doctor', 'doctores.status'])
       .where('doctores.correo = :correo', { correo: correo })
       .andWhere('doctores.password = :password', { password: password })
+      .andWhere('doctores.status <> :status', { status: 'Bloqueado' })
       .getOne();
 
     const payload = { id_doctor: response.id_doctor, status: response.status };
