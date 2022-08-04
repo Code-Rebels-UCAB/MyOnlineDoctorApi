@@ -9,6 +9,6 @@ async function bootstrap() {
   app.enableCors();
   app.useGlobalFilters(new AllExceptionFilter(new LoggerService()));
   app.useGlobalInterceptors(new LoggingInterceptor(new LoggerService()));
-  await app.listen(3000);
+  await app.listen(parseInt(process.env.PORT) || 3000);
 }
 bootstrap();
