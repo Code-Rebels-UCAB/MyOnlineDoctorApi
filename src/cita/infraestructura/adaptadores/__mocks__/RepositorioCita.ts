@@ -29,6 +29,17 @@ const Citas = [
     doctor: '0c8aa290-d11c-4d47-8e38-6606a03f434a',
     paciente: 'ed649257-8091-4b77-827a-8532b5c4c826',
   },
+  {
+    id_cita: '4f23f91c-7782-4f0a-b1c3-603bff9b8072',
+    statuscita: 'Aceptada',
+    modalidad: 'Presencial',
+    motivo: 'Dolor de Barriga',
+    fechacita: new Date().toISOString().split('T')[0],
+    horacita: '22:00',
+    duracion: '60',
+    doctor: 'da4fc7ef-ed74-4749-82b6-64693332c266',
+    paciente: '548107c8-81ba-4d3a-a36f-891e81eef54f',
+  },
 ];
 
 export class RepositorioCita implements IRepositorioCita {
@@ -45,8 +56,23 @@ export class RepositorioCita implements IRepositorioCita {
         throw new Error("Method not implemented.");
     }
     obtenerCitaById(id_cita: string) {
-        throw new Error("Method not implemented.");
-    }
+        const datos = Citas.filter( (cita) => cita.id_cita == id_cita);
+        return  {
+          id_cita: datos[0].id_cita,
+          paciente: {
+            id_paciente: datos[0].paciente,
+          },
+          doctor:{
+            id_doctor: datos[0].doctor,
+          },
+          statuscita: datos[0].statuscita,
+          modalidad: datos[0].modalidad,
+          motivo: datos[0].motivo,
+          fechacita: datos[0].fechacita,
+          horacita: datos[0].horacita,
+          duracion: datos[0].duracion,
+        }
+      }
     obtenerCitaByDoctor(id_doctor: string) {
         throw new Error("Method not implemented.");
     }
@@ -104,8 +130,31 @@ export class RepositorioCita implements IRepositorioCita {
 
 
     actualizarStatusCita(citaid: string, status: string) {
-        throw new Error("Method not implemented.");
-    }
+        Citas.forEach( (cita) => {
+          if (cita.id_cita == citaid) {
+              cita.statuscita = status;
+          }
+        });
+  
+        const datos = Citas.filter( (cita) => cita.id_cita == citaid);
+  
+        return  {
+          id_cita: datos[0].id_cita,
+          paciente: {
+            id_paciente: datos[0].paciente,
+          },
+          doctor:{
+            id_doctor: datos[0].doctor,
+          },
+          statuscita: datos[0].statuscita,
+          modalidad: datos[0].modalidad,
+          motivo: datos[0].motivo,
+          fechacita: datos[0].fechacita,
+          horacita: datos[0].horacita,
+          duracion: datos[0].duracion,
+        }
+  
+      }
     async actualizarCitaAgendada(citaid: string, fecha: string, hora: string, duracion: string) {
         Citas.forEach( (cita) => {
             if (cita.id_cita == citaid) {
@@ -119,7 +168,7 @@ export class RepositorioCita implements IRepositorioCita {
         throw new Error("Method not implemented.");
     }
 
-
+    
     
 }
 
