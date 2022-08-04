@@ -8,16 +8,17 @@ const Paciente = [
     s_nombre: 'Jose',
     p_apellido: 'Gavidia',
     s_apellido: 'Rodriguez',
+    fecha_nacimiento: '1979-05-09',
+    telefono: '+58414-500-0159',
+    correo: 'FrancoGav@example.net',
     sexo: 'M',
     altura: '229',
     peso: '89',
-    telefono: '+58414-500-0159',
-    antecedentes: 'Dolor en la nariz',
-    operacion: null,
+    contrasena: 'Pciente1234',
     status_suscripcion: 'Activo',
     alergia: null,
-    correo: 'FrancoGav@example.net',
-    fecha_nacimiento: '1979-05-09',
+    antecedentes: 'Dolor en la nariz',
+    operacion: null,
   },
   {
     id_paciente: '1b1c1ea7-441e-4efd-afd2-7c4cb1d5da03',
@@ -25,16 +26,17 @@ const Paciente = [
     s_nombre: 'Maria',
     p_apellido: 'Ortiz',
     s_apellido: 'Rodriguez',
+    fecha_nacimiento: '1917-04-25',
+    telefono: '+58414-420-3090',
+    correo: 'AlinesOrtiz24@example.net',
     sexo: 'F',
     altura: '194',
     peso: '15',
-    telefono: '+58414-420-3090',
-    antecedentes: 'Dolor de cabeza',
-    operacion: null,
+    contrasena: 'Pciente1234',
     status_suscripcion: 'Atrasado',
     alergia: 'Algodon',
-    correo: 'AlinesOrtiz24@example.net',
-    fecha_nacimiento: '1917-04-25',
+    antecedentes: 'Dolor de cabeza',
+    operacion: null,
   },
   {
     id_paciente: '56ba95ea-accc-458d-962f-b88edab62ba8',
@@ -42,16 +44,17 @@ const Paciente = [
     s_nombre: 'Carles',
     p_apellido: 'Landaeta',
     s_apellido: 'Longaniza',
+    fecha_nacimiento: '1936-02-19',
+    telefono: '+58414-929-8417',
+    correo: 'CarlosLand_aeta50@example.net',
     sexo: 'M',
     altura: '182',
     peso: '124',
-    telefono: '+58414-929-8417',
-    antecedentes: 'Dolor en el pie izquierdo',
-    operacion: null,
+    contrasena: 'Pciente1234',
     status_suscripcion: 'Activo',
     alergia: null,
-    correo: 'CarlosLand_aeta50@example.net',
-    fecha_nacimiento: '1936-02-19',
+    antecedentes: 'Dolor en el pie izquierdo',
+    operacion: null,
   },
 ];
 
@@ -84,9 +87,9 @@ export class RepositorioPaciente implements IRepositorioPaciente {
     throw new Error('Method not implemented.');
   }
   bloquearPaciente(id: string) {
-    throw new Error('Method not implemented.');
+    return true;
   }
   suspenderPaciente(id: string) {
-    throw new Error('Method not implemented.');
+    return true;
   }
 }
