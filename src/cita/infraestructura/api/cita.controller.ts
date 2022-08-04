@@ -26,6 +26,8 @@ import { SuspenderCita } from '../../aplicacion/servicios/SuspenderCita.service'
 import { FinalizarCita } from '../../aplicacion/servicios/FinalizarCita.service';
 import { CitasDiaDoctor } from '../../aplicacion/servicios/CitasDiaDoctor.service';
 import { JWTDoctorGuard } from '../../../doctor/infraestructura/autenticacion/guards/JWTDoctor.guard';
+import { ObtenerDoctor } from '../../../doctor/infraestructura/autenticacion/decoradores/ObtenerDoctor.decorator';
+import { DoctorAutenticacionDTO } from '../../../doctor/infraestructura/autenticacion/dtos/DoctorAutenticacionDTO';
 
 @Controller('api/cita')
 export class CitaController {
@@ -60,15 +62,17 @@ export class CitaController {
     private readonly citasalDia: CitasDiaDoctor,
   ) {}
 
-  @Get('getsolicitudesdoctor/:doctorid')
-  async getSolicitadasDoctor(@Param('doctorid') doctorid: string) {
-    const citas = await this.citasSolicitadasDoctor.ejecutar(doctorid);
+  @UseGuards(JWTDoctorGuard)
+  @Get('getsolicitudesdoctor')
+  async getSolicitadasDoctor(@ObtenerDoctor() doctor: DoctorAutenticacionDTO) {
+    const citas = await this.citasSolicitadasDoctor.ejecutar(doctor.id_doctor);
     return citas;
   }
 
-  @Get('getcitasdoctor/:doctorid')
-  async getTodasDoctor(@Param('doctorid') doctorid: string) {
-    const citas = await this.citasDoctor.ejecutar(doctorid);
+  @UseGuards(JWTDoctorGuard)
+  @Get('getcitasdoctor')
+  async getTodasDoctor(@ObtenerDoctor() doctor: DoctorAutenticacionDTO) {
+    const citas = await this.citasDoctor.ejecutar(doctor.id_doctor);
     return citas;
   }
 
@@ -78,7 +82,7 @@ export class CitaController {
     return citas;
   }
 
-  //@UseGuards(JWTDoctorGuard)
+  @UseGuards(JWTDoctorGuard)
   @Put('putagendarcita/:citaid')
   async postAgendar(
     @Body() datos: AgendarCitaDTO,
@@ -97,9 +101,10 @@ export class CitaController {
   }
 
   //END-POINT PARA OBTENER TODAS LAS CITAS AL DIA DEL DOCTOR
-  @Get('citasAlDiadoctor/:doctorid')
-  async getCitasDelDiaDoctor(@Param('doctorid') doctorId: string) {
-    const citas = await this.citasalDia.ejecutar(doctorId);
+  @UseGuards(JWTDoctorGuard)
+  @Get('citasAlDiadoctor')
+  async getCitasDelDiaDoctor(@ObtenerDoctor() doctor: DoctorAutenticacionDTO) {
+    const citas = await this.citasalDia.ejecutar(doctor.id_doctor);
     return citas;
   }
 
@@ -110,6 +115,7 @@ export class CitaController {
     return Cantcitas;
   }
 
+  @UseGuards(JWTDoctorGuard)
   @Put('iniciarcita')
   async iniciarCitaPut(@Query('citaid') citaid: string) {
     const cita = await this.iniciarCita.ejecutar(citaid);
@@ -143,6 +149,7 @@ export class CitaController {
     return CitaBloquear;
   }
 
+  @UseGuards(JWTDoctorGuard)
   @Put('suspendercita')
   async suspenderCitaPut(@Query('citaId') citaId: string) {
     const CitaSuspender = await this.suspenderCita.ejecutar(citaId);
