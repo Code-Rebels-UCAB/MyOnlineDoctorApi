@@ -10,7 +10,7 @@ export class JWTDoctorStrategy extends PassportStrategy(
   constructor() {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: process.env.SECRET,
+      secretOrKey: 'CODEREBELS',
       ignoreExpiration: true,
     });
   }
