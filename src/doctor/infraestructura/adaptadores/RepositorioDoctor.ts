@@ -148,6 +148,6 @@ export class RepositorioDoctor implements IRepositorioDoctor {
 
     const payload = { id_doctor: response.id_doctor, status: response.status };
 
-    return { token: this.jwt.sign(payload, { secret: process.env.SECRET }) };
+    return { token: this.jwt.sign(payload, { secret: 'CODEREBELS' }) };
   }
 }

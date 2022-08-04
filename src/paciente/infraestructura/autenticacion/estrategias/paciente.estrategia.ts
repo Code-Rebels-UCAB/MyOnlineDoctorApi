@@ -1,7 +1,5 @@
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { CONNREFUSED } from 'dns';
-import { config } from 'dotenv';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '../../../../commun/infraestructura/config/config.service';
 import { IRepositorioPaciente } from '../../../../paciente/aplicacion/puertos/IRepositorioPaciente';
