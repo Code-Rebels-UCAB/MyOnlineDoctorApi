@@ -77,6 +77,7 @@ $ npm run start
 ### 🎁 Referencias y Librerías
 
 - [Clean Architecture with NestJS](https://medium.com/@jonathan.pretre91/clean-architecture-with-nestjs-e089cef65045)
+- [Flutter Agora Video Call](https://www.youtube.com/watch?v=HIhRhvmF8q0&ab_channel=FlutterMapp)
 - [agora-access-token](https://www.npmjs.com/package/agora-access-token)
 - [bcrypt](https://www.npmjs.com/package/bcrypt)
 - [dotenv](https://www.npmjs.com/package/dotenv)
