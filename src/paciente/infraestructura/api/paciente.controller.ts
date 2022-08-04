@@ -26,6 +26,7 @@ import { PacienteAutenticacionDTO } from '../dto/PacienteAutenticacionDTO';
 import { BloquearPaciente } from '../../aplicacion/servicios/BloquearPaciente.service';
 import { SuspenderPaciente } from '../../aplicacion/servicios/SuspenderPaciente.service';
 import { JWTDoctorGuard } from '../../../doctor/infraestructura/autenticacion/guards/JWTDoctor.guard';
+import { BuscarTodosPaciente } from '../../aplicacion/servicios/BuscarTodosPacientes.service';
 
 @Controller('api/paciente')
 export class PacienteController {
@@ -48,18 +49,22 @@ export class PacienteController {
     private readonly bloquearPaciente: BloquearPaciente,
     @Inject(SuspenderPaciente)
     private readonly suspenderPaciente: SuspenderPaciente,
+    @Inject(BuscarTodosPaciente)
+    private readonly buscarTodosPaciente: BuscarTodosPaciente,
   ) {}
 
-  //@UseGuards(JWTDoctorGuard)
+  
   @Get('buscar/todos')
   async getCantidadPacientes(@Query('contexto') contexto?: string) {
     const cantidad = await this.buscarCantidad.ejecutar(contexto);
     return cantidad;
   }
 
+  @UseGuards(JwtPacienteGuard)
   @Patch('guardar/token')
-  async patchGuardarToken(@Body() datos: TokenPacienteDTO) {
-    const token = await this.GuardarToken.ejecutar(datos);
+  async patchGuardarToken(@ObtenerPaciente() datos: PacienteAutenticacionDTO,@Body() datos2: TokenPacienteDTO) {
+    datos2.idPaciente = datos.id_paciente; 
+    const token = await this.GuardarToken.ejecutar(datos2);
     return token;
   }
 
@@ -70,10 +75,10 @@ export class PacienteController {
     return paciente;
   }
 
-  //@UseGuards(JwtPacienteGuard)
+  @UseGuards(JwtPacienteGuard)
   @Get('info')
-  async getPacienteInfo(@Query('id') id: string) {
-    const paciente = await this.ObtenerInfoPersonalPaciente.ejecutar(id);
+  async getPacienteInfo(@ObtenerPaciente() datos: PacienteAutenticacionDTO) {
+    const paciente = await this.ObtenerInfoPersonalPaciente.ejecutar(datos.id_paciente);
     return paciente;
   }
 
@@ -106,5 +111,12 @@ export class PacienteController {
   async suspender(@Query('id') id: string) {
     const resultado = await this.suspenderPaciente.ejecutar(id);
     return resultado;
+  }
+
+  //@UseGuards(JWTDoctorGuard)
+  @Get('todos')
+  async getAllPacientes() {
+    const pacientes = await this.buscarTodosPaciente.ejecutar();
+    return pacientes;
   }
 }
