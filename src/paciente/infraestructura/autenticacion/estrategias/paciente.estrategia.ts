@@ -1,5 +1,6 @@
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
+import { CONNREFUSED } from 'dns';
 import { config } from 'dotenv';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '../../../../commun/infraestructura/config/config.service';
@@ -19,7 +20,7 @@ export class PacienteEstrategia extends PassportStrategy(
     private readonly configService: ConfigService,
   ) {
     super({
-      secretOrKey: process.env.SECRET,
+      secretOrKey: configService.get('SECRET'),
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: true,
     });
