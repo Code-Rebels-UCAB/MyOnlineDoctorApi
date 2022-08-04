@@ -56,6 +56,10 @@ const Paciente = [
 ];
 
 export class RepositorioPaciente implements IRepositorioPaciente {
+  obtenerTodosPacientes() {
+    throw new Error('Method not implemented.');
+  }
+
   registrarPaciente(pacienteNuevo: ConsultarPacienteRespuestaDTO) {
     throw new Error('Method not implemented.');
   }
@@ -83,10 +87,6 @@ export class RepositorioPaciente implements IRepositorioPaciente {
     throw new Error('Method not implemented.');
   }
   suspenderPaciente(id: string) {
-    throw new Error('Method not implemented.');
-  }
-
-  obtenerTodosPacientes() {
     throw new Error('Method not implemented.');
   }
 }
