@@ -59,6 +59,9 @@ const Paciente = [
     
 
 export class RepositorioPaciente implements IRepositorioPaciente{
+    obtenerTodosPacientes() {
+        throw new Error('Method not implemented.');
+    }
 
     registrarPaciente(pacienteNuevo: ConsultarPacienteRespuestaDTO) {
         throw new Error('Method not implemented.');
