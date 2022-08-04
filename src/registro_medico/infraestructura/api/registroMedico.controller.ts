@@ -7,6 +7,8 @@ import { PacienteAutenticacionDTO } from '../../../paciente/infraestructura/dto/
 import { JwtPacienteGuard } from '../../../paciente/infraestructura/autenticacion/guards/paciente.guard';
 import { ObtenerPaciente } from '../../../paciente/infraestructura/autenticacion/decoradores/obtener.paciente.decorador';
 import { JWTDoctorGuard } from '../../../doctor/infraestructura/autenticacion/guards/JWTDoctor.guard';
+import { DoctorAutenticacionDTO } from '../../../doctor/infraestructura/autenticacion/dtos/DoctorAutenticacionDTO';
+import { ObtenerDoctor } from '../../../doctor/infraestructura/autenticacion/decoradores/ObtenerDoctor.decorator';
 
 
 
@@ -23,8 +25,9 @@ export class RegistroMedicoController {
   
   @UseGuards(JWTDoctorGuard)
   @Post('crear')
-  async postCrearRegistro(@Body() datos: RegistroMedicoDTO) {
-    const RegistroMedico = await this.crearRegistroMedico.ejecutar(datos);
+  async postCrearRegistro(@ObtenerDoctor() datos: DoctorAutenticacionDTO,@Body() datos2: RegistroMedicoDTO) {
+    datos2.IdDoctor = datos.id_doctor; 
+    const RegistroMedico = await this.crearRegistroMedico.ejecutar(datos2);
     return RegistroMedico;
   }
 
