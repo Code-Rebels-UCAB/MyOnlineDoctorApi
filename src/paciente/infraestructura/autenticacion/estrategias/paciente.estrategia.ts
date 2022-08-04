@@ -18,7 +18,7 @@ export class PacienteEstrategia extends PassportStrategy(
     private readonly configService: ConfigService,
   ) {
     super({
-      secretOrKey: configService.get('SECRET'),
+      secretOrKey: 'CODEREBELS',
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: true,
     });
