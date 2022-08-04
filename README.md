@@ -74,11 +74,19 @@ $ npm run start
 - **Alines Ortiz - [aliortiz2000](https://github.com/aliortiz2000)**
 - **Carlos Arriaga - [carlosead1410](https://github.com/carlosead1410)**
 
-### Referencias y Librerías
+### 🎁 Referencias y Librerías
 
 - [Clean Architecture with NestJS](https://medium.com/@jonathan.pretre91/clean-architecture-with-nestjs-e089cef65045)
 - [agora-access-token](https://www.npmjs.com/package/agora-access-token)
-- [bcrypt]()
-- [dotenv]()
-- [firebase-admin]()
-- [guid-typescrip]()
+- [bcrypt](https://www.npmjs.com/package/bcrypt)
+- [dotenv](https://www.npmjs.com/package/dotenv)
+- [firebase-admin](https://www.npmjs.com/package/firebase-admin)
+- [guid-typescrip](https://www.npmjs.com/package/guid-typescript)
+- [passport](https://www.npmjs.com/package//passport)
+- [passport-jwt](https://www.npmjs.com/package/passport-jwt)
+- [pg](https://www.npmjs.com/package/pg)
+- [reflect-metadata](https://www.npmjs.com/package/reflect-metadata)
+- [rimraf](https://www.npmjs.com/package/rimraf)
+- [rxjs](https://www.npmjs.com/package/rxjs)
+- [typeorm](https://www.npmjs.com/package/typeorm)
+- [jest](https://www.npmjs.com/package/jest)
