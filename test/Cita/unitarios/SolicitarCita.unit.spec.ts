@@ -3,7 +3,7 @@ import { CitaRepoMockFactory } from '../../fabricas/CitaRepoMockFactory';
 import { SolicitarCita } from '../../../src/cita/aplicacion/servicios/SolicitarCita.service';
 
 
-describe('Unitario - CU Agendar Cita', () => {
+describe('Unitario - CU Solicitar Cita', () => {
   let mockRepositorioCita;
   let mockLoggerService;
   let casoUso: SolicitarCita;
