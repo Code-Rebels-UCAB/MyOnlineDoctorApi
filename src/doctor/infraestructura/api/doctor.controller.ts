@@ -76,7 +76,9 @@ export class DoctorController {
 
   @Put('autenticar')
   async autenticar(@Body() data: AutenticarDoctorDTO) {
+    console.log(data);
     const response = await this.autenticarDoctor.ejecutar(data);
+    console.log(response);
     return response;
   }
 
