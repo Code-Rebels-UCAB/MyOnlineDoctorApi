@@ -5,6 +5,7 @@ import { DoctorORM } from "../../../../doctor/infraestructura/persistencia/Docto
 import { PacienteORM } from "../../../../paciente/infraestructura/persistencia/Paciente.orm";
 import { CitaORM } from "../../persistencia/Cita.orm";
 import { SolicitarCitaPersistenciaDTO } from "../../persistencia/SolicitarCitaPersistenciaDTO";
+import { Cita } from "src/cita/dominio/entidades/Cita";
 
 
 const Citas = [
@@ -21,7 +22,6 @@ const Citas = [
 
     },
 ]
-
 
 export class RepositorioCita implements IRepositorioCita {
     constructor(
@@ -73,8 +73,22 @@ export class RepositorioCita implements IRepositorioCita {
         throw new Error("Method not implemented.");
     }
     crearCita(cita: SolicitarCitaPersistenciaDTO) {
-        throw new Error("Method not implemented.");
+        Citas.push({
+            id_cita: cita.id_cita,
+            statuscita: cita.statuscita,
+            modalidad: cita.modalidad,
+            motivo: cita.motivo,
+            fechacita: null,
+            horacita: null,
+            duracion: null,
+            doctor: cita.iddoctor,
+            paciente: cita.idpaciente,
+        });
+
+        return Citas[53];
     }
+
+
     actualizarStatusCita(citaid: string, status: string) {
         throw new Error("Method not implemented.");
     }
@@ -93,4 +107,4 @@ export class RepositorioCita implements IRepositorioCita {
 
 
     
-    }
+}
