@@ -54,7 +54,7 @@ describe('Unitario - CU Calificar Doctor', () => {
       });
     });
 
-    it('Un doctor que no puede ser calificado con una menor a 0', () => {
+    it('Un doctor no puede ser calificado con un puntaje menor a 0', () => {
         const resultado = casoUso.ejecutar(CalificacionLess0);
     
         return resultado.then((res) => {
