@@ -15,10 +15,12 @@ const Doctores = [
       sexo:'M',
       foto: 'https://cdn.discordapp.com/attachments/997586747141668876/997603634168737912/unknown.png',
       calificacion: 15,
-      cantidad_calificacion: '3',
+      cantidad_calificacion: 3,
       correo: 'Aaron72@example.net',
       password: 'Doctor1234',
       status: 'Activo',
+      latitud: '-34.6033',
+      longitud: '-58.3816',
       especialidades:[
         'Neumologia',
         'Neurologia',
@@ -61,7 +63,22 @@ export class RepositorioDoctor implements IRepositorioDoctor{
         throw new Error("Method not implemented.");
     }
     obtenerDoctorById(id: string) {
-       return "AAA"
+        const datos = Doctores.filter( (doctor) => doctor.id_doctor == id);
+
+        return  {
+            id_doctor: datos[0].id_doctor,
+            p_nombre: datos[0].p_nombre,
+            p_apellido: datos[0].p_apellido,
+            sexo: datos[0].sexo,
+            foto: datos[0].foto,
+            calificacion: datos[0].calificacion,
+            cantidad_calificacion: datos[0].cantidad_calificacion,
+            correo: datos[0].correo,
+            password: datos[0].password,
+            status: datos[0].status,
+            latitud: datos[0].latitud,
+            longitud: datos[0].longitud,
+        }
     }
     obtenerTodosDoctores() {
         throw new Error("Method not implemented.");
@@ -74,7 +91,7 @@ export class RepositorioDoctor implements IRepositorioDoctor{
         throw new Error("Method not implemented.");
     }
     calificarDoctor(id: string, puntaje: number, cantidad: number) {
-        throw new Error("Method not implemented.");
+        return {calificacion: 5};
     }
     autenticarDoctor(correo: string, password: string) {
         throw new Error("Method not implemented.");
