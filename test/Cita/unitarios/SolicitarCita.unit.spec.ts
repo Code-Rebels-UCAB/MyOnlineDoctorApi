@@ -29,6 +29,54 @@ describe('Unitario - CU Agendar Cita', () => {
         });
     });
 
+    it('No debe solicitar la cita (Falta el Paciente)', async () => {
+        const resultado = casoUso.ejecutar({
+            id_doctor: "dd2d571a-aadf-4213-a81f-ade5f5e89893",
+            modalidad: "Virtual",
+            motivo: "Prueba Test"
+        });
+    
+        return resultado.then((res) => {
+          expect(res.esExitoso).toBeFalsy();
+        });
+    });
+
+    it('No debe solicitar la cita (Falta el Doctor)', async () => {
+        const resultado = casoUso.ejecutar({
+            id_paciente: "4a2ed3f9-5331-41a7-89e1-c8d1f76d23e7" ,
+            modalidad: "Virtual",
+            motivo: "Prueba Test"
+        });
+    
+        return resultado.then((res) => {
+          expect(res.esExitoso).toBeFalsy();
+        });
+    });
+
+    it('No debe solicitar la cita (Falta modalidad)', async () => {
+        const resultado = casoUso.ejecutar({
+            id_paciente: "4a2ed3f9-5331-41a7-89e1-c8d1f76d23e7" ,
+            id_doctor: "dd2d571a-aadf-4213-a81f-ade5f5e89893",
+            motivo: "Prueba Test"
+        });
+    
+        return resultado.then((res) => {
+          expect(res.esExitoso).toBeFalsy();
+        });
+    });
+
+    it('No debe solicitar la cita (Falta motivo)', async () => {
+        const resultado = casoUso.ejecutar({
+            id_paciente: "4a2ed3f9-5331-41a7-89e1-c8d1f76d23e7" ,
+            id_doctor: "dd2d571a-aadf-4213-a81f-ade5f5e89893",
+            modalidad: "Virtual",
+        });
+    
+        return resultado.then((res) => {
+          expect(res.esExitoso).toBeFalsy();
+        });
+    });
+
   
 
 
