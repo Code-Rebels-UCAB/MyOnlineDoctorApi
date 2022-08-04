@@ -66,7 +66,9 @@ export class RepositorioCita implements IRepositorioCita {
     throw new Error('Method not implemented.');
   }
   obtenerCantidadPacientesPorDoctor(doctorId: string) {
-    throw new Error('Method not implemented.');
+    const filtro = Citas.filter((cita) => cita.doctor == doctorId);
+
+    return filtro.length;
   }
   obtenerCantidadCitasDelDiaDoctor(doctorId: string) {
     return Citas.filter(
