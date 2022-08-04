@@ -41,77 +41,85 @@ export class RepositorioCita implements IRepositorioCita {
     private readonly RepositorioPaciente: Repository<PacienteORM>,
   ) {}
 
-  obtenerTodasLasCitas() {
-    throw new Error('Method not implemented.');
-  }
-  obtenerCitaById(id_cita: string) {
-    throw new Error('Method not implemented.');
-  }
-  obtenerCitaByDoctor(id_doctor: string) {
-    throw new Error('Method not implemented.');
-  }
-  obtenerCitaByPaciente(id_paciente: string) {
-    throw new Error('Method not implemented.');
-  }
-  obtenerCitaByFecha(fecha: string) {
-    throw new Error('Method not implemented.');
-  }
-  obtenerCitaDeDoctorByStatus(status: string, doctorid: string) {
-    throw new Error('Method not implemented.');
-  }
-  obtenerCitasDeDoctor(doctorid: string) {
-    throw new Error('Method not implemented.');
-  }
-  obtenerCitasDelDiaDoctor(doctorId: string) {
-    throw new Error('Method not implemented.');
-  }
-  obtenerCantidadPacientesPorDoctor(doctorId: string) {
-    const filtro = Citas.filter((cita) => cita.doctor == doctorId);
+    obtenerTodasLasCitas() {
+        throw new Error("Method not implemented.");
+    }
+    obtenerCitaById(id_cita: string) {
+        throw new Error("Method not implemented.");
+    }
+    obtenerCitaByDoctor(id_doctor: string) {
+        throw new Error("Method not implemented.");
+    }
+    obtenerCitaByPaciente(id_paciente: string) {
+        throw new Error("Method not implemented.");
+    }
+    obtenerCitaByFecha(fecha: string) {
+        throw new Error("Method not implemented.");
+    }
+    obtenerCitaDeDoctorByStatus(status: string, doctorid: string) {
+        throw new Error("Method not implemented.");
+    }
+    obtenerCitasDeDoctor(doctorid: string) {
+        throw new Error("Method not implemented.");
+    }
+    obtenerCitasDelDiaDoctor(doctorId: string) {
+        throw new Error("Method not implemented.");
+    }
+    obtenerCantidadPacientesPorDoctor(doctorId: string) {
+      const filtro = Citas.filter((cita) => cita.doctor == doctorId);
 
-    return filtro.length;
-  }
-  obtenerCantidadCitasDelDiaDoctor(doctorId: string) {
-    return Citas.filter(
-      (cita) =>
-        cita.fechacita == new Date().toISOString().split('T')[0] &&
-        doctorId == cita.doctor,
-    ).length;
-  }
-  obtenerCitaIniciada(citaid: string) {
-    throw new Error('Method not implemented.');
-  }
-  obtenerTokenF(citaid: string) {
-    throw new Error('Method not implemented.');
-  }
-  obtenerDoctorCita(citaid: string) {
-    throw new Error('Method not implemented.');
-  }
-  crearCita(cita: SolicitarCitaPersistenciaDTO) {
-    throw new Error('Method not implemented.');
-  }
-  actualizarStatusCita(citaid: string, status: string) {
-    throw new Error('Method not implemented.');
-  }
-  async actualizarCitaAgendada(
-    citaid: string,
-    fecha: string,
-    hora: string,
-    duracion: string,
-  ) {
-    Citas.forEach((cita) => {
-      if (cita.id_cita == citaid) {
-        cita.fechacita = fecha;
-        cita.horacita = hora;
-        cita.duracion = duracion;
-        cita.statuscita = 'Agendada';
-      }
-    });
-  }
-  actualizarDatosVideollamadaCita(
-    citaid: string,
-    nombreCanal: string,
-    tokenCita: string,
-  ) {
-    throw new Error('Method not implemented.');
-  }
+      return filtro.length;
+    }
+    obtenerCantidadCitasDelDiaDoctor(doctorId: string) {
+      return Citas.filter(
+        (cita) =>
+          cita.fechacita == new Date().toISOString().split('T')[0] &&
+          doctorId == cita.doctor,
+      ).length;
+    }
+    obtenerCitaIniciada(citaid: string) {
+        throw new Error("Method not implemented.");
+    }
+    obtenerTokenF(citaid: string) {
+        throw new Error("Method not implemented.");
+    }
+    obtenerDoctorCita(citaid: string) {
+        throw new Error("Method not implemented.");
+    }
+    crearCita(cita: SolicitarCitaPersistenciaDTO) {
+        Citas.push({
+            id_cita: cita.id_cita,
+            statuscita: cita.statuscita,
+            modalidad: cita.modalidad,
+            motivo: cita.motivo,
+            fechacita: null,
+            horacita: null,
+            duracion: null,
+            doctor: cita.iddoctor,
+            paciente: cita.idpaciente,
+        });
+
+        return Citas[Citas.length - 1];
+    }
+
+
+    actualizarStatusCita(citaid: string, status: string) {
+        throw new Error("Method not implemented.");
+    }
+    async actualizarCitaAgendada(citaid: string, fecha: string, hora: string, duracion: string) {
+        Citas.forEach( (cita) => {
+            if (cita.id_cita == citaid) {
+                cita.fechacita = fecha;
+                cita.horacita = hora;
+                cita.duracion = duracion;
+            }
+            });
+    }
+    actualizarDatosVideollamadaCita(citaid: string, nombreCanal: string, tokenCita: string) {
+        throw new Error("Method not implemented.");
+    }
+
+
+    
 }
+

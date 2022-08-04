@@ -58,7 +58,6 @@ describe('Unitario - CU Calificar Doctor', () => {
         const resultado = casoUso.ejecutar(CalificacionLess0);
     
         return resultado.then((res) => {
-          console.log(res);
           expect(res.esExitoso).toBeFalsy();
           expect(res.error).toEqual({"mensaje": "La calificación no debe ser menor a 0", "origen": "CalificacionInvalida"});
         });
